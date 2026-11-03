@@ -1,0 +1,27 @@
+Proyecto: web demo de Molinari Viajes (agencia de turismo de Trelew, Chubut).
+Brief completo en docs/brief.md. Referencia visual en docs/referencia.png.
+Idioma de respuestas y de textos del sitio: español rioplatense.
+
+Stack:
+- Astro + React Islands + Tailwind CSS v4 + JavaScript (sin TypeScript) + Lucide + Vercel
+- Componentes estáticos: .astro
+- React (.jsx) SOLO cuando haya interactividad real que lo justifique, con client:visible
+- Interacciones chicas (menú mobile, etc.) con un script mínimo dentro del componente Astro, no con React
+
+Diseño:
+- Tokens de color, tipografías, radios y sombras definidos en src/styles/global.css (bloque @theme de Tailwind v4). Usar siempre esos tokens, nunca colores sueltos.
+- Verde de WhatsApp solo para acciones de WhatsApp.
+- Público adulto (60+): textos grandes, alto contraste, botones grandes, WCAG 2.2 AA.
+- Animaciones suaves y siempre respetando prefers-reduced-motion. Nada de carruseles automáticos.
+
+Contenido:
+- NO inventar datos comerciales (años de trayectoria, precios, fechas, testimonios, estadísticas).
+- Todo dato no confirmado va marcado como demo en los archivos de datos y se ve como "de ejemplo" en la interfaz.
+- Paquetes en src/data/packages.js, configuración general en src/config/site.js.
+
+Reglas de trabajo:
+- No tocar archivos que no se mencionan en el prompt.
+- No modificar componentes que ya funcionan sin que se pida.
+- No instalar librerías sin justificar por qué hacen falta.
+- No usar estilos inline ni etiquetas style salvo casos justificados — Tailwind + tokens.
+- Imágenes con el componente Image de astro:assets, con alt descriptivo y dimensiones definidas.
