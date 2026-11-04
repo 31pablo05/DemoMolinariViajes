@@ -1,0 +1,95 @@
+---
+import { Image } from 'astro:assets';
+import { Camera } from '@lucide/astro';
+import Button from '../ui/Button.astro';
+import Container from '../ui/Container.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import GalleryLightbox from '../react/GalleryLightbox.jsx';
+import { site } from '../../config/site.js';
+
+const modules = import.meta.glob('../../assets/images/experiences/*.{jpg,jpeg,png,webp,avif}', {
+  eager: true,
+  import: 'default',
+});
+
+const altsByFile = {
+  'experiencia-01.jpg': 'Un grupo de viajeros de espaldas, con mochilas, mirando el Coliseo de Roma.',
+  'experiencia-02.jpg': 'Visitantes caminando entre torii bermellón y cerezos en flor.',
+  'experiencia-03.jpg': 'Camellos frente a las pirámides de Guiza.',
+  'experiencia-04.jpg': 'El Empire State iluminado sobre el skyline de Nueva York al atardecer.',
+  'experiencia-05.jpg': 'La torre Eiffel al atardecer, junto al Sena y un puente de París.',
+  'experiencia-06.jpg': 'Mont Saint-Michel iluminado al anochecer, sobre el islote y la playa.',
+  'experiencia-07.jpg': 'Viajeros con sombrero frente a las montañas de Machu Picchu.',
+  'experiencia-08.jpg': 'La torre de Tokio iluminada, con el monte Fuji detrás.',
+};
+
+const photos = Object.entries(modules)
+  .sort(([a], [b]) => a.localeCompare(b, 'es'))
+  .slice(0, 8)
+  .map(([path, image]) => ({
+    image,
+    src: image.src,
+    alt: altsByFile[path.split('/').pop()] || 'Fotografía de un destino de viaje.',
+    width: image.width,
+    height: image.height,
+  }));
+
+const lightboxImages = photos.map(({ src, alt, width, height }) => ({ src, alt, width, height }));
+---
+
+<section id="experiencias" class="scroll-mt-24 py-8 lg:py-12" aria-label="Así se viven nuestros viajes">
+  <Container>
+    <SectionHeading icon={Camera} title="Así se viven nuestros viajes" />
+    <GalleryLightbox client:visible images={lightboxImages}>
+      {
+        photos.length > 0 && (
+          <ul class="mt-10 grid grid-cols-2 gap-3 md:gap-4 lg:mt-12 lg:grid-cols-[1.4fr_1fr_1fr_1.4fr] lg:gap-5">
+            {photos.map((photo, index) => (
+              <li class="overflow-hidden rounded-card">
+                <button
+                  type="button"
+                  data-lightbox-index={index}
+                  aria-label={`Ampliar foto: ${photo.alt}`}
+                  class="block w-full cursor-pointer"
+                >
+                  <Image
+                    src={photo.image}
+                    alt={photo.alt}
+                    width={640}
+                    height={480}
+                    widths={[320, 480, 640, 960]}
+                    sizes="(min-width: 1024px) 30vw, 50vw"
+                    loading="lazy"
+                    class="aspect-square h-auto w-full object-cover md:aspect-[4/3] lg:aspect-auto lg:h-56 xl:h-64"
+                  />
+                </button>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </GalleryLightbox>
+    <p class="mt-4 text-center text-muted">
+      Imágenes ilustrativas. Pronto, fotos reales de nuestros grupos.
+    </p>
+    <div class="mt-6 flex justify-center">
+      <Button href={site.instagram.url} variant="secondary" size="large">
+        <svg
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          class="size-5 shrink-0"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <rect width="20" height="20" x="2" y="2" rx="5"></rect>
+          <circle cx="12" cy="12" r="4"></circle>
+          <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"></circle>
+        </svg>
+        Ver más en Instagram
+      </Button>
+    </div>
+  </Container>
+</section>

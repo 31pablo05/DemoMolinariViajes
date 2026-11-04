@@ -1,0 +1,72 @@
+---
+import WhatsAppIcon from './WhatsAppIcon.astro';
+
+const {
+  href,
+  variant = 'primary',
+  size = 'normal',
+  icon: Icon,
+  type = 'button',
+  class: className,
+  ...rest
+} = Astro.props;
+
+const isLink = typeof href === 'string';
+const isExternal = isLink && /^https?:\/\//i.test(href);
+const isWhatsApp = variant === 'whatsapp' || variant === 'whatsapp-outline';
+const iconSize = size === 'large' ? 22 : 20;
+
+const variants = {
+  primary:
+    'border border-transparent bg-violet text-white shadow-rest hover:bg-violet-dark hover:shadow-hover active:shadow-rest',
+  secondary:
+    'border border-violet bg-white text-violet shadow-rest hover:border-violet-dark hover:bg-lilac-soft hover:text-violet-dark hover:shadow-hover active:shadow-rest',
+  whatsapp:
+    'border border-transparent bg-whatsapp text-white shadow-rest hover:bg-whatsapp-hover hover:shadow-hover active:shadow-rest',
+  'whatsapp-outline':
+    'border border-whatsapp bg-white text-whatsapp shadow-rest hover:border-whatsapp-hover hover:text-whatsapp-hover hover:shadow-hover active:shadow-rest',
+  'ghost-light':
+    'border border-white bg-transparent text-white hover:bg-white/15 hover:shadow-hover focus-visible:outline-white',
+};
+
+const sizes = {
+  normal: 'min-h-12 min-w-12 gap-2 px-5 text-base',
+  large: 'min-h-14 min-w-12 gap-2.5 px-6 text-lg',
+};
+
+const classes = [
+  'inline-flex cursor-pointer items-center justify-center rounded-pill text-center font-body font-semibold leading-tight no-underline motion-safe:transition motion-safe:duration-200',
+  'motion-safe:hover:-translate-y-px motion-safe:active:translate-y-0',
+  variants[variant] ?? variants.primary,
+  sizes[size] ?? sizes.normal,
+  className,
+];
+---
+
+{
+  isLink ? (
+    <a
+      href={href}
+      class:list={classes}
+      {...rest}
+      {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+    >
+      {isWhatsApp ? (
+        <WhatsAppIcon size={iconSize} />
+      ) : (
+        Icon && <Icon size={iconSize} aria-hidden="true" class="shrink-0" />
+      )}
+      <slot />
+      {isExternal && <span class="sr-only"> (se abre en una ventana nueva)</span>}
+    </a>
+  ) : (
+    <button type={type} class:list={classes} {...rest}>
+      {isWhatsApp ? (
+        <WhatsAppIcon size={iconSize} />
+      ) : (
+        Icon && <Icon size={iconSize} aria-hidden="true" class="shrink-0" />
+      )}
+      <slot />
+    </button>
+  )
+}

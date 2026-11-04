@@ -1,0 +1,56 @@
+---
+import { Plane } from '@lucide/astro';
+import Button from '../ui/Button.astro';
+import Container from '../ui/Container.astro';
+import { getGeneralWhatsAppLink } from '../../lib/whatsapp.js';
+---
+
+<section class="pt-8 pb-16 lg:pt-12 lg:pb-24" aria-labelledby="cta-final-titulo">
+  <Container>
+    <div
+      class="rounded-3xl bg-violet bg-linear-to-r from-violet to-[color-mix(in_srgb,var(--color-violet)_74%,var(--color-violet-dark))] px-6 py-8 text-white lg:px-10 lg:py-9"
+    >
+      <div class="flex flex-col items-center gap-6 text-center lg:flex-row lg:gap-8 lg:text-left">
+        <div class="relative h-14 w-32 shrink-0 lg:h-[4.5rem] lg:w-40" aria-hidden="true">
+          <svg viewBox="0 0 160 72" class="h-full w-full" fill="none">
+            <path
+              d="M4 60C34 60 46 20 90 16c28-2.5 42 10 62 12"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-dasharray="0.1 8"
+            />
+          </svg>
+          <Plane
+            size={28}
+            aria-hidden="true"
+            class="absolute top-0 right-0 size-7 lg:size-10"
+          />
+        </div>
+
+        <div class="min-w-0 flex-1">
+          <h2
+            id="cta-final-titulo"
+            class="font-display text-4xl leading-tight font-extrabold text-balance"
+          >
+            ¿Listo para tu próximo viaje?
+          </h2>
+          <p class="mt-2 text-lg leading-relaxed text-balance text-white">
+            Escribinos y te ayudamos a encontrar la salida ideal para vos.
+          </p>
+        </div>
+
+        <div class="w-full shrink-0 lg:w-auto lg:border-l lg:border-white/30 lg:pl-8">
+          <Button
+            href={getGeneralWhatsAppLink()}
+            variant="whatsapp"
+            size="large"
+            class="w-full border-2! border-white! focus-visible:outline-white lg:w-auto"
+          >
+            Consultanos por WhatsApp
+          </Button>
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>

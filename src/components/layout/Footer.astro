@@ -1,0 +1,156 @@
+---
+import { Image } from 'astro:assets';
+import { MapPin } from '@lucide/astro';
+import logoLight from '../../assets/images/brand/logo-horizontal-light.png';
+import Container from '../ui/Container.astro';
+import WhatsAppIcon from '../ui/WhatsAppIcon.astro';
+import { site } from '../../config/site.js';
+import { getGeneralWhatsAppLink } from '../../lib/whatsapp.js';
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isHome = path === '/';
+const year = new Date().getFullYear();
+const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${site.name}, ${site.address}`)}`;
+const whatsappHref = getGeneralWhatsAppLink();
+
+const links = [
+  { label: 'Inicio', href: '/', current: isHome },
+  {
+    label: 'Paquetes',
+    href: '/paquetes',
+    current: path === '/paquetes' || path.startsWith('/paquetes/'),
+  },
+  { label: 'Nosotros', href: isHome ? '#nosotros' : '/#nosotros', current: false },
+  {
+    label: 'Experiencias',
+    href: isHome ? '#experiencias' : '/#experiencias',
+    current: false,
+  },
+  {
+    label: 'Contacto',
+    href: '/contacto',
+    current: path === '/contacto' || path.startsWith('/contacto/'),
+  },
+];
+
+const textLink =
+  'inline-flex min-h-12 items-center justify-center gap-2 rounded-md px-1 text-lg text-white underline-offset-4 hover:underline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-white md:justify-start';
+
+function telHref(phone) {
+  return `tel:${String(phone).replace(/[^\d+]/g, '')}`;
+}
+---
+
+<footer class="bg-violet-dark text-white">
+  <Container class="py-14 lg:py-16">
+    <div
+      class="grid grid-cols-1 justify-items-center gap-10 text-center md:grid-cols-2 md:justify-items-start md:gap-x-10 md:gap-y-12 md:text-left lg:grid-cols-4"
+    >
+      <div class="max-w-xs">
+        <a
+          href="/"
+          aria-label="Molinari Viajes, inicio"
+          class="inline-flex rounded-md focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-white"
+        >
+          <Image
+            src={logoLight}
+            alt="Molinari Viajes, agencia de turismo"
+            width={820}
+            height={180}
+            widths={[410, 820]}
+            sizes="280px"
+            loading="lazy"
+            class="mx-auto h-14 w-auto md:mx-0 md:h-16"
+          />
+        </a>
+        <p class="mt-4 text-lg leading-relaxed text-lilac-soft">
+          Agencia de viajes y turismo en Trelew, Chubut.
+        </p>
+      </div>
+
+      <nav aria-label="Navegación">
+        <p class="font-display text-lg font-semibold">Navegación</p>
+        <ul class="mt-2">
+          {
+            links.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class={textLink}
+                  {...(link.current ? { 'aria-current': 'page' } : {})}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div>
+        <p class="font-display text-lg font-semibold">Contacto</p>
+        <ul class="mt-2">
+          <li>
+            <a href={mapsUrl} class:list={[textLink, 'items-start py-3 text-left']} target="_blank" rel="noopener noreferrer">
+              <MapPin size={22} aria-hidden="true" class="mt-0.5 size-[22px] shrink-0" />
+              <span>{site.address}</span>
+              <span class="sr-only"> (se abre en una ventana nueva)</span>
+            </a>
+          </li>
+          {
+            site.phones.map((phone) => (
+              <li>
+                <a href={telHref(phone)} class={textLink}>
+                  {phone}
+                </a>
+              </li>
+            ))
+          }
+          <li>
+            <a href={whatsappHref} class={textLink} target="_blank" rel="noopener noreferrer">
+              <WhatsAppIcon size={22} />
+              <span>WhatsApp</span>
+              <span class="sr-only"> (se abre en una ventana nueva)</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="font-display text-lg font-semibold">Redes</p>
+        <ul class="mt-2">
+          <li>
+            <a href={site.instagram.url} class={textLink} target="_blank" rel="noopener noreferrer">
+              <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                class="size-5 shrink-0"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect width="20" height="20" x="2" y="2" rx="5"></rect>
+                <circle cx="12" cy="12" r="4"></circle>
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"></circle>
+              </svg>
+              <span>{site.instagram.handle}</span>
+              <span class="sr-only"> (se abre en una ventana nueva)</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div
+      class="mt-12 flex flex-col items-center gap-3 border-t border-white/30 pt-6 text-center md:flex-row md:justify-between md:text-left"
+    >
+      <p>© {year} {site.name}</p>
+      <p class="text-lilac-soft">
+        <!-- Pendiente de confirmar con el cliente: legajo y datos legales de la agencia. -->
+        Sitio desarrollado por MediaDesign
+      </p>
+    </div>
+  </Container>
+</footer>

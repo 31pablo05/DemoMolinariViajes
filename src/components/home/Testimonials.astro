@@ -1,0 +1,67 @@
+---
+import { MessageCircle, Quote, Star } from '@lucide/astro';
+import Badge from '../ui/Badge.astro';
+import Container from '../ui/Container.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import { testimonials } from '../../data/testimonials.js';
+
+function initials(name) {
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return '';
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
+}
+---
+
+<section class="py-8 lg:py-12" aria-label="Lo que dicen nuestros viajeros">
+  <Container>
+    <SectionHeading icon={MessageCircle} title="Lo que dicen nuestros viajeros" />
+    <ul class="mt-10 grid grid-cols-1 gap-6 md:mt-12 md:grid-cols-2 md:gap-8">
+      {
+        testimonials.map((item) => {
+          const showRating = !item.isDemo && Number.isFinite(item.rating);
+          return (
+            <li class="h-full">
+              <figure class="flex h-full flex-col rounded-card-lg bg-lilac-soft p-6 md:p-8">
+                <div class="flex items-start justify-between gap-4">
+                  <Quote size={48} aria-hidden="true" class="size-12 shrink-0 text-lilac" />
+                  {item.isDemo && (
+                    <Badge variant="demo" class="bg-white! text-violet!">
+                      Testimonio de ejemplo
+                    </Badge>
+                  )}
+                </div>
+                {showRating && (
+                  <p class="mt-4 flex gap-1" aria-label={`Valoración verificada: ${item.rating} de 5`}>
+                    {Array.from({ length: 5 }, (_, star) => (
+                      <Star
+                        size={18}
+                        aria-hidden="true"
+                        class:list={[
+                          'size-[18px]',
+                          star < item.rating ? 'fill-violet text-violet' : 'text-lilac',
+                        ]}
+                      />
+                    ))}
+                  </p>
+                )}
+                <blockquote class="m-0 mt-4 flex-1">
+                  <p class="font-body text-lg leading-relaxed text-violet-dark italic">{item.quote}</p>
+                </blockquote>
+                <figcaption class="mt-8 flex items-center gap-4">
+                  <span
+                    class="grid size-14 shrink-0 place-items-center rounded-full bg-violet font-display text-lg font-semibold text-white"
+                    aria-hidden="true"
+                  >
+                    {initials(item.name)}
+                  </span>
+                  <span class="font-body text-lg font-semibold text-violet-dark">{item.name}</span>
+                </figcaption>
+              </figure>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </Container>
+</section>

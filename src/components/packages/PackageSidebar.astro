@@ -1,0 +1,58 @@
+---
+import { MapPin, Phone } from '@lucide/astro';
+import Button from '../ui/Button.astro';
+import { site } from '../../config/site.js';
+import { getPackageWhatsAppLink } from '../../lib/whatsapp.js';
+
+const { pkg } = Astro.props;
+const whatsappHref = getPackageWhatsAppLink(pkg.title);
+const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${site.name}, ${site.address}`)}`;
+
+function telHref(phone) {
+  return `tel:${String(phone).replace(/[^\d+]/g, '')}`;
+}
+
+const contactLink =
+  'inline-flex min-h-12 items-center gap-2 text-lg font-semibold text-violet no-underline hover:underline';
+---
+
+<aside class="hidden lg:block lg:sticky lg:top-24 lg:self-start">
+  <div class="rounded-card-lg bg-white p-6 shadow-rest">
+    <p class="font-display text-2xl leading-tight font-bold text-violet-dark">{pkg.title}</p>
+    <dl class="mt-4 space-y-3 text-lg">
+      <div>
+        <dt class="text-base font-semibold text-muted">Fecha de salida</dt>
+        <dd class="font-semibold text-violet-dark">{pkg.departureDate}</dd>
+      </div>
+      <div>
+        <dt class="text-base font-semibold text-muted">Duración</dt>
+        <dd class="font-semibold text-violet-dark">{pkg.duration}</dd>
+      </div>
+    </dl>
+    <p class="mt-4 leading-relaxed">
+      Consultá disponibilidad, itinerario completo y formas de pago.
+    </p>
+    <Button href={whatsappHref} variant="whatsapp" size="large" class="mt-6 w-full">
+      Consultar por WhatsApp
+    </Button>
+    <ul class="mt-6 space-y-1">
+      {
+        site.phones.map((phone) => (
+          <li>
+            <a href={telHref(phone)} class={contactLink}>
+              <Phone size={22} aria-hidden="true" class="size-[22px] shrink-0" />
+              {phone}
+            </a>
+          </li>
+        ))
+      }
+      <li>
+        <a href={mapsUrl} class={contactLink} target="_blank" rel="noopener noreferrer">
+          <MapPin size={22} aria-hidden="true" class="size-[22px] shrink-0" />
+          <span>{site.address}</span>
+          <span class="sr-only"> (se abre en una ventana nueva)</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</aside>

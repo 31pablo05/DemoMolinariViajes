@@ -1,0 +1,76 @@
+---
+import '../styles/global.css';
+import Footer from '../components/layout/Footer.astro';
+import Header from '../components/layout/Header.astro';
+import { site } from '../config/site.js';
+
+const { title, description = site.description, image, jsonLd } = Astro.props;
+const pageTitle = `${title} | ${site.name}`;
+const canonical = new URL(Astro.url.pathname, site.url).href;
+const ogImage = new URL(image || '/og-default.jpg', site.url).href;
+const [streetAddress, addressLocality, addressRegion] = site.address
+  .split(',')
+  .map((part) => part.trim());
+
+const agency = {
+  '@context': 'https://schema.org',
+  '@type': 'TravelAgency',
+  name: site.name,
+  url: site.url,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress,
+    addressLocality,
+    addressRegion,
+    addressCountry: 'AR',
+  },
+  sameAs: [site.instagram.url],
+};
+
+if (site.phones.length > 0) {
+  agency.telephone = site.phones.length === 1 ? site.phones[0] : site.phones;
+}
+
+const structuredData = [!site.isDemo && agency, jsonLd].filter(Boolean);
+
+function jsonLdScript(data) {
+  return JSON.stringify(data).replaceAll('<', '\\u003c');
+}
+---
+
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {site.isDemo && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="theme-color" content="#321344" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    {
+      structuredData.map((data) => (
+        <script is:inline type="application/ld+json" set:html={jsonLdScript(data)} />
+      ))
+    }
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <Header />
+    <main id="contenido">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

@@ -1,0 +1,24 @@
+---
+import Container from '../ui/Container.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import PackageCard from './PackageCard.astro';
+
+const { packages = [] } = Astro.props;
+---
+
+{
+  packages.length > 0 && (
+    <section class="pt-8 pb-16 lg:pt-12 lg:pb-24" aria-labelledby="relacionados-titulo">
+      <Container>
+        <SectionHeading title="Otros viajes que te pueden interesar" />
+        <ul class="mt-10 grid grid-cols-1 items-stretch gap-7 md:mt-12 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
+          {packages.map((pkg) => (
+            <li class="h-full">
+              <PackageCard pkg={pkg} />
+            </li>
+          ))}
+        </ul>
+      </Container>
+    </section>
+  )
+}

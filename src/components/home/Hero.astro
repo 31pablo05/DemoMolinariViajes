@@ -1,0 +1,52 @@
+---
+import { Image } from 'astro:assets';
+import { Luggage } from '@lucide/astro';
+import hero from '../../assets/images/hero/hero.jpg';
+import Button from '../ui/Button.astro';
+import Container from '../ui/Container.astro';
+import { getGeneralWhatsAppLink } from '../../lib/whatsapp.js';
+---
+
+<section class="relative isolate h-[min(40rem,calc(100svh-4rem))] overflow-hidden lg:h-[560px]" aria-labelledby="hero-titulo">
+  <Image
+    src={hero}
+    alt="El Coliseo de Roma, el monte Fuji y una pagoda entre cerezos en flor."
+    priority
+    widths={[640, 960, 1280, 1600, 1920]}
+    sizes="100vw"
+    class="absolute inset-0 h-full w-full object-cover object-[78%_42%] lg:object-center"
+  />
+  <div class="hero-scrim absolute inset-0" aria-hidden="true"></div>
+  <Container class="relative z-10 flex h-full items-end pb-8 lg:items-center lg:pb-0">
+    <div class="w-full max-w-lg motion-safe:animate-hero-in lg:max-w-[36rem]">
+      <h1
+        id="hero-titulo"
+        class="font-display text-[2.125rem] font-extrabold leading-[1.12] text-balance text-white sm:text-[2.375rem] lg:text-[3.25rem] xl:text-[3.5rem] xl:leading-[1.08]"
+      >
+        Viajá con la experiencia de Molinari Viajes
+      </h1>
+      <p class="mt-4 max-w-[36rem] text-lg leading-relaxed text-white/90 lg:text-xl">
+        Desde Trelew al mundo, con salidas acompañadas y asesoramiento personalizado.
+      </p>
+      <div class="mt-6 flex w-full flex-col gap-3 lg:w-auto lg:flex-row">
+        <Button
+          href="#paquetes"
+          variant="secondary"
+          size="large"
+          icon={Luggage}
+          class="w-full focus-visible:outline-white lg:w-auto"
+        >
+          Ver paquetes
+        </Button>
+        <Button
+          href={getGeneralWhatsAppLink()}
+          variant="whatsapp"
+          size="large"
+          class="w-full focus-visible:outline-white lg:w-auto"
+        >
+          Hablar por WhatsApp
+        </Button>
+      </div>
+    </div>
+  </Container>
+</section>

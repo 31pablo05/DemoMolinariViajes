@@ -1,0 +1,34 @@
+---
+import { Plane } from '@lucide/astro';
+import Button from '../ui/Button.astro';
+import Container from '../ui/Container.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import PackageCard from '../packages/PackageCard.astro';
+import { getFeaturedPackages } from '../../data/packages.js';
+
+const packages = getFeaturedPackages();
+---
+
+<section id="paquetes" class="scroll-mt-24 pt-16 pb-8 lg:pt-24 lg:pb-12" aria-label="Próximas salidas destacadas">
+  <Container>
+    <SectionHeading
+      icon={Plane}
+      title="Próximas salidas destacadas"
+      subtitle="Tres salidas de ejemplo. Las fechas se confirman con la agencia."
+    />
+    <ul class="mt-10 grid grid-cols-1 items-stretch gap-7 md:mt-12 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
+      {
+        packages.map((pkg) => (
+          <li class="h-full">
+            <PackageCard pkg={pkg} />
+          </li>
+        ))
+      }
+    </ul>
+    <div class="mt-10 flex justify-center md:mt-12">
+      <Button href="/paquetes" variant="secondary" size="large">
+        Ver todos los paquetes
+      </Button>
+    </div>
+  </Container>
+</section>

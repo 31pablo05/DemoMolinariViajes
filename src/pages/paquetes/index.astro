@@ -1,0 +1,92 @@
+---
+import Button from '../../components/ui/Button.astro';
+import Container from '../../components/ui/Container.astro';
+import PackageCard from '../../components/packages/PackageCard.astro';
+import { getAllPackages } from '../../data/packages.js';
+import { getGeneralWhatsAppLink } from '../../lib/whatsapp.js';
+import MainLayout from '../../layouts/MainLayout.astro';
+
+function rank(pkg) {
+  if (pkg.status === 'proximamente') return 2;
+  if (pkg.featured) return 0;
+  return 1;
+}
+
+const packages = getAllPackages()
+  .slice()
+  .sort((a, b) => rank(a) - rank(b));
+
+const description =
+  'Salidas acompañadas y viajes internacionales organizados desde Trelew por Molinari Viajes.';
+---
+
+<MainLayout title="Nuestros paquetes" description={description}>
+  <section class="bg-lilac-soft" aria-labelledby="paquetes-titulo">
+    <Container class="pt-12 pb-8 lg:pt-16 lg:pb-12">
+      <nav aria-label="Migas de pan">
+        <ol class="flex flex-wrap items-center gap-x-3 gap-y-1 text-lg">
+          <li>
+            <a
+              href="/"
+              class="inline-flex min-h-12 min-w-12 items-center font-semibold text-violet no-underline hover:underline"
+            >
+              Inicio
+            </a>
+          </li>
+          <li aria-hidden="true" class="text-violet">/</li>
+          <li class="font-semibold text-violet-dark" aria-current="page">Paquetes</li>
+        </ol>
+      </nav>
+      <h1
+        id="paquetes-titulo"
+        class="mt-2 font-display text-4xl leading-tight font-extrabold text-violet-dark md:text-5xl"
+      >
+        Nuestros paquetes
+      </h1>
+      <p class="mt-4 max-w-3xl">
+        Salidas acompañadas y viajes internacionales organizados desde Trelew.
+      </p>
+    </Container>
+  </section>
+
+  <section class="py-8 lg:py-12" aria-labelledby="listado-paquetes-titulo">
+    <Container>
+      <h2 id="listado-paquetes-titulo" class="sr-only">Listado de paquetes</h2>
+      <ul class="grid grid-cols-1 items-stretch gap-7 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
+        {
+          packages.map((pkg) => (
+            <li class="h-full">
+              <PackageCard pkg={pkg} />
+            </li>
+          ))
+        }
+      </ul>
+    </Container>
+  </section>
+
+  <section class="pt-8 pb-16 lg:pt-12 lg:pb-24" aria-labelledby="propuesta-titulo">
+    <Container>
+      <div class="rounded-card-lg bg-lilac-soft px-6 py-10 text-center md:px-10 md:py-12">
+        <h2
+          id="propuesta-titulo"
+          class="font-display text-3xl leading-tight font-extrabold text-balance text-violet-dark md:text-4xl"
+        >
+          ¿No encontrás el viaje que buscás?
+        </h2>
+        <p class="mx-auto mt-4 max-w-2xl">
+          Contanos a dónde querés ir y armamos una propuesta a tu medida.
+        </p>
+        <div class="mt-6 flex justify-center">
+          <Button
+            href={getGeneralWhatsAppLink()}
+            variant="whatsapp"
+            size="large"
+            class="w-full lg:w-auto"
+          >
+            Consultanos por WhatsApp
+          </Button>
+        </div>
+      </div>
+    </Container>
+  </section>
+</MainLayout>

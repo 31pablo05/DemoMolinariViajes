@@ -1,16 +1,20 @@
 ---
+import About from '../components/home/About.astro';
+import Benefits from '../components/home/Benefits.astro';
+import Experiences from '../components/home/Experiences.astro';
+import FinalCTA from '../components/home/FinalCTA.astro';
+import FeaturedPackages from '../components/home/FeaturedPackages.astro';
+import Hero from '../components/home/Hero.astro';
+import Testimonials from '../components/home/Testimonials.astro';
+import MainLayout from '../layouts/MainLayout.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<MainLayout title="Inicio">
+  <Hero />
+  <FeaturedPackages />
+  <Benefits />
+  <About />
+  <Experiences />
+  <Testimonials />
+  <FinalCTA />
+</MainLayout>

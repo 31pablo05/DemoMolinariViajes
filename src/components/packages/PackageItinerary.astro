@@ -1,0 +1,79 @@
+---
+import { ChevronDown } from '@lucide/astro';
+import Button from '../ui/Button.astro';
+
+const { itinerary = [] } = Astro.props;
+---
+
+{
+  itinerary.length > 0 && (
+    <section aria-labelledby="itinerario-titulo" data-itinerary>
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <h2
+          id="itinerario-titulo"
+          class="font-display text-3xl leading-tight font-bold text-violet-dark md:text-4xl"
+        >
+          Itinerario
+        </h2>
+        <Button
+          type="button"
+          variant="secondary"
+          data-itinerary-toggle
+          aria-expanded="false"
+          aria-controls="itinerario-dias"
+        >
+          Abrir todos
+        </Button>
+      </div>
+      <div id="itinerario-dias" class="mt-6 space-y-3">
+        {itinerary.map((item, index) => (
+          <details class="group rounded-card border border-lilac-soft bg-white" open={index === 0}>
+            <summary class="flex min-h-14 cursor-pointer list-none items-center gap-4 px-4 py-3 [&::-webkit-details-marker]:hidden">
+              <span
+                class="grid size-12 shrink-0 place-items-center rounded-full bg-violet font-display text-lg font-bold text-white"
+                aria-hidden="true"
+              >
+                {item.day}
+              </span>
+              <span class="min-w-0 flex-1 font-display text-xl leading-tight font-bold text-violet-dark">
+                <span class="sr-only">Día {item.day}. </span>
+                {item.title}
+              </span>
+              <ChevronDown
+                size={24}
+                aria-hidden="true"
+                class="size-6 shrink-0 text-violet motion-safe:transition-transform motion-safe:duration-200 group-open:rotate-180"
+              />
+            </summary>
+            <p class="px-4 pb-4 text-lg leading-relaxed sm:ps-20">{item.description}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+<script>
+  const root = document.querySelector('[data-itinerary]');
+  const button = root?.querySelector('[data-itinerary-toggle]');
+  const items = root ? [...root.querySelectorAll('details')] : [];
+
+  if (root && button && items.length > 0) {
+    const label = () => {
+      const allOpen = items.every((item) => item.open);
+      button.textContent = allOpen ? 'Cerrar todos' : 'Abrir todos';
+      button.setAttribute('aria-expanded', allOpen ? 'true' : 'false');
+    };
+
+    button.addEventListener('click', () => {
+      const shouldOpen = items.some((item) => !item.open);
+      items.forEach((item) => {
+        item.open = shouldOpen;
+      });
+      label();
+    });
+
+    items.forEach((item) => item.addEventListener('toggle', label));
+    label();
+  }
+</script>

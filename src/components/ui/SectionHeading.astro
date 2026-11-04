@@ -1,0 +1,32 @@
+---
+const { title, subtitle, icon: Icon, align = 'start', class: className } = Astro.props;
+const centered = align === 'center';
+---
+
+<div class:list={[centered && 'text-center', className]}>
+  <div class:list={[!centered && 'md:flex md:items-center md:gap-4']}>
+    <div class:list={['flex items-center gap-3', centered && 'justify-center']}>
+      {
+        Icon && (
+          <Icon size={28} aria-hidden="true" class="size-7 shrink-0 text-violet" />
+        )
+      }
+      <h2 class="font-display text-3xl font-bold leading-tight text-violet-dark md:text-4xl">
+        {title}
+      </h2>
+    </div>
+    {
+      !centered && (
+        <span
+          class="mt-4 block h-px w-full bg-lilac md:mt-0 md:min-w-8 md:flex-1"
+          aria-hidden="true"
+        />
+      )
+    }
+  </div>
+  {
+    subtitle && (
+      <p class:list={['mt-3 max-w-2xl text-muted', centered && 'mx-auto']}>{subtitle}</p>
+    )
+  }
+</div>

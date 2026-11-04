@@ -1,0 +1,60 @@
+---
+import { Medal, MessageCircle, Plane, Users } from '@lucide/astro';
+import Container from '../ui/Container.astro';
+
+const benefits = [
+  {
+    title: ['Trayectoria', 'en Trelew'],
+    description: 'Una agencia local, con oficina en el centro de la ciudad.',
+    icon: Medal,
+  },
+  {
+    title: ['Atención', 'personalizada'],
+    description: 'Te asesoramos de manera directa, sin intermediarios.',
+    icon: Users,
+  },
+  {
+    title: ['Salidas', 'acompañadas'],
+    description: 'Viajás en grupo, con coordinación de la agencia.',
+    icon: Plane,
+  },
+  {
+    title: ['Asesoramiento', 'cercano'],
+    description: 'Te acompañamos antes, durante y después del viaje.',
+    icon: MessageCircle,
+  },
+];
+---
+
+<section class="py-8 lg:py-12" aria-labelledby="beneficios-titulo">
+  <Container>
+    <div class="rounded-card-lg bg-lilac-soft px-6 py-10 md:px-10 md:py-12 lg:px-12 lg:py-14">
+      <div class="lg:grid lg:grid-cols-[auto_minmax(0,1fr)] lg:items-center lg:gap-10">
+        <h2
+          id="beneficios-titulo"
+          class="text-center font-display text-3xl leading-tight font-extrabold text-violet-dark md:text-4xl lg:text-left"
+        >
+          <span class="lg:block lg:whitespace-nowrap">¿Por qué viajar</span>{' '}
+          <span class="lg:block lg:whitespace-nowrap">con Molinari?</span>
+        </h2>
+        <ul class="mt-8 grid grid-cols-1 gap-8 md:mt-10 md:grid-cols-2 lg:mt-0 lg:grid-cols-4 lg:gap-0">
+          {
+            benefits.map(({ title, description, icon: Icon }) => (
+              <li class="flex items-start gap-4 md:flex-col md:items-center md:text-center lg:border-l lg:border-lilac lg:px-5 lg:first:border-l-0 lg:first:pl-0 lg:last:pr-0">
+                <Icon size={40} aria-hidden="true" class="size-10 shrink-0 text-violet" />
+                <div class="min-w-0">
+                  <h3 class="font-display text-lg leading-tight font-semibold text-violet-dark">
+                    {title[0]}
+                    <br />
+                    {title[1]}
+                  </h3>
+                  <p class="mt-2 leading-snug text-muted">{description}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </Container>
+</section>

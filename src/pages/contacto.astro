@@ -1,0 +1,186 @@
+---
+import { Clock, MapPin, Phone } from '@lucide/astro';
+import Badge from '../components/ui/Badge.astro';
+import Container from '../components/ui/Container.astro';
+import WhatsAppIcon from '../components/ui/WhatsAppIcon.astro';
+import { site } from '../config/site.js';
+import { getGeneralWhatsAppLink } from '../lib/whatsapp.js';
+import MainLayout from '../layouts/MainLayout.astro';
+
+const description =
+  'Contacto de Molinari Viajes en Trelew. Consultas por WhatsApp y atención en Belgrano 461, Chubut.';
+const mapsQuery = `${site.name}, ${site.address}`;
+const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapsQuery)}`;
+const mapEmbed = `https://maps.google.com/maps?q=${encodeURIComponent(mapsQuery)}&z=16&hl=es&output=embed`;
+const whatsappHref = getGeneralWhatsAppLink();
+const hasWhatsappNumber = Boolean(site.whatsappNumber);
+
+const cardBase =
+  'flex min-h-24 items-center gap-4 rounded-card-lg p-5 no-underline shadow-rest motion-safe:transition motion-safe:duration-200 md:p-6';
+const cardLight = `${cardBase} bg-white text-violet-dark hover:shadow-hover motion-safe:hover:-translate-y-1`;
+const cardStatic = `${cardBase} bg-white text-violet-dark`;
+const cardWhatsapp = `${cardBase} bg-whatsapp text-white hover:bg-whatsapp-hover`;
+const iconLight = 'grid size-14 shrink-0 place-items-center rounded-full bg-lilac-soft text-violet';
+const iconWhatsapp = 'grid size-14 shrink-0 place-items-center rounded-full bg-white/20 text-white';
+const titleClass = 'font-display text-xl leading-tight font-bold md:text-2xl';
+
+function telHref(phone) {
+  return `tel:${String(phone).replace(/[^\d+]/g, '')}`;
+}
+---
+
+<MainLayout title="Contacto" description={description}>
+  <section class="bg-lilac-soft" aria-labelledby="contacto-titulo">
+    <Container class="pt-12 pb-8 lg:pt-16 lg:pb-12">
+      <nav aria-label="Migas de pan">
+        <ol class="flex flex-wrap items-center gap-x-3 gap-y-1 text-lg">
+          <li>
+            <a
+              href="/"
+              class="inline-flex min-h-12 min-w-12 items-center font-semibold text-violet no-underline hover:underline"
+            >
+              Inicio
+            </a>
+          </li>
+          <li aria-hidden="true" class="text-violet">/</li>
+          <li class="font-semibold text-violet-dark" aria-current="page">Contacto</li>
+        </ol>
+      </nav>
+      <h1
+        id="contacto-titulo"
+        class="mt-2 font-display text-4xl leading-tight font-extrabold text-violet-dark md:text-5xl"
+      >
+        Contacto
+      </h1>
+      <p class="mt-4 max-w-3xl">Estamos en Trelew para ayudarte a planificar tu próximo viaje.</p>
+    </Container>
+  </section>
+
+  <section class="pt-8 pb-16 lg:pt-12 lg:pb-24" aria-label="Datos de contacto">
+    <Container>
+      <div class="grid items-start gap-8 md:grid-cols-2 lg:gap-10">
+        <div class="space-y-4">
+          <a href={whatsappHref} class={cardWhatsapp}>
+            <span class={iconWhatsapp}>
+              <WhatsAppIcon size={28} />
+            </span>
+            <span class="min-w-0">
+              <span class="flex flex-wrap items-center gap-2">
+                <h2 class={titleClass}>WhatsApp</h2>
+                {!hasWhatsappNumber && <Badge variant="demo">Pendiente</Badge>}
+              </span>
+              <span class="mt-1 block text-lg leading-snug">
+                {hasWhatsappNumber ? site.whatsappNumber : 'Número a confirmar'}
+              </span>
+            </span>
+          </a>
+
+          {
+            site.phones.length > 0 ? (
+              site.phones.map((phone) => (
+                <a href={telHref(phone)} class={cardLight}>
+                  <span class={iconLight}>
+                    <Phone size={28} aria-hidden="true" class="size-7" />
+                  </span>
+                  <span class="min-w-0">
+                    <h2 class={titleClass}>Teléfono</h2>
+                    <span class="mt-1 block text-lg leading-snug text-muted">{phone}</span>
+                  </span>
+                </a>
+              ))
+            ) : (
+              <div class={cardStatic}>
+                <span class={iconLight}>
+                  <Phone size={28} aria-hidden="true" class="size-7" />
+                </span>
+                <span class="min-w-0">
+                  <span class="flex flex-wrap items-center gap-2">
+                    <h2 class={titleClass}>Teléfono</h2>
+                    <Badge variant="demo">Pendiente</Badge>
+                  </span>
+                  <span class="mt-1 block text-lg leading-snug text-muted">A confirmar</span>
+                </span>
+              </div>
+            )
+          }
+
+          <a
+            href={site.instagram.url}
+            class={cardLight}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class={iconLight}>
+              <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                class="size-7"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect width="20" height="20" x="2" y="2" rx="5"></rect>
+                <circle cx="12" cy="12" r="4"></circle>
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"></circle>
+              </svg>
+            </span>
+            <span class="min-w-0">
+              <h2 class={titleClass}>Instagram</h2>
+              <span class="mt-1 block text-lg leading-snug text-muted">{site.instagram.handle}</span>
+              <span class="sr-only"> (se abre en una ventana nueva)</span>
+            </span>
+          </a>
+
+          <a href={mapsUrl} class={cardLight} target="_blank" rel="noopener noreferrer">
+            <span class={iconLight}>
+              <MapPin size={28} aria-hidden="true" class="size-7" />
+            </span>
+            <span class="min-w-0">
+              <h2 class={titleClass}>Dirección</h2>
+              <span class="mt-1 block text-lg leading-snug text-muted">{site.address}</span>
+              <span class="sr-only"> (se abre en una ventana nueva)</span>
+            </span>
+          </a>
+
+          <section class="rounded-card-lg bg-lilac-soft p-5 md:p-6" aria-labelledby="horarios-titulo">
+            <div class="flex items-start gap-4">
+              <span class="grid size-14 shrink-0 place-items-center rounded-full bg-white text-violet">
+                <Clock size={28} aria-hidden="true" class="size-7" />
+              </span>
+              <div class="min-w-0">
+                <div class="flex flex-wrap items-center gap-2">
+                  <h2 id="horarios-titulo" class={titleClass}>Horarios de atención</h2>
+                  <Badge variant="demo">Pendiente</Badge>
+                </div>
+                <p class="mt-1 text-lg font-semibold text-violet-dark">A confirmar</p>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div>
+          <div class="overflow-hidden rounded-card-lg shadow-rest">
+            <iframe
+              title="Mapa de Molinari Viajes, Belgrano 461, Trelew"
+              src={mapEmbed}
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              class="h-[300px] w-full border-0 lg:h-[560px]"
+            ></iframe>
+          </div>
+          <a
+            href={mapsUrl}
+            class="mt-4 inline-flex min-h-12 items-center text-lg font-semibold text-violet no-underline hover:underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Abrir en Google Maps
+            <span class="sr-only"> (se abre en una ventana nueva)</span>
+          </a>
+        </div>
+      </div>
+    </Container>
+  </section>
+</MainLayout>

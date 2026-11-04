@@ -1,0 +1,50 @@
+---
+import { Image } from 'astro:assets';
+import GalleryLightbox from '../react/GalleryLightbox.jsx';
+
+const { gallery = [] } = Astro.props;
+const images = gallery.map((photo) => ({
+  src: photo.src.src,
+  alt: photo.alt,
+  width: photo.src.width,
+  height: photo.src.height,
+}));
+---
+
+{
+  images.length > 0 && (
+    <section aria-labelledby="galeria-titulo">
+      <h2
+        id="galeria-titulo"
+        class="font-display text-3xl leading-tight font-bold text-violet-dark md:text-4xl"
+      >
+        Galería
+      </h2>
+      <GalleryLightbox client:visible images={images}>
+        <ul class="mt-6 grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-3">
+          {gallery.map((photo, index) => (
+            <li class="overflow-hidden rounded-card">
+              <button
+                type="button"
+                data-lightbox-index={index}
+                aria-label={`Ampliar foto: ${photo.alt}`}
+                class="block w-full cursor-pointer"
+              >
+                <Image
+                  src={photo.src}
+                  alt={photo.alt}
+                  width={640}
+                  height={480}
+                  widths={[320, 480, 640, 960]}
+                  sizes="(min-width: 1024px) 22vw, 50vw"
+                  loading="lazy"
+                  class="aspect-[4/3] h-auto w-full object-cover"
+                />
+              </button>
+            </li>
+          ))}
+        </ul>
+      </GalleryLightbox>
+    </section>
+  )
+}

@@ -1,0 +1,35 @@
+---
+import { ChevronDown } from '@lucide/astro';
+
+const { faq = [] } = Astro.props;
+---
+
+{
+  faq.length > 0 && (
+    <section aria-labelledby="faq-titulo">
+      <h2
+        id="faq-titulo"
+        class="font-display text-3xl leading-tight font-bold text-violet-dark md:text-4xl"
+      >
+        Preguntas frecuentes
+      </h2>
+      <div class="mt-6 space-y-3">
+        {faq.map((item) => (
+          <details class="group rounded-card border border-lilac-soft bg-white">
+            <summary class="flex min-h-14 cursor-pointer list-none items-center gap-4 px-4 py-3 [&::-webkit-details-marker]:hidden">
+              <span class="min-w-0 flex-1 text-lg leading-snug font-semibold text-violet-dark">
+                {item.question}
+              </span>
+              <ChevronDown
+                size={24}
+                aria-hidden="true"
+                class="size-6 shrink-0 text-violet motion-safe:transition-transform motion-safe:duration-200 group-open:rotate-180"
+              />
+            </summary>
+            <p class="px-4 pb-4 text-lg leading-relaxed">{item.answer}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+  )
+}

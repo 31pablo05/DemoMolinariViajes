@@ -1,0 +1,67 @@
+---
+import { Image } from 'astro:assets';
+import Badge from '../ui/Badge.astro';
+import Container from '../ui/Container.astro';
+
+const { pkg } = Astro.props;
+const crumbs = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Paquetes', href: '/paquetes' },
+];
+---
+
+<section class="relative isolate" aria-labelledby="paquete-titulo">
+  <div class="relative h-[300px] overflow-hidden lg:h-[440px]">
+    <Image
+      src={pkg.image}
+      alt={pkg.imageAlt}
+      priority
+      widths={[640, 960, 1280, 1600, 1920]}
+      sizes="100vw"
+      class="absolute inset-0 h-full w-full object-cover"
+    />
+    <div
+      class="absolute inset-0 bg-linear-to-t from-violet-dark from-10% via-violet-dark/85 via-42% to-transparent"
+      aria-hidden="true"
+    ></div>
+  </div>
+  <Container class="absolute inset-0 z-10 flex flex-col justify-end pb-16 lg:pb-20">
+    <nav aria-label="Migas de pan">
+      <ol class="flex flex-wrap items-center gap-x-3 gap-y-1 text-lg text-white">
+        {
+          crumbs.map((crumb) => (
+            <>
+              <li>
+                <a
+                  href={crumb.href}
+                  class="inline-flex min-h-12 min-w-12 items-center justify-center font-semibold no-underline hover:underline focus-visible:outline-white"
+                >
+                  {crumb.label}
+                </a>
+              </li>
+              <li aria-hidden="true" class="text-white">
+                /
+              </li>
+            </>
+          ))
+        }
+        <li class="font-semibold" aria-current="page">{pkg.title}</li>
+      </ol>
+    </nav>
+    <div class="mt-1 flex flex-wrap gap-2">
+      {pkg.accompanied && <Badge class="bg-white! text-violet-dark!">Salida acompañada</Badge>}
+      {
+        pkg.status === 'ultimos-lugares' && (
+          <Badge class="bg-lilac! text-violet-dark!">Últimos lugares</Badge>
+        )
+      }
+      {pkg.isDemo && <Badge class="bg-white! text-violet!">Contenido de ejemplo</Badge>}
+    </div>
+    <h1
+      id="paquete-titulo"
+      class="mt-3 max-w-4xl font-display text-4xl leading-tight font-extrabold text-balance text-white md:text-5xl"
+    >
+      {pkg.title}
+    </h1>
+  </Container>
+</section>

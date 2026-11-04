@@ -1,0 +1,18 @@
+---
+import Button from '../ui/Button.astro';
+import { getPackageWhatsAppLink } from '../../lib/whatsapp.js';
+
+const { pkg } = Astro.props;
+const whatsappHref = getPackageWhatsAppLink(pkg.title);
+---
+
+<div
+  class="fixed inset-x-0 bottom-0 z-40 border-t border-lilac-soft bg-white px-5 py-3 shadow-rest lg:hidden"
+>
+  <div class="mx-auto flex max-w-page items-center gap-3">
+    <p class="min-w-0 flex-1 truncate font-display text-lg font-bold text-violet-dark">
+      {pkg.title}
+    </p>
+    <Button href={whatsappHref} variant="whatsapp" class="shrink-0">Consultar</Button>
+  </div>
+</div>

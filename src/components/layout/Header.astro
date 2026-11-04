@@ -1,0 +1,190 @@
+---
+import { Menu, X } from '@lucide/astro';
+import Button from '../ui/Button.astro';
+import { site } from '../../config/site.js';
+import { getGeneralWhatsAppLink } from '../../lib/whatsapp.js';
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isHome = path === '/';
+const whatsappHref = getGeneralWhatsAppLink();
+
+const links = [
+  { label: 'Inicio', href: '/', current: isHome },
+  {
+    label: 'Paquetes',
+    href: '/paquetes',
+    current: path === '/paquetes' || path.startsWith('/paquetes/'),
+  },
+  { label: 'Nosotros', href: isHome ? '#nosotros' : '/#nosotros', current: false },
+  {
+    label: 'Experiencias',
+    href: isHome ? '#experiencias' : '/#experiencias',
+    current: false,
+  },
+  {
+    label: 'Contacto',
+    href: '/contacto',
+    current: path === '/contacto' || path.startsWith('/contacto/'),
+  },
+];
+
+const linkClass =
+  'rounded-pill font-display font-semibold text-violet-dark transition-colors';
+---
+
+<header class="sticky top-0 z-40 bg-white" data-site-header>
+  <div class="border-b border-lilac-soft">
+    <div
+      class="mx-auto flex h-16 max-w-page items-center justify-between gap-3 px-5 md:px-8 lg:grid lg:h-20 lg:grid-cols-[1fr_auto_1fr] lg:items-center"
+    >
+      <a
+        href="/"
+        aria-label="Molinari Viajes, inicio"
+        class="inline-flex min-h-12 min-w-12 items-center gap-2.5 justify-self-start rounded-pill lg:gap-3"
+      >
+        <svg
+          viewBox="0 0 48 48"
+          class="size-10 shrink-0 text-violet lg:size-12"
+          aria-hidden="true"
+        >
+          <circle cx="24" cy="24" r="22" fill="currentColor"></circle>
+          <g
+            fill="none"
+            stroke="var(--color-white)"
+            stroke-width="1.6"
+            stroke-linecap="round"
+          >
+            <circle cx="24" cy="24" r="13.5"></circle>
+            <ellipse cx="24" cy="24" rx="6.2" ry="13.5"></ellipse>
+            <path d="M10.5 24h27"></path>
+            <path d="M13 17.5h22"></path>
+            <path d="M13 30.5h22"></path>
+          </g>
+        </svg>
+        <span class="flex flex-col leading-none">
+          <span class="font-display text-base font-bold text-violet-dark lg:text-lg">
+            {site.name}
+          </span>
+          <span
+            class="mt-1 font-display text-base font-semibold tracking-wide text-violet"
+          >
+            AGENCIA DE TURISMO
+          </span>
+        </span>
+      </a>
+
+      <nav class="hidden lg:flex lg:justify-self-center lg:gap-1" aria-label="Principal">
+        {
+          links.map((link) => (
+            <a
+              href={link.href}
+              class:list={[
+                linkClass,
+                'inline-flex min-h-12 min-w-12 items-center px-3 text-[17px]',
+                link.current ? 'bg-lilac-soft' : 'hover:bg-lilac-soft/60',
+              ]}
+              {...(link.current ? { 'aria-current': 'page' } : {})}
+            >
+              {link.label}
+            </a>
+          ))
+        }
+      </nav>
+
+      <div class="flex items-center justify-self-end">
+        <div class="hidden lg:block">
+          <Button href={whatsappHref} variant="whatsapp" class="shrink-0">
+            Consultanos por WhatsApp
+          </Button>
+        </div>
+        <button
+          type="button"
+          class="inline-flex size-12 items-center justify-center rounded-pill text-violet-dark lg:hidden"
+          data-menu-toggle
+          aria-expanded="false"
+          aria-controls="menu-movil"
+          aria-label="Abrir menú"
+        >
+          <span class="sr-only" data-menu-label>Abrir menú</span>
+          <span data-icon-open class="inline-flex">
+            <Menu size={24} aria-hidden="true" />
+          </span>
+          <span data-icon-close class="inline-flex" hidden>
+            <X size={24} aria-hidden="true" />
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div
+    id="menu-movil"
+    class="absolute inset-x-0 top-full z-40 max-h-[calc(100dvh-4rem)] overflow-y-auto border-b border-lilac-soft bg-white lg:hidden"
+    data-menu-panel
+    hidden
+  >
+    <nav class="mx-auto flex max-w-page flex-col gap-2 px-5 py-4 md:px-8" aria-label="Principal">
+      {
+        links.map((link) => (
+          <a
+            href={link.href}
+            class:list={[
+              linkClass,
+              'flex min-h-14 items-center px-5 text-xl',
+              link.current ? 'bg-lilac-soft' : 'hover:bg-lilac-soft/60',
+            ]}
+            {...(link.current ? { 'aria-current': 'page' } : {})}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+      <Button href={whatsappHref} variant="whatsapp" class="mt-2 w-full">
+        Consultanos por WhatsApp
+      </Button>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector('[data-site-header]');
+  const toggle = header?.querySelector('[data-menu-toggle]');
+  const panel = header?.querySelector('[data-menu-panel]');
+  const iconOpen = header?.querySelector('[data-icon-open]');
+  const iconClose = header?.querySelector('[data-icon-close]');
+  const label = header?.querySelector('[data-menu-label]');
+  const desktop = window.matchMedia('(min-width: 1024px)');
+
+  function setOpen(open) {
+    if (!(toggle instanceof HTMLButtonElement) || !(panel instanceof HTMLElement)) return;
+    if (!(iconOpen instanceof HTMLElement) || !(iconClose instanceof HTMLElement)) return;
+
+    panel.hidden = !open;
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    const text = open ? 'Cerrar menú' : 'Abrir menú';
+    toggle.setAttribute('aria-label', text);
+    if (label) label.textContent = text;
+    iconOpen.hidden = open;
+    iconClose.hidden = !open;
+    document.documentElement.classList.toggle('overflow-hidden', open);
+  }
+
+  toggle?.addEventListener('click', () => {
+    setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+  });
+
+  panel?.addEventListener('click', (event) => {
+    const target = event.target;
+    if (target instanceof Element && target.closest('a')) setOpen(false);
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape' || toggle?.getAttribute('aria-expanded') !== 'true') return;
+    setOpen(false);
+    if (toggle instanceof HTMLButtonElement) toggle.focus();
+  });
+
+  desktop.addEventListener('change', (event) => {
+    if (event.matches) setOpen(false);
+  });
+</script>
