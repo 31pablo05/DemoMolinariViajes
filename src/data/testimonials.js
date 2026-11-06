@@ -3,14 +3,14 @@ export const testimonials = [
     id: 'ejemplo-1',
     name: 'Nombre del viajero',
     quote:
-      'Texto de ejemplo. Acá va una opinión real de quien viajó con Molinari, cuando la agencia la autorice.',
+      'Acá se publica la opinión de quien viajó con Molinari, cuando la agencia la autorice.',
     isDemo: true,
   },
   {
     id: 'ejemplo-2',
     name: 'Nombre del viajero',
     quote:
-      'Texto de ejemplo. Esta tarjeta reserva el lugar donde después se publican experiencias confirmadas.',
+      'Este espacio queda reservado para las experiencias que compartan los viajeros de la agencia.',
     isDemo: true,
   },
 ];

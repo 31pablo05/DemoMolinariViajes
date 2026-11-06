@@ -21,6 +21,8 @@
   --color-lilac-soft: #f1e5f7;
   /* Fondo general */
   --color-surface: #faf9fc;
+  /* Crema cálido para alternar fondos de sección */
+  --color-cream: #fbf7f2;
   --color-white: #ffffff;
   /* Texto secundario */
   --color-muted: #5e5664;
@@ -37,6 +39,8 @@
 
   --shadow-rest: 0 8px 24px rgb(50 19 68 / 0.08);
   --shadow-hover: 0 14px 32px rgb(50 19 68 / 0.14);
+  --shadow-violet: 0 8px 20px color-mix(in srgb, var(--color-violet) 22%, transparent);
+  --shadow-whatsapp: 0 8px 20px color-mix(in srgb, var(--color-whatsapp) 22%, transparent);
 
   --container-page: 1240px;
 

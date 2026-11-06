@@ -1,6 +1,5 @@
 ---
 import { Image } from 'astro:assets';
-import { Camera } from '@lucide/astro';
 import Button from '../ui/Button.astro';
 import Container from '../ui/Container.astro';
 import SectionHeading from '../ui/SectionHeading.astro';
@@ -37,9 +36,9 @@ const photos = Object.entries(modules)
 const lightboxImages = photos.map(({ src, alt, width, height }) => ({ src, alt, width, height }));
 ---
 
-<section id="experiencias" class="scroll-mt-24 py-8 lg:py-12" aria-label="Así se viven nuestros viajes">
+<section id="experiencias" class="scroll-mt-24 py-9 lg:py-14" aria-label="Así se viven nuestros viajes">
   <Container>
-    <SectionHeading icon={Camera} title="Así se viven nuestros viajes" />
+    <SectionHeading eyebrow="Experiencias" title="Así se viven nuestros viajes" />
     <GalleryLightbox client:visible images={lightboxImages}>
       {
         photos.length > 0 && (

@@ -32,9 +32,9 @@ const packages = [
     slug: 'europa-clasica',
     title: 'Europa Clásica',
     shortDescription:
-      'Salida acompañada de ejemplo por París, Roma, Viena, Praga y Budapest.',
+      'Recorré París, Roma, Viena, Praga y Budapest en un viaje en grupo, con la coordinación de Molinari de principio a fin.',
     description:
-      'Ficha de ejemplo de una salida acompañada por algunas de las capitales más visitadas de Europa. Muestra cómo se va a presentar el viaje: las ciudades, el ritmo del programa y los servicios. Las fechas, la duración y el itinerario definitivo quedan a confirmar con la agencia.',
+      'Un recorrido por algunas de las capitales más lindas de Europa: los bulevares de París, la historia viva de Roma, los palacios de Viena, el casco antiguo de Praga y el Danubio a su paso por Budapest. Viajás en grupo y con la coordinación de Molinari, para disfrutar cada ciudad sin ocuparte de la organización.',
     image: europaClasicaCover,
     imageAlt: 'La torre Eiffel al atardecer, junto al Sena y un puente de París.',
     gallery: gallery([
@@ -55,37 +55,37 @@ const packages = [
         day: 1,
         title: 'Llegada a París',
         description:
-          'Día representativo. Encuentro con el grupo y primer paseo por la ciudad.',
+          'Encuentro con el grupo y primer paseo por la ciudad.',
       },
       {
         day: 2,
         title: 'París',
         description:
-          'Tiempo de ejemplo para recorrer el centro, los museos y un barrio de la ciudad.',
+          'Tiempo para recorrer el centro, los museos y los barrios de la ciudad.',
       },
       {
         day: 3,
         title: 'Roma',
         description:
-          'Traslado de ejemplo y paseo por el centro histórico.',
+          'Traslado y paseo por el centro histórico.',
       },
       {
         day: 4,
         title: 'Viena',
         description:
-          'Día representativo para conocer el centro y algunos de sus palacios.',
+          'Un día para conocer el centro y algunos de sus palacios.',
       },
       {
         day: 5,
         title: 'Praga',
         description:
-          'Recorrido de ejemplo por la ciudad vieja y sus miradores.',
+          'Recorrido por la ciudad vieja y sus miradores.',
       },
       {
         day: 6,
         title: 'Budapest',
         description:
-          'Cierre de ejemplo del programa, con tiempo libre antes del regreso.',
+          'Cierre del viaje, con tiempo libre antes del regreso.',
       },
     ],
     included: [
@@ -101,22 +101,22 @@ const packages = [
       'Todo lo que no esté escrito en el programa confirmado.',
     ],
     importantInfo:
-      'Los datos de esta ficha son de ejemplo. Documentación, horarios y servicios se confirman con Molinari antes de reservar. Esta página no publica precios.',
+      'Fechas, documentación, horarios y servicios se confirman con Molinari antes de reservar. Los valores y las formas de pago se consultan directamente con la agencia.',
     faq: [
       {
-        question: '¿Las fechas ya están confirmadas?',
+        question: '¿Cuáles son las próximas fechas?',
         answer:
-          'No. En esta demo la salida figura como "A confirmar". La agencia comunica la fecha cuando el programa está cerrado.',
+          'La agencia comunica las fechas de salida cuando el programa está cerrado. Escribinos por WhatsApp y te avisamos.',
       },
       {
         question: '¿El itinerario es el programa final?',
         answer:
-          'No. Los días que se muestran son representativos, para ver cómo se va a leer el programa. No reemplazan el itinerario real.',
+          'El recorrido muestra el espíritu del viaje. El programa día por día se confirma con la agencia antes de reservar.',
       },
       {
         question: '¿Dónde consulto el valor y la forma de pago?',
         answer:
-          'Por WhatsApp con la agencia. Esta ficha no informa precios.',
+          'Escribinos por WhatsApp y te pasamos los valores y las formas de pago.',
       },
     ],
     isDemo: true,
@@ -126,9 +126,9 @@ const packages = [
     slug: 'japon-nueva-york',
     title: 'Japón y Nueva York',
     shortDescription:
-      'Salida acompañada de ejemplo que combina Tokio, Kioto y Nueva York.',
+      'Del Japón de templos y cerezos a la energía de Nueva York: Tokio, Kioto y la Gran Manzana en un mismo viaje.',
     description:
-      'Ficha de ejemplo de un viaje que reúne dos ritmos distintos: las ciudades de Japón y una estadía en Nueva York. El programa de abajo ilustra la estructura de la ficha y no corresponde a una salida confirmada.',
+      'Un viaje que reúne dos mundos: el pulso de Tokio, la calma de los templos de Kioto y la energía de Nueva York. Viajás en grupo y con la coordinación de Molinari, para vivir cada destino con tranquilidad y sin preocuparte por la organización.',
     image: japonCover,
     imageAlt: 'La torre de Tokio y el Empire State de Nueva York, iluminados al anochecer.',
     gallery: gallery([
@@ -149,37 +149,37 @@ const packages = [
         day: 1,
         title: 'Llegada a Tokio',
         description:
-          'Día representativo de llegada, encuentro con el grupo y primer contacto con la ciudad.',
+          'Llegada, encuentro con el grupo y primer contacto con la ciudad.',
       },
       {
         day: 2,
         title: 'Tokio',
         description:
-          'Tiempo de ejemplo para recorrer barrios, templos y el centro.',
+          'Tiempo para recorrer barrios, templos y el centro.',
       },
       {
         day: 3,
         title: 'Kioto',
         description:
-          'Traslado de ejemplo y paseo por templos y calles históricas.',
+          'Traslado y paseo por templos y calles históricas.',
       },
       {
         day: 4,
         title: 'Kioto',
         description:
-          'Segundo día representativo en la ciudad, con tiempo libre.',
+          'Segundo día en la ciudad, con tiempo libre.',
       },
       {
         day: 5,
         title: 'Nueva York',
         description:
-          'Llegada de ejemplo y primer recorrido por la ciudad.',
+          'Llegada y primer recorrido por la ciudad.',
       },
       {
         day: 6,
         title: 'Nueva York',
         description:
-          'Día representativo para museos, barrios y el cierre del programa.',
+          'Museos, barrios y cierre del viaje.',
       },
     ],
     included: [
@@ -195,22 +195,22 @@ const packages = [
       'Todo lo que no esté escrito en el programa confirmado.',
     ],
     importantInfo:
-      'Los datos de esta ficha son de ejemplo. Documentación, horarios y servicios se confirman con Molinari antes de reservar. Esta página no publica precios.',
+      'Fechas, documentación, horarios y servicios se confirman con Molinari antes de reservar. Los valores y las formas de pago se consultan directamente con la agencia.',
     faq: [
       {
-        question: '¿Las fechas ya están confirmadas?',
+        question: '¿Cuáles son las próximas fechas?',
         answer:
-          'No. En esta demo la salida figura como "A confirmar". La agencia comunica la fecha cuando el programa está cerrado.',
+          'La agencia comunica las fechas de salida cuando el programa está cerrado. Escribinos por WhatsApp y te avisamos.',
       },
       {
         question: '¿El viaje incluye Japón y Nueva York en la misma salida?',
         answer:
-          'En esta ficha de ejemplo, sí se presentan juntas. El armado real del recorrido se confirma con la agencia.',
+          'El recorrido combina los dos destinos. El armado final se confirma con la agencia.',
       },
       {
         question: '¿Dónde consulto el valor y la forma de pago?',
         answer:
-          'Por WhatsApp con la agencia. Esta ficha no informa precios.',
+          'Escribinos por WhatsApp y te pasamos los valores y las formas de pago.',
       },
     ],
     isDemo: true,
@@ -220,9 +220,9 @@ const packages = [
     slug: 'egipto',
     title: 'Egipto',
     shortDescription:
-      'Salida acompañada de ejemplo por El Cairo, Luxor, Asuán y un tramo en crucero por el Nilo.',
+      'Las pirámides, los templos de Luxor y Asuán y la navegación por el Nilo, en un viaje en grupo coordinado por Molinari.',
     description:
-      'Ficha de ejemplo de una salida acompañada por el Egipto más clásico: la capital, los templos de Luxor y Asuán, y un tramo en el Nilo. Sirve para mostrar la ficha de un viaje. No es un programa confirmado.',
+      'El Egipto de siempre en un solo viaje: El Cairo y sus pirámides, los templos de Luxor y Asuán y un tramo navegando el Nilo. Viajás en grupo y con la coordinación de Molinari, para recorrer cada lugar con tranquilidad.',
     image: egiptoCover,
     imageAlt: 'Las pirámides de Guiza con camellos en el desierto.',
     gallery: gallery([
@@ -241,37 +241,37 @@ const packages = [
         day: 1,
         title: 'Llegada a El Cairo',
         description:
-          'Día representativo de llegada y encuentro con el grupo.',
+          'Llegada y encuentro con el grupo.',
       },
       {
         day: 2,
         title: 'El Cairo',
         description:
-          'Tiempo de ejemplo para las pirámides y el museo de la ciudad.',
+          'Visita a las pirámides y al museo de la ciudad.',
       },
       {
         day: 3,
         title: 'Luxor',
         description:
-          'Traslado de ejemplo y visita representativa a los templos de la zona.',
+          'Traslado y visita a los templos de la zona.',
       },
       {
         day: 4,
         title: 'Crucero por el Nilo',
         description:
-          'Tramo de ejemplo navegando entre templos de la ribera.',
+          'Navegación entre los templos de la ribera.',
       },
       {
         day: 5,
         title: 'Asuán',
         description:
-          'Día representativo en la ciudad y sus alrededores.',
+          'Un día en la ciudad y sus alrededores.',
       },
       {
         day: 6,
         title: 'Regreso',
         description:
-          'Cierre de ejemplo del programa y regreso, con los horarios a confirmar.',
+          'Cierre del viaje y regreso.',
       },
     ],
     included: [
@@ -287,22 +287,22 @@ const packages = [
       'Todo lo que no esté escrito en el programa confirmado.',
     ],
     importantInfo:
-      'Los datos de esta ficha son de ejemplo. Documentación, horarios y servicios se confirman con Molinari antes de reservar. Esta página no publica precios.',
+      'Fechas, documentación, horarios y servicios se confirman con Molinari antes de reservar. Los valores y las formas de pago se consultan directamente con la agencia.',
     faq: [
       {
-        question: '¿Las fechas ya están confirmadas?',
+        question: '¿Cuáles son las próximas fechas?',
         answer:
-          'No. En esta demo la salida figura como "A confirmar". La agencia comunica la fecha cuando el programa está cerrado.',
+          'La agencia comunica las fechas de salida cuando el programa está cerrado. Escribinos por WhatsApp y te avisamos.',
       },
       {
         question: '¿El crucero por el Nilo ya está incluido?',
         answer:
-          'En esta ficha aparece como parte del ejemplo. Se confirma junto con el resto del programa.',
+          'Forma parte del recorrido propuesto y se confirma junto con el resto del programa.',
       },
       {
         question: '¿Dónde consulto el valor y la forma de pago?',
         answer:
-          'Por WhatsApp con la agencia. Esta ficha no informa precios.',
+          'Escribinos por WhatsApp y te pasamos los valores y las formas de pago.',
       },
     ],
     isDemo: true,
@@ -312,9 +312,9 @@ const packages = [
     slug: 'europa-central',
     title: 'Europa Central',
     shortDescription:
-      'Recorrido de ejemplo por Berlín, Praga, Viena, Budapest, Salzburgo, Venecia y Roma.',
+      'Berlín, Praga, Viena, Budapest y Salzburgo, con cierre en Venecia y Roma: un recorrido por el corazón de Europa.',
     description:
-      'Ficha de ejemplo para un viaje por Europa central y dos ciudades de Italia. Las ciudades están elegidas para mostrar la ficha, no como una salida ya armada. Fechas, duración y modalidad quedan a confirmar.',
+      'Un viaje que une las grandes capitales de Europa central con dos joyas de Italia: la historia de Berlín, los puentes y las cúpulas de Praga, la música de Viena y Salzburgo, el Danubio en Budapest, los canales de Venecia y el final en Roma. Molinari te asesora en cada paso para que lo disfrutes sin preocupaciones.',
     image: europaCentralCover,
     imageAlt: 'El Coliseo de Roma al atardecer, entre cipreses.',
     gallery: gallery([
@@ -333,33 +333,33 @@ const packages = [
       {
         day: 1,
         title: 'Berlín',
-        description: 'Día representativo de llegada y primer paseo por la ciudad.',
+        description: 'Llegada y primer paseo por la ciudad.',
       },
       {
         day: 2,
         title: 'Praga',
-        description: 'Traslado de ejemplo y recorrido por el centro histórico.',
+        description: 'Traslado y recorrido por el centro histórico.',
       },
       {
         day: 3,
         title: 'Viena',
-        description: 'Día representativo en el centro de la ciudad.',
+        description: 'Un día para recorrer el centro de la ciudad.',
       },
       {
         day: 4,
         title: 'Budapest',
-        description: 'Tiempo de ejemplo para recorrer los dos lados de la ciudad.',
+        description: 'Tiempo para recorrer Buda y Pest, a los dos lados del Danubio.',
       },
       {
         day: 5,
         title: 'Salzburgo y Venecia',
         description:
-          'Tramo representativo entre las dos ciudades. Los tiempos de viaje se confirman en el programa final.',
+          'Tramo entre las dos ciudades. Los tiempos de viaje se confirman en el programa final.',
       },
       {
         day: 6,
         title: 'Roma',
-        description: 'Cierre de ejemplo del recorrido, con tiempo libre.',
+        description: 'Cierre del recorrido, con tiempo libre.',
       },
     ],
     included: [
@@ -374,22 +374,22 @@ const packages = [
       'Todo lo que no esté escrito en el programa confirmado.',
     ],
     importantInfo:
-      'Los datos de esta ficha son de ejemplo. Todavía no está confirmado si la salida es acompañada. Esta página no publica precios.',
+      'La modalidad del viaje, las fechas y los servicios se confirman con Molinari antes de reservar. Los valores y las formas de pago se consultan directamente con la agencia.',
     faq: [
       {
         question: '¿Es una salida acompañada?',
         answer:
-          'En esta demo no está confirmado. La modalidad figura como "A confirmar".',
+          'La modalidad se confirma con la agencia. Escribinos por WhatsApp y te contamos cómo se organiza.',
       },
       {
         question: '¿El itinerario visita todas las ciudades?',
         answer:
-          'La lista de destinos es de ejemplo. Los días que se muestran son representativos y no cierran el programa.',
+          'El recorrido final se confirma con la agencia, junto con el programa día por día.',
       },
       {
         question: '¿Dónde consulto el valor y la forma de pago?',
         answer:
-          'Por WhatsApp con la agencia. Esta ficha no informa precios.',
+          'Escribinos por WhatsApp y te pasamos los valores y las formas de pago.',
       },
     ],
     isDemo: true,
@@ -399,9 +399,9 @@ const packages = [
     slug: 'francia-bretana',
     title: 'Francia y Bretaña',
     shortDescription:
-      'Recorrido de ejemplo por París, Mont Saint-Michel, Saint-Malo y Avallon.',
+      'De París al Mont Saint-Michel, Saint-Malo y Avallon: la Francia de los grandes íconos y de los pueblos con encanto.',
     description:
-      'Ficha de ejemplo que combina París con pueblos y ciudades de Bretaña y el interior de Francia. Sirve para ver cómo se lee una ficha con varias escalas. El programa real, las fechas y la modalidad quedan a confirmar.',
+      'Un viaje que combina la elegancia de París con la Francia más pintoresca: la abadía del Mont Saint-Michel, las murallas de Saint-Malo frente al mar y los pueblos del interior, como Avallon. Molinari te asesora en cada paso para que lo disfrutes sin preocupaciones.',
     image: franciaCover,
     imageAlt: 'Mont Saint-Michel iluminado al anochecer, sobre el islote y la playa.',
     gallery: gallery([
@@ -420,33 +420,33 @@ const packages = [
       {
         day: 1,
         title: 'Llegada a París',
-        description: 'Día representativo de llegada y primer paseo por la ciudad.',
+        description: 'Llegada y primer paseo por la ciudad.',
       },
       {
         day: 2,
         title: 'París',
-        description: 'Tiempo de ejemplo para el centro y sus barrios.',
+        description: 'Tiempo para el centro y sus barrios.',
       },
       {
         day: 3,
         title: 'Mont Saint-Michel',
-        description: 'Traslado de ejemplo y visita a la abadía y su entorno.',
+        description: 'Traslado y visita a la abadía y su entorno.',
       },
       {
         day: 4,
         title: 'Saint-Malo',
-        description: 'Día representativo en la ciudad amurallada.',
+        description: 'Un día en la ciudad amurallada.',
       },
       {
         day: 5,
         title: 'Avallon',
-        description: 'Escala de ejemplo en el interior de Francia.',
+        description: 'Escala en el interior de Francia.',
       },
       {
         day: 6,
         title: 'Cierre del recorrido',
         description:
-          'Día representativo de regreso. El punto de salida se confirma con el programa.',
+          'Regreso. El punto de salida se confirma con el programa.',
       },
     ],
     included: [
@@ -461,22 +461,22 @@ const packages = [
       'Todo lo que no esté escrito en el programa confirmado.',
     ],
     importantInfo:
-      'Los datos de esta ficha son de ejemplo. Todavía no está confirmado si la salida es acompañada. Esta página no publica precios.',
+      'La modalidad del viaje, las fechas y los servicios se confirman con Molinari antes de reservar. Los valores y las formas de pago se consultan directamente con la agencia.',
     faq: [
       {
         question: '¿Es una salida acompañada?',
         answer:
-          'En esta demo no está confirmado. La modalidad figura como "A confirmar".',
+          'La modalidad se confirma con la agencia. Escribinos por WhatsApp y te contamos cómo se organiza.',
       },
       {
         question: '¿El itinerario es el programa final?',
         answer:
-          'No. Los días son representativos y no reemplazan el programa que confirme la agencia.',
+          'El recorrido muestra el espíritu del viaje. El programa día por día se confirma con la agencia antes de reservar.',
       },
       {
         question: '¿Dónde consulto el valor y la forma de pago?',
         answer:
-          'Por WhatsApp con la agencia. Esta ficha no informa precios.',
+          'Escribinos por WhatsApp y te pasamos los valores y las formas de pago.',
       },
     ],
     isDemo: true,
@@ -486,13 +486,13 @@ const packages = [
     slug: 'proximamente',
     title: 'Destino a confirmar',
     shortDescription:
-      'Tarjeta de ejemplo para avisar que se suman salidas nuevas cuando el destino esté definido.',
+      'Estamos preparando nuevas salidas. Escribinos y te avisamos apenas esté confirmado el próximo destino.',
     description:
-      'Esta ficha no describe un viaje. Muestra el espacio donde más adelante se publica una salida próxima, sin inventar destino, fechas ni programa.',
+      'Muy pronto se suman nuevos destinos. Escribinos y te avisamos apenas esté confirmada la próxima salida.',
     image: placeholder,
-    imageAlt: 'Imagen de ejemplo para una salida que todavía no tiene destino confirmado.',
+    imageAlt: 'Imagen ilustrativa para una próxima salida, todavía sin destino confirmado.',
     gallery: gallery([
-      [placeholder, 'Imagen de ejemplo para una próxima salida, todavía sin destino confirmado.'],
+      [placeholder, 'Imagen ilustrativa para una próxima salida, todavía sin destino confirmado.'],
     ]),
     destinations: [],
     departureDate: 'A confirmar',
@@ -505,7 +505,7 @@ const packages = [
     included: [],
     excluded: [],
     importantInfo:
-      'El destino, las fechas y el programa se publican cuando Molinari los confirme. Hasta entonces, esta tarjeta es solo un aviso de ejemplo.',
+      'El destino, las fechas y el programa se publican cuando Molinari los confirme.',
     faq: [],
     isDemo: true,
   },

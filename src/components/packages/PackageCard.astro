@@ -10,6 +10,9 @@ const href = `/paquetes/${pkg.slug}`;
 const whatsappHref = getPackageWhatsAppLink(pkg.title);
 const isComing = pkg.status === 'proximamente';
 const isLastSpots = pkg.status === 'ultimos-lugares';
+const isPending = (value) => !value || value === 'A confirmar';
+const hasDate = !isPending(pkg.departureDate);
+const hasDuration = !isPending(pkg.duration);
 ---
 
 <article
@@ -56,21 +59,33 @@ const isLastSpots = pkg.status === 'ultimos-lugares';
     <ul class="mt-4 flex flex-col gap-2 text-[1.0625rem] text-violet-dark">
       <li class="flex items-center gap-2">
         <Calendar size={20} aria-hidden="true" class="shrink-0 text-violet-mid" />
-        <span class="sr-only">Fecha de salida:</span>
-        <span>{pkg.departureDate}</span>
+        {
+          hasDate ? (
+            <>
+              <span class="sr-only">Fecha de salida:</span>
+              <span>{pkg.departureDate}</span>
+            </>
+          ) : (
+            <span>Consultá próximas fechas</span>
+          )
+        }
       </li>
-      <li class="flex items-center gap-2">
-        <Clock size={20} aria-hidden="true" class="shrink-0 text-violet-mid" />
-        <span class="sr-only">Duración:</span>
-        <span>{pkg.duration}</span>
-      </li>
+      {
+        hasDuration && (
+          <li class="flex items-center gap-2">
+            <Clock size={20} aria-hidden="true" class="shrink-0 text-violet-mid" />
+            <span class="sr-only">Duración:</span>
+            <span>{pkg.duration}</span>
+          </li>
+        )
+      }
     </ul>
 
-    <div class="mt-auto pt-6">
-      <div class="flex flex-col gap-3 min-[380px]:flex-row">
+    <div class="@container mt-auto pt-6">
+      <div class="flex flex-col gap-3 @[22rem]:flex-row">
         {
           !isComing && (
-            <Button href={href} class="relative z-10 w-full min-[380px]:flex-1">
+            <Button href={href} class="relative z-10 w-full @[22rem]:flex-1">
               Ver detalles
             </Button>
           )
@@ -78,20 +93,11 @@ const isLastSpots = pkg.status === 'ultimos-lugares';
         <Button
           href={whatsappHref}
           variant="whatsapp-outline"
-          class:list={['relative z-10 w-full', isComing ? '' : 'min-[380px]:flex-1']}
+          class:list={['relative z-10 w-full', isComing ? '' : '@[22rem]:flex-1']}
         >
           {isComing ? 'Avisame cuando salga' : 'Consultar'}
         </Button>
       </div>
-      <p
-        class:list={[
-          'mt-3 text-muted',
-          !pkg.isDemo && 'invisible',
-        ]}
-        aria-hidden={pkg.isDemo ? undefined : 'true'}
-      >
-        Contenido de ejemplo
-      </p>
     </div>
   </div>
 </article>

@@ -1,0 +1,15 @@
+---
+const { tone = 'default', class: className } = Astro.props;
+const light = tone === 'light';
+---
+
+<p
+  class:list={[
+    'flex items-center gap-3 font-body text-[0.8125rem] leading-none font-semibold tracking-[0.16em] uppercase',
+    light ? 'text-lilac' : 'text-violet-mid',
+    className,
+  ]}
+>
+  <span class="h-0.5 w-6 shrink-0 rounded-pill bg-lilac" aria-hidden="true"></span>
+  <slot />
+</p>

@@ -66,14 +66,6 @@ const touristTrip = {
     <Container class="pt-16 pb-8 lg:pt-24 lg:pb-12">
       <div class="lg:grid lg:grid-cols-3 lg:items-start lg:gap-10">
         <div class="space-y-16 lg:col-span-2 lg:space-y-24">
-          {
-            pkg.isDemo && (
-              <p class="rounded-card bg-lilac-soft px-5 py-4 text-lg leading-relaxed text-violet-dark" role="note">
-                Contenido de ejemplo: fechas, itinerario y servicios se confirmarán con la agencia.
-              </p>
-            )
-          }
-
           <section aria-labelledby="sobre-viaje-titulo">
             <h2 id="sobre-viaje-titulo" class={sectionTitle}>Sobre este viaje</h2>
             <p class="mt-4 max-w-3xl">{pkg.description}</p>
