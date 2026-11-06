@@ -11,15 +11,14 @@ const shortAddress = site.address.split(',').slice(0, 2).map((part) => part.trim
 const isPending = (value) => !value || value === 'A confirmar';
 const datesPending = isPending(pkg.departureDate) && isPending(pkg.duration);
 
+const modality = isPending(pkg.modality) ? [] : [{ label: 'Modalidad', value: pkg.modality }];
+
 const facts = datesPending
-  ? [
-      { label: 'Fechas', value: 'Consultá disponibilidad' },
-      { label: 'Modalidad', value: pkg.modality },
-    ]
+  ? [{ label: 'Fechas', value: 'Consultá disponibilidad' }, ...modality]
   : [
       { label: 'Fecha de salida', value: pkg.departureDate },
       { label: 'Duración', value: pkg.duration },
-      { label: 'Modalidad', value: pkg.modality },
+      ...modality,
     ];
 
 function telHref(phone) {

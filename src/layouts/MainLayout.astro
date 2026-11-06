@@ -65,6 +65,11 @@ function jsonLdScript(data) {
       ))
     }
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script is:inline>
+      if ('IntersectionObserver' in window && matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+        document.documentElement.classList.add('js-reveal');
+      }
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -74,5 +79,44 @@ function jsonLdScript(data) {
       <slot />
     </main>
     <Footer />
+    <script>
+      const root = document.documentElement;
+
+      if (root.classList.contains('js-reveal')) {
+        const reveal = (el) => {
+          el.classList.add('is-revealing', 'is-revealed');
+          const delay = parseFloat(el.style.getPropertyValue('--reveal-delay')) || 0;
+          window.setTimeout(() => el.classList.remove('is-revealing'), delay + 700);
+        };
+
+        try {
+          const targets = document.querySelectorAll(
+            'main section:not(:has(h1)), main section:not(:has(h1)) ul.grid > li',
+          );
+
+          targets.forEach((el) => {
+            if (el.matches('li')) {
+              const index = [...el.parentElement.children].indexOf(el);
+              el.style.setProperty('--reveal-delay', `${Math.min(index, 5) * 80}ms`);
+            }
+          });
+
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                observer.unobserve(entry.target);
+                reveal(entry.target);
+              });
+            },
+            { rootMargin: '0px 0px -8% 0px' },
+          );
+
+          targets.forEach((el) => observer.observe(el));
+        } catch {
+          root.classList.remove('js-reveal');
+        }
+      }
+    </script>
   </body>
 </html>

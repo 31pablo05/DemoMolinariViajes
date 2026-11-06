@@ -9,16 +9,20 @@ const destinationCount = Array.isArray(pkg.destinations) ? pkg.destinations.leng
 const isPending = (value) => !value || value === 'A confirmar';
 const datesPending = isPending(pkg.departureDate) && isPending(pkg.duration);
 
+const modality = isPending(pkg.modality)
+  ? []
+  : [{ label: 'Modalidad', value: pkg.modality, icon: Route }];
+
 const facts = datesPending
   ? [
-      { label: 'Modalidad', value: pkg.modality, icon: Route },
+      ...modality,
       { label: 'Destinos', value: String(destinationCount), icon: MapPin },
       { label: 'Fechas', value: 'Consultá disponibilidad', icon: CalendarSearch, wide: true },
     ]
   : [
       { label: 'Fecha de salida', value: pkg.departureDate, icon: Calendar },
       { label: 'Duración', value: pkg.duration, icon: Clock },
-      { label: 'Modalidad', value: pkg.modality, icon: Route },
+      ...modality,
       { label: 'Destinos', value: String(destinationCount), icon: MapPin },
     ];
 ---
@@ -33,7 +37,13 @@ const facts = datesPending
     <dl
       class:list={[
         'grid grid-cols-2 gap-x-6 gap-y-6',
-        datesPending ? 'sm:grid-cols-3 lg:flex-1' : 'lg:grid-cols-4',
+        datesPending
+          ? facts.length === 3
+            ? 'sm:grid-cols-3 lg:flex-1'
+            : 'lg:flex-1'
+          : facts.length === 4
+            ? 'lg:grid-cols-4'
+            : 'lg:grid-cols-3',
       ]}
     >
       {
