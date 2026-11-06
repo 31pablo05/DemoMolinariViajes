@@ -1,6 +1,8 @@
 ---
-import { Menu, X } from '@lucide/astro';
+import { Image } from 'astro:assets';
+import { MapPin, Menu, X } from '@lucide/astro';
 import Button from '../ui/Button.astro';
+import logo from '../../assets/images/brand/logo-horizontal.png';
 import { site } from '../../config/site.js';
 import { getGeneralWhatsAppLink } from '../../lib/whatsapp.js';
 
@@ -27,122 +29,118 @@ const links = [
     current: path === '/contacto' || path.startsWith('/contacto/'),
   },
 ];
-
-const linkClass =
-  'rounded-pill font-display font-semibold text-violet-dark transition-colors';
 ---
 
-<header class="sticky top-0 z-40 bg-white" data-site-header>
-  <div class="border-b border-lilac-soft">
-    <div
-      class="mx-auto flex h-16 max-w-page items-center justify-between gap-3 px-5 md:px-8 lg:grid lg:h-20 lg:grid-cols-[1fr_auto_1fr] lg:items-center"
-    >
-      <a
-        href="/"
-        aria-label="Molinari Viajes, inicio"
-        class="inline-flex min-h-12 min-w-12 items-center gap-2.5 justify-self-start rounded-pill lg:gap-3"
-      >
-        <svg
-          viewBox="0 0 48 48"
-          class="size-10 shrink-0 text-violet lg:size-12"
-          aria-hidden="true"
-        >
-          <circle cx="24" cy="24" r="22" fill="currentColor"></circle>
-          <g
-            fill="none"
-            stroke="var(--color-white)"
-            stroke-width="1.6"
-            stroke-linecap="round"
-          >
-            <circle cx="24" cy="24" r="13.5"></circle>
-            <ellipse cx="24" cy="24" rx="6.2" ry="13.5"></ellipse>
-            <path d="M10.5 24h27"></path>
-            <path d="M13 17.5h22"></path>
-            <path d="M13 30.5h22"></path>
-          </g>
-        </svg>
-        <span class="flex flex-col leading-none">
-          <span class="font-display text-base font-bold text-violet-dark lg:text-lg">
-            {site.name}
-          </span>
-          <span
-            class="mt-1 font-display text-base font-semibold tracking-wide text-violet"
-          >
-            AGENCIA DE TURISMO
-          </span>
-        </span>
-      </a>
+<header class="group/header sticky top-0 z-40" data-site-header>
+  <div
+    class="absolute inset-0 -z-10 border-b border-lilac-soft/70 bg-white/92 backdrop-blur-md motion-safe:transition-shadow motion-safe:duration-300 group-data-scrolled/header:shadow-[0_6px_20px_color-mix(in_srgb,var(--color-violet-dark)_7%,transparent)]"
+    aria-hidden="true"
+  >
+  </div>
+  <div
+    class="mx-auto flex h-21 max-w-page items-center justify-between gap-4 px-5 motion-safe:transition-[height] motion-safe:duration-300 group-data-scrolled/header:h-17 md:px-8"
+  >
+    <a href="/" class="inline-flex min-h-12 shrink-0 items-center rounded-card">
+      <Image
+        src={logo}
+        alt="Molinari Viajes, inicio"
+        width={237}
+        height={52}
+        densities={[2]}
+        loading="eager"
+        class="h-10 w-auto lg:h-13"
+      />
+    </a>
 
-      <nav class="hidden lg:flex lg:justify-self-center lg:gap-1" aria-label="Principal">
-        {
-          links.map((link) => (
-            <a
-              href={link.href}
+    <nav class="hidden lg:flex lg:items-center" aria-label="Principal">
+      {
+        links.map((link) => (
+          <a
+            href={link.href}
+            class="group/link relative inline-flex min-h-12 items-center px-3 font-body text-base font-semibold text-violet-dark xl:px-4"
+            {...(link.current ? { 'aria-current': 'page' } : {})}
+          >
+            {link.label}
+            <span
               class:list={[
-                linkClass,
-                'inline-flex min-h-12 min-w-12 items-center px-3 text-[17px]',
-                link.current ? 'bg-lilac-soft' : 'hover:bg-lilac-soft/60',
+                'absolute inset-x-3 bottom-1.5 h-0.5 origin-center rounded-pill bg-violet motion-safe:transition-transform motion-safe:duration-200 xl:inset-x-4',
+                link.current
+                  ? 'scale-x-100'
+                  : 'scale-x-0 group-hover/link:scale-x-100 group-focus-visible/link:scale-x-100',
               ]}
-              {...(link.current ? { 'aria-current': 'page' } : {})}
+              aria-hidden="true"
             >
-              {link.label}
-            </a>
-          ))
-        }
-      </nav>
+            </span>
+          </a>
+        ))
+      }
+    </nav>
 
-      <div class="flex items-center justify-self-end">
-        <div class="hidden lg:block">
-          <Button href={whatsappHref} variant="whatsapp" class="shrink-0">
-            Consultanos por WhatsApp
-          </Button>
-        </div>
-        <button
-          type="button"
-          class="inline-flex size-12 items-center justify-center rounded-pill text-violet-dark lg:hidden"
-          data-menu-toggle
-          aria-expanded="false"
-          aria-controls="menu-movil"
-          aria-label="Abrir menú"
-        >
-          <span class="sr-only" data-menu-label>Abrir menú</span>
-          <span data-icon-open class="inline-flex">
-            <Menu size={24} aria-hidden="true" />
-          </span>
-          <span data-icon-close class="inline-flex" hidden>
-            <X size={24} aria-hidden="true" />
-          </span>
-        </button>
+    <div class="flex items-center">
+      <div class="hidden lg:block">
+        <Button href={whatsappHref} variant="whatsapp" class="shrink-0">
+          <span class="xl:hidden">WhatsApp</span>
+          <span class="hidden xl:inline">Consultanos por WhatsApp</span>
+        </Button>
       </div>
+      <button
+        type="button"
+        class="inline-flex size-12 items-center justify-center rounded-pill text-violet-dark lg:hidden"
+        data-menu-toggle
+        aria-expanded="false"
+        aria-controls="menu-movil"
+        aria-label="Abrir menú"
+      >
+        <span class="sr-only" data-menu-label>Abrir menú</span>
+        <span data-icon-open class="inline-flex">
+          <Menu size={28} aria-hidden="true" />
+        </span>
+        <span data-icon-close class="inline-flex" hidden>
+          <X size={28} aria-hidden="true" />
+        </span>
+      </button>
     </div>
   </div>
 
   <div
     id="menu-movil"
-    class="absolute inset-x-0 top-full z-40 max-h-[calc(100dvh-4rem)] overflow-y-auto border-b border-lilac-soft bg-white lg:hidden"
+    class="fixed inset-x-0 top-(--menu-top) bottom-0 z-40 overflow-y-auto border-t border-lilac-soft bg-white lg:hidden"
     data-menu-panel
     hidden
   >
-    <nav class="mx-auto flex max-w-page flex-col gap-2 px-5 py-4 md:px-8" aria-label="Principal">
-      {
-        links.map((link) => (
-          <a
-            href={link.href}
-            class:list={[
-              linkClass,
-              'flex min-h-14 items-center px-5 text-xl',
-              link.current ? 'bg-lilac-soft' : 'hover:bg-lilac-soft/60',
-            ]}
-            {...(link.current ? { 'aria-current': 'page' } : {})}
-          >
-            {link.label}
-          </a>
-        ))
-      }
-      <Button href={whatsappHref} variant="whatsapp" class="mt-2 w-full">
-        Consultanos por WhatsApp
-      </Button>
-    </nav>
+    <div class="mx-auto flex min-h-full max-w-page flex-col px-5 pt-2 pb-8 md:px-8">
+      <nav aria-label="Principal">
+        <ul>
+          {
+            links.map((link) => (
+              <li class="border-b border-lilac-soft">
+                <a
+                  href={link.href}
+                  class:list={[
+                    'flex min-h-16 items-center font-display text-2xl font-semibold',
+                    link.current ? 'text-violet' : 'text-violet-dark hover:text-violet',
+                  ]}
+                  {...(link.current ? { 'aria-current': 'page' } : {})}
+                >
+                  <span class:list={[link.current && 'border-b-2 border-violet pb-0.5']}>
+                    {link.label}
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      <div class="mt-auto pt-10">
+        <Button href={whatsappHref} variant="whatsapp" size="large" class="w-full">
+          Consultanos por WhatsApp
+        </Button>
+        <p class="mt-5 flex items-center justify-center gap-2 text-muted">
+          <MapPin size={20} aria-hidden="true" class="shrink-0" />
+          {site.address}
+        </p>
+      </div>
+    </div>
   </div>
 </header>
 
@@ -155,10 +153,21 @@ const linkClass =
   const label = header?.querySelector('[data-menu-label]');
   const desktop = window.matchMedia('(min-width: 1024px)');
 
+  function updateScrolled() {
+    header?.toggleAttribute('data-scrolled', window.scrollY > 40);
+  }
+
+  updateScrolled();
+  window.addEventListener('scroll', updateScrolled, { passive: true });
+
   function setOpen(open) {
+    if (!(header instanceof HTMLElement)) return;
     if (!(toggle instanceof HTMLButtonElement) || !(panel instanceof HTMLElement)) return;
     if (!(iconOpen instanceof HTMLElement) || !(iconClose instanceof HTMLElement)) return;
 
+    if (open) {
+      panel.style.setProperty('--menu-top', `${header.getBoundingClientRect().bottom}px`);
+    }
     panel.hidden = !open;
     toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     const text = open ? 'Cerrar menú' : 'Abrir menú';

@@ -132,23 +132,104 @@
 }
 
 @layer components {
+  /* Mobile: solo protege los controles que van sobre la foto. */
   .hero-scrim {
-    background: linear-gradient(
-      to top,
-      color-mix(in srgb, var(--color-violet-dark) 96%, transparent) 0%,
-      color-mix(in srgb, var(--color-violet-dark) 92%, transparent) 68%,
-      transparent 88%
-    );
+    background:
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--color-violet-dark) 45%, transparent) 0%,
+        transparent 28%
+      ),
+      linear-gradient(
+        to top,
+        color-mix(in srgb, var(--color-violet-dark) 80%, transparent) 0%,
+        transparent 45%
+      );
   }
 
+  /*
+   * Desktop: el violeta se mantiene denso hasta el borde del bloque de texto y recién
+   * ahí se desvanece. Con esa opacidad el texto blanco y el lila pasan AA aunque la
+   * foto de atrás sea blanca.
+   */
   @media (min-width: 64rem) {
     .hero-scrim {
-      background: linear-gradient(
-        90deg,
-        color-mix(in srgb, var(--color-violet-dark) 97%, transparent) 0%,
-        color-mix(in srgb, var(--color-violet-dark) 94%, transparent) 58%,
-        transparent 78%
-      );
+      --hero-text-end: calc(max(0px, (100% - var(--container-page)) / 2) + 2rem + 34rem);
+      background:
+        linear-gradient(
+          to top,
+          color-mix(in srgb, var(--color-violet-dark) 40%, transparent) 0%,
+          transparent 30%
+        ),
+        linear-gradient(
+          90deg,
+          color-mix(in srgb, var(--color-violet-dark) 90%, transparent) 0%,
+          color-mix(in srgb, var(--color-violet-dark) 82%, transparent) var(--hero-text-end),
+          transparent calc(var(--hero-text-end) + 12%)
+        );
+    }
+  }
+
+  @media (min-width: 80rem) {
+    .hero-scrim {
+      --hero-text-end: calc(max(0px, (100% - var(--container-page)) / 2) + 2rem + 37.5rem);
+    }
+  }
+
+  .hero-slide {
+    opacity: 0;
+    z-index: 0;
+    transition: opacity 1.5s ease-in-out;
+  }
+
+  .hero-slide.is-leaving {
+    opacity: 1;
+    z-index: 1;
+  }
+
+  .hero-slide.is-active {
+    opacity: 1;
+    z-index: 2;
+  }
+
+  [data-hero][data-ready] .hero-slide.is-active img {
+    animation: hero-zoom 7s linear both;
+  }
+
+  .hero-fill {
+    scale: 0 1;
+    transform-origin: left center;
+  }
+
+  .is-done .hero-fill,
+  .is-active .hero-fill {
+    scale: 1 1;
+  }
+
+  [data-hero][data-ready] .is-active .hero-fill {
+    animation: hero-progress 7s linear both;
+  }
+
+  [data-hero][data-ready][data-paused] .hero-slide.is-active img,
+  [data-hero][data-ready][data-paused] .is-active .hero-fill {
+    animation-play-state: paused;
+  }
+
+  @keyframes hero-zoom {
+    from {
+      scale: 1.08;
+    }
+    to {
+      scale: 1;
+    }
+  }
+
+  @keyframes hero-progress {
+    from {
+      scale: 0 1;
+    }
+    to {
+      scale: 1 1;
     }
   }
 
