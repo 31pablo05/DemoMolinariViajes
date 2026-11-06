@@ -29,6 +29,8 @@
   /* Verde de WhatsApp. #128C4A queda en 4.31:1 con blanco y no llega a AA en texto de 16 px. */
   --color-whatsapp: #0f7840;
   --color-whatsapp-hover: #0d6535;
+  /* Dorado cálido: solo para estrellas de puntaje, que son decorativas (el puntaje siempre va en texto). */
+  --color-gold: #e3a008;
 
   --font-display: "Plus Jakarta Sans", sans-serif;
   --font-body: "Inter", sans-serif;

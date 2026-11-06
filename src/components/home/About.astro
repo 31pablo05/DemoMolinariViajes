@@ -1,57 +1,66 @@
 ---
 import { Image } from 'astro:assets';
-import { ArrowRight, Globe, MapPin, Users } from '@lucide/astro';
+import { CircleCheck, MapPin } from '@lucide/astro';
+import Button from '../ui/Button.astro';
 import Container from '../ui/Container.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import vidriera from '../../assets/images/agency/vidriera.webp';
 import { site } from '../../config/site.js';
+import { getGeneralWhatsAppLink } from '../../lib/whatsapp.js';
 
-const agencyImages = import.meta.glob('../../assets/images/agency/vidriera.webp', {
-  eager: true,
-  import: 'default',
-});
-const vidriera = Object.values(agencyImages)[0];
-const photoAlt = 'Vidriera de Molinari Viajes en Belgrano 461, Trelew';
+const photoAlt = 'Vidriera de Molinari Viajes en Belgrano 461, Trelew, con afiches de viajes y el logo de la agencia.';
 const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`Molinari Viajes, ${site.address}`)}`;
+const [street, ...cityParts] = site.address.split(',').map((part) => part.trim());
+const city = cityParts.join(', ');
 
 const highlights = [
-  { label: 'Agencia de Trelew', icon: MapPin },
-  { label: 'Atención cercana', icon: Users },
-  { label: 'Experiencia en viajes internacionales', icon: Globe },
+  'Agencia local con oficina a la calle',
+  'Te atendemos en persona y por WhatsApp',
+  'Coordinación de salidas grupales al exterior',
 ];
 ---
 
-<section id="nosotros" class="scroll-mt-24 py-9 lg:py-14" aria-labelledby="nosotros-titulo">
+<section id="nosotros" class="scroll-mt-24 bg-cream py-18 lg:py-28" aria-labelledby="nosotros-titulo">
   <Container>
-    <div class="grid items-center gap-8 lg:grid-cols-[minmax(0,11fr)_1px_minmax(0,9fr)] lg:gap-x-10">
-      <div class="overflow-hidden rounded-card-lg shadow-rest">
-        {
-          vidriera ? (
-            <Image
-              src={vidriera}
-              alt={photoAlt}
-              width={960}
-              height={640}
-              widths={[480, 720, 960, 1280]}
-              sizes="(min-width: 1024px) 55vw, 100vw"
-              loading="lazy"
-              class="aspect-[3/2] h-full w-full object-cover"
-            />
-          ) : (
-            <div class="aspect-[3/2] bg-lilac-soft" role="img" aria-label={photoAlt} />
-          )
-        }
-      </div>
-      <div class="hidden h-full self-stretch bg-lilac lg:block" aria-hidden="true"></div>
-      <div>
-        <p class="font-body font-semibold tracking-wide text-violet uppercase">
-          Nuestra agencia
-        </p>
-        <h2
-          id="nosotros-titulo"
-          class="mt-3 font-display text-3xl leading-tight font-bold text-violet-dark md:text-4xl"
+    <div class="grid items-center gap-14 lg:grid-cols-2 lg:gap-16 xl:gap-20">
+      <div class="relative lg:mr-5 lg:mb-5">
+        <div
+          class="absolute inset-0 hidden translate-x-5 translate-y-5 rounded-3xl bg-lilac lg:block"
+          aria-hidden="true"
         >
-          Una agencia con historia y confianza
-        </h2>
-        <div class="mt-4 space-y-4">
+        </div>
+        <div class="relative overflow-hidden rounded-3xl shadow-hover lg:-rotate-[1.5deg]">
+          <Image
+            src={vidriera}
+            alt={photoAlt}
+            width={680}
+            height={510}
+            widths={[480, 680]}
+            sizes="(min-width: 1024px) 560px, 100vw"
+            loading="lazy"
+            class="aspect-[4/3] h-full w-full object-cover"
+          />
+        </div>
+        <div
+          class="absolute right-4 -bottom-8 flex items-center gap-3 rounded-card bg-white py-3 pr-5 pl-3 shadow-hover sm:right-6 lg:-right-4 lg:bottom-8"
+        >
+          <span class="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-lilac-soft">
+            <MapPin size={22} aria-hidden="true" class="text-violet" />
+          </span>
+          <p class="text-base leading-tight">
+            <span class="block font-bold text-violet-dark">{street}</span>
+            <span class="block text-muted">{city}</span>
+          </p>
+        </div>
+      </div>
+
+      <div>
+        <SectionHeading
+          id="nosotros-titulo"
+          eyebrow="Nuestra agencia"
+          title="Una agencia con historia y confianza"
+        />
+        <div class="mt-6 space-y-4">
           <p>
             Molinari Viajes es una agencia de viajes y turismo de Trelew. Trabajamos con atención
             personalizada, asesoramiento cercano y salidas acompañadas a destinos internacionales.
@@ -61,26 +70,24 @@ const highlights = [
             durante el recorrido y al volver.
           </p>
         </div>
-        <ul class="mt-6 grid gap-3 sm:grid-cols-3">
+        <ul class="mt-7 space-y-3">
           {
-            highlights.map(({ label, icon: Icon }) => (
-              <li class="flex min-w-0 items-center gap-3 rounded-card bg-lilac-soft px-3 py-3">
-                <Icon size={24} aria-hidden="true" class="size-6 shrink-0 text-violet" />
-                <span class="min-w-0 text-base leading-tight font-semibold text-violet-dark">{label}</span>
+            highlights.map((label) => (
+              <li class="flex items-start gap-3 text-[1.0625rem] leading-snug text-violet-dark md:text-lg">
+                <CircleCheck size={24} aria-hidden="true" class="mt-px size-6 shrink-0 text-violet" />
+                <span>{label}</span>
               </li>
             ))
           }
         </ul>
-        <a
-          href={mapsUrl}
-          class="mt-6 inline-flex min-h-12 items-center gap-2 text-lg font-semibold text-violet no-underline hover:text-violet-dark"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Visitanos en Belgrano 461
-          <ArrowRight size={20} aria-hidden="true" class="size-5 shrink-0" />
-          <span class="sr-only"> (se abre en una ventana nueva)</span>
-        </a>
+        <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+          <Button href={mapsUrl} variant="secondary" size="large" icon={MapPin} class="w-full sm:w-auto">
+            Cómo llegar
+          </Button>
+          <Button href={getGeneralWhatsAppLink()} variant="whatsapp" size="large" class="w-full sm:w-auto">
+            Escribinos
+          </Button>
+        </div>
       </div>
     </div>
   </Container>

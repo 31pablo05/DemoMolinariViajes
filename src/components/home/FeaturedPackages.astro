@@ -1,4 +1,5 @@
 ---
+import { ArrowRight } from '@lucide/astro';
 import Button from '../ui/Button.astro';
 import Container from '../ui/Container.astro';
 import SectionHeading from '../ui/SectionHeading.astro';
@@ -8,24 +9,43 @@ import { getFeaturedPackages } from '../../data/packages.js';
 const packages = getFeaturedPackages();
 ---
 
-<section id="paquetes" class="scroll-mt-24 pt-18 pb-9 lg:pt-28 lg:pb-14" aria-label="Próximas salidas destacadas">
+<section id="paquetes" class="scroll-mt-24 bg-white py-18 lg:py-28" aria-labelledby="paquetes-titulo">
   <Container>
-    <SectionHeading
-      eyebrow="Salidas destacadas"
-      title="Próximas salidas destacadas"
-      subtitle="Viajes en grupo, con la coordinación de Molinari de principio a fin."
-    />
+    <div class="md:flex md:items-end md:justify-between md:gap-8">
+      <SectionHeading
+        id="paquetes-titulo"
+        eyebrow="Próximas salidas"
+        title="Viajes pensados para disfrutar sin preocupaciones"
+        class="max-w-2xl"
+      />
+      <a
+        href="/paquetes"
+        class="group/all hidden min-h-12 shrink-0 items-center gap-2 font-semibold text-violet underline-offset-4 hover:text-violet-dark hover:underline md:inline-flex"
+      >
+        Ver todos los paquetes
+        <ArrowRight
+          size={20}
+          aria-hidden="true"
+          class="motion-safe:transition-transform motion-safe:duration-200 motion-safe:group-hover/all:translate-x-[3px]"
+        />
+      </a>
+    </div>
+    <p class="mt-4 max-w-[60ch] text-muted">
+      Elegí tu próximo destino y dejá la organización en nuestras manos.
+    </p>
+
     <ul class="mt-10 grid grid-cols-1 items-stretch gap-7 md:mt-12 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
       {
         packages.map((pkg) => (
           <li class="h-full">
-            <PackageCard pkg={pkg} />
+            <PackageCard pkg={pkg} variant="vertical" />
           </li>
         ))
       }
     </ul>
-    <div class="mt-10 flex justify-center md:mt-12">
-      <Button href="/paquetes" variant="secondary" size="large">
+
+    <div class="mt-10 md:hidden">
+      <Button href="/paquetes" variant="secondary" size="large" class="w-full">
         Ver todos los paquetes
       </Button>
     </div>

@@ -1,5 +1,6 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
+import { Expand } from '@lucide/astro';
 import Button from '../ui/Button.astro';
 import Container from '../ui/Container.astro';
 import SectionHeading from '../ui/SectionHeading.astro';
@@ -11,56 +12,131 @@ const modules = import.meta.glob('../../assets/images/experiences/*.{jpg,jpeg,pn
   import: 'default',
 });
 
-const altsByFile = {
-  'experiencia-01.jpg': 'Un grupo de viajeros de espaldas, con mochilas, mirando el Coliseo de Roma.',
-  'experiencia-02.jpg': 'Visitantes caminando entre torii bermellón y cerezos en flor.',
-  'experiencia-03.jpg': 'Camellos frente a las pirámides de Guiza.',
-  'experiencia-04.jpg': 'El Empire State iluminado sobre el skyline de Nueva York al atardecer.',
-  'experiencia-05.jpg': 'La torre Eiffel al atardecer, junto al Sena y un puente de París.',
-  'experiencia-06.jpg': 'Mont Saint-Michel iluminado al anochecer, sobre el islote y la playa.',
-  'experiencia-07.jpg': 'Viajeros con sombrero frente a las montañas de Machu Picchu.',
-  'experiencia-08.jpg': 'La torre de Tokio iluminada, con el monte Fuji detrás.',
+// El orden de este objeto es el orden del mosaico y del visor.
+// focus: encuadre de la foto cuando el recorte es apaisado.
+const photoInfo = {
+  'experiencia-03.jpg': {
+    alt: 'Viajeros caminando por la explanada empedrada frente al Coliseo de Roma, en un día de sol.',
+    destination: 'Roma',
+  },
+  'experiencia-01.jpg': {
+    alt: 'Un grupo de viajeros mayores recorre a pie una calle angosta y empedrada, entre casas blancas con puertas de madera en arco.',
+    // TODO: confirmar el destino; parece una medina del Mediterráneo (¿Túnez?), pero no se distingue con certeza.
+    destination: '',
+  },
+  'experiencia-04.jpg': {
+    alt: 'Visitantes en la escalinata del templo Sensō-ji de Tokio, bajo su gran farol rojo y entre el humo del incienso.',
+    destination: 'Tokio',
+  },
+  'experiencia-02.jpg': {
+    alt: 'Una pareja de viajeros consulta un mapa en una calle peatonal empedrada, entre edificios con balcones de hierro.',
+    // TODO: confirmar; el empedrado y los edificios parecen de Oporto.
+    destination: 'Portugal',
+  },
+  'experiencia-06.jpg': {
+    alt: 'Dos viajeras caminan por un callejón empedrado hacia una antigua muralla de piedra con almenas.',
+    // TODO: confirmar; la muralla parece de Toledo.
+    destination: 'España',
+    focus: 'object-[50%_70%]',
+  },
+  'experiencia-05.jpg': {
+    alt: 'Un grupo de viajeros reunido en una escalinata, a la sombra de árboles con flores blancas.',
+    // TODO: confirmar el destino; no se distingue en la foto.
+    destination: '',
+    focus: 'object-[50%_55%]',
+  },
 };
 
-const photos = Object.entries(modules)
-  .sort(([a], [b]) => a.localeCompare(b, 'es'))
-  .slice(0, 8)
-  .map(([path, image]) => ({
-    image,
-    src: image.src,
-    alt: altsByFile[path.split('/').pop()] || 'Fotografía de un destino de viaje.',
-    width: image.width,
-    height: image.height,
-  }));
+const layout = [
+  { item: 'col-span-2 md:row-span-2', image: 'aspect-[4/3]', sizes: '(min-width: 1024px) 820px, (min-width: 768px) 66vw, 100vw' },
+  { item: 'lg:row-span-2', image: 'aspect-square', sizes: '(min-width: 1024px) 400px, (min-width: 768px) 33vw, 50vw' },
+  { item: '', image: 'aspect-square', sizes: '(min-width: 1024px) 300px, (min-width: 768px) 33vw, 50vw' },
+  { item: '', image: 'aspect-square', sizes: '(min-width: 1024px) 300px, (min-width: 768px) 33vw, 50vw' },
+  { item: 'lg:col-span-2', image: 'aspect-square', sizes: '(min-width: 1024px) 600px, (min-width: 768px) 33vw, 50vw' },
+  { item: 'hidden md:block lg:col-span-2', image: 'aspect-square', sizes: '(min-width: 1024px) 600px, 33vw' },
+];
 
-const lightboxImages = photos.map(({ src, alt, width, height }) => ({ src, alt, width, height }));
+const photos = Object.entries(photoInfo)
+  .map(([file, info]) => {
+    const image = Object.entries(modules).find(([path]) => path.endsWith(`/${file}`))?.[1];
+    return image ? { image, ...info } : null;
+  })
+  .filter(Boolean)
+  .slice(0, layout.length);
+
+const lightboxImages = await Promise.all(
+  photos.map(async ({ image, alt }) => {
+    const optimized = await getImage({ src: image, width: 1600, format: 'webp' });
+    return {
+      src: optimized.src,
+      alt,
+      width: optimized.attributes.width,
+      height: optimized.attributes.height,
+    };
+  }),
+);
+
+const instagramIcon = `<svg viewBox="0 0 24 24" aria-hidden="true" class="size-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"></circle></svg>`;
 ---
 
-<section id="experiencias" class="scroll-mt-24 py-9 lg:py-14" aria-label="Así se viven nuestros viajes">
+<section id="experiencias" class="scroll-mt-24 bg-white py-18 lg:py-28" aria-labelledby="experiencias-titulo">
   <Container>
-    <SectionHeading eyebrow="Experiencias" title="Así se viven nuestros viajes" />
+    <div class="md:flex md:items-end md:justify-between md:gap-8">
+      <SectionHeading
+        id="experiencias-titulo"
+        eyebrow="Experiencias"
+        title="Así se viven nuestros viajes"
+        subtitle="Momentos de viaje en algunos de los destinos que recorremos."
+        class="max-w-2xl"
+      />
+      <div class="hidden shrink-0 md:block">
+        <Button href={site.instagram.url} variant="secondary">
+          <Fragment set:html={instagramIcon} />
+          Seguinos en Instagram
+        </Button>
+      </div>
+    </div>
+
     <GalleryLightbox client:visible images={lightboxImages}>
       {
         photos.length > 0 && (
-          <ul class="mt-10 grid grid-cols-2 gap-3 md:gap-4 lg:mt-12 lg:grid-cols-[1.4fr_1fr_1fr_1.4fr] lg:gap-5">
+          <ul class="mt-10 grid grid-cols-2 gap-4 md:mt-12 md:auto-rows-[220px] md:grid-cols-3 lg:auto-rows-[260px] lg:grid-cols-4">
             {photos.map((photo, index) => (
-              <li class="overflow-hidden rounded-card">
+              <li class:list={['relative overflow-hidden rounded-card-lg bg-lilac-soft', layout[index].item]}>
                 <button
                   type="button"
                   data-lightbox-index={index}
                   aria-label={`Ampliar foto: ${photo.alt}`}
-                  class="block w-full cursor-pointer"
+                  class="group/photo block size-full cursor-pointer focus-visible:outline-offset-[-3px]"
                 >
                   <Image
                     src={photo.image}
                     alt={photo.alt}
-                    width={640}
-                    height={480}
-                    widths={[320, 480, 640, 960]}
-                    sizes="(min-width: 1024px) 30vw, 50vw"
+                    width={1280}
+                    height={Math.round((1280 * photo.image.height) / photo.image.width)}
+                    widths={[480, 800, 1280]}
+                    sizes={layout[index].sizes}
                     loading="lazy"
-                    class="aspect-square h-auto w-full object-cover md:aspect-[4/3] lg:aspect-auto lg:h-56 xl:h-64"
+                    class:list={[
+                      'h-auto w-full object-cover md:aspect-auto md:h-full motion-safe:transition-transform motion-safe:duration-500 motion-safe:ease-out motion-safe:group-hover/photo:scale-105',
+                      layout[index].image,
+                      photo.focus,
+                    ]}
                   />
+                  {photo.destination && (
+                    <span
+                      class="absolute bottom-3 left-3 rounded-pill bg-white/80 px-3 py-1.5 text-sm leading-none font-semibold text-violet-dark backdrop-blur-md md:bottom-4 md:left-4 md:text-base"
+                      aria-hidden="true"
+                    >
+                      {photo.destination}
+                    </span>
+                  )}
+                  <span
+                    class="absolute top-3 right-3 inline-flex size-10 items-center justify-center rounded-full bg-white/80 text-violet-dark opacity-0 backdrop-blur-md group-hover/photo:opacity-100 group-focus-visible/photo:opacity-100 motion-safe:transition-opacity motion-safe:duration-300 md:top-4 md:right-4"
+                    aria-hidden="true"
+                  >
+                    <Expand size={20} />
+                  </span>
                 </button>
               </li>
             ))}
@@ -68,26 +144,11 @@ const lightboxImages = photos.map(({ src, alt, width, height }) => ({ src, alt, 
         )
       }
     </GalleryLightbox>
-    <p class="mt-4 text-center text-muted">
-      Imágenes ilustrativas. Pronto, fotos reales de nuestros grupos.
-    </p>
-    <div class="mt-6 flex justify-center">
-      <Button href={site.instagram.url} variant="secondary" size="large">
-        <svg
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-          class="size-5 shrink-0"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <rect width="20" height="20" x="2" y="2" rx="5"></rect>
-          <circle cx="12" cy="12" r="4"></circle>
-          <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"></circle>
-        </svg>
-        Ver más en Instagram
+
+    <div class="mt-10 md:hidden">
+      <Button href={site.instagram.url} variant="secondary" size="large" class="w-full">
+        <Fragment set:html={instagramIcon} />
+        Seguinos en Instagram
       </Button>
     </div>
   </Container>

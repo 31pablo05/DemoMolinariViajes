@@ -13,6 +13,23 @@ export const site = {
   whatsappNumber: '',
   // Pendiente de confirmar con el cliente.
   phones: [],
+  // Datos tomados de los perfiles públicos el 06/11/2026; actualizar antes de publicar.
+  reviews: {
+    google: {
+      rating: 4.9,
+      count: 11,
+      // Pendiente: link a la ficha de Google Maps de Molinari Viajes.
+      url: '',
+    },
+    facebook: {
+      rating: 5.0,
+      count: 5,
+      followers: 'más de 3.400',
+    },
+    instagram: {
+      followers: 'más de 1.000',
+    },
+  },
   domain,
   url: `https://${domain}`,
   isDemo: true,

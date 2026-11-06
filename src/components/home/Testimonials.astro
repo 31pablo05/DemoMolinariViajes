@@ -1,8 +1,23 @@
 ---
 import { Quote, Star } from '@lucide/astro';
+import Button from '../ui/Button.astro';
 import Container from '../ui/Container.astro';
 import SectionHeading from '../ui/SectionHeading.astro';
+import { site } from '../../config/site.js';
 import { testimonials } from '../../data/testimonials.js';
+
+const { google, facebook, instagram } = site.reviews;
+
+const formatRating = (value) =>
+  value.toLocaleString('es-AR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const shortFollowers = (label) => label.replace(/^más de\s+/i, '+');
+
+const googleRating = formatRating(google.rating);
+const googleUrl =
+  google.url ||
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`Molinari Viajes, ${site.address}`)}`;
+
+const realTestimonials = testimonials.filter((item) => item.isDemo === false);
 
 function initials(name) {
   const parts = name.trim().split(/\s+/).filter(Boolean);
@@ -12,26 +27,107 @@ function initials(name) {
 }
 ---
 
-<section class="py-9 lg:py-14" aria-label="Lo que dicen nuestros viajeros">
+<section class="bg-lilac-soft py-18 lg:py-28" aria-labelledby="opiniones-titulo">
   <Container>
-    <SectionHeading eyebrow="Testimonios" title="Lo que dicen nuestros viajeros" />
-    <ul class="mt-10 grid grid-cols-1 gap-6 md:mt-12 md:grid-cols-2 md:gap-8">
-      {
-        testimonials.map((item) => {
-          const showRating = !item.isDemo && Number.isFinite(item.rating);
-          return (
+    <SectionHeading
+      id="opiniones-titulo"
+      eyebrow="Opiniones"
+      title="Lo que dicen nuestros viajeros"
+      align="center"
+      class="[&>p:first-child]:text-violet"
+    />
+
+    <div class="mx-auto mt-12 max-w-xl rounded-3xl bg-white px-6 py-10 text-center shadow-rest md:px-12 md:py-12 lg:mt-14">
+      <p class="font-display text-7xl leading-none font-extrabold tracking-[-0.03em] text-violet-dark">
+        {googleRating}<span class="sr-only"> de 5 en Google</span>
+      </p>
+      <div class="mt-4 flex justify-center gap-1.5" aria-hidden="true">
+        {
+          Array.from({ length: 5 }, (_, star) => (
+            <Star
+              size={28}
+              class:list={[
+                'size-7',
+                star < Math.round(google.rating) ? 'fill-gold text-gold' : 'text-lilac',
+              ]}
+            />
+          ))
+        }
+      </div>
+      <p class="mt-4 text-lg font-semibold text-violet-dark">{google.count} opiniones en Google</p>
+      <Button href={googleUrl} variant="secondary" class="mt-7 w-full sm:w-auto">
+        Leer opiniones en Google
+      </Button>
+    </div>
+
+    <ul class="mt-10 flex flex-col items-center gap-4 md:flex-row md:justify-center md:gap-10">
+      <li class="flex items-center gap-3 text-lg font-semibold text-violet-dark">
+        <span class="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-white text-violet">
+          <Star size={22} aria-hidden="true" class="size-[22px] fill-current" />
+        </span>
+        <span>{formatRating(facebook.rating)}<span class="sr-only"> de 5</span> en Facebook</span>
+      </li>
+      <li class="flex items-center gap-3 text-lg font-semibold text-violet-dark">
+        <span class="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-white text-violet">
+          <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            class="size-[22px]"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+          </svg>
+        </span>
+        <span>
+          <span aria-hidden="true">{shortFollowers(facebook.followers)}</span>
+          <span class="sr-only">{facebook.followers}</span> seguidores en Facebook
+        </span>
+      </li>
+      <li class="flex items-center gap-3 text-lg font-semibold text-violet-dark">
+        <span class="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-white text-violet">
+          <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            class="size-[22px]"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect width="20" height="20" x="2" y="2" rx="5"></rect>
+            <circle cx="12" cy="12" r="4"></circle>
+            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"></circle>
+          </svg>
+        </span>
+        <span>
+          <span aria-hidden="true">{shortFollowers(instagram.followers)}</span>
+          <span class="sr-only">{instagram.followers} seguidores</span> en Instagram
+        </span>
+      </li>
+    </ul>
+
+    {
+      realTestimonials.length > 0 && (
+        <ul class="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 lg:mt-16">
+          {realTestimonials.map((item) => (
             <li class="h-full">
-              <figure class="flex h-full flex-col rounded-card-lg bg-lilac-soft p-6 md:p-8">
+              <figure class="flex h-full flex-col rounded-card-lg bg-white p-6 shadow-rest md:p-8">
                 <Quote size={48} aria-hidden="true" class="size-12 shrink-0 text-lilac" />
-                {showRating && (
-                  <p class="mt-4 flex gap-1" aria-label={`Valoración verificada: ${item.rating} de 5`}>
+                {Number.isFinite(item.rating) && (
+                  <p class="mt-4 flex gap-1">
+                    <span class="sr-only">Valoración: {item.rating} de 5</span>
                     {Array.from({ length: 5 }, (_, star) => (
                       <Star
                         size={18}
                         aria-hidden="true"
                         class:list={[
                           'size-[18px]',
-                          star < item.rating ? 'fill-violet text-violet' : 'text-lilac',
+                          star < item.rating ? 'fill-gold text-gold' : 'text-lilac',
                         ]}
                       />
                     ))}
@@ -51,9 +147,9 @@ function initials(name) {
                 </figcaption>
               </figure>
             </li>
-          );
-        })
-      }
-    </ul>
+          ))}
+        </ul>
+      )
+    }
   </Container>
 </section>
