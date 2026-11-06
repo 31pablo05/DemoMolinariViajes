@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import praga from '../../assets/images/hero/hero-praga.jpg';
 import Button from '../../components/ui/Button.astro';
 import Container from '../../components/ui/Container.astro';
 import PackageCard from '../../components/packages/PackageCard.astro';
@@ -21,29 +23,40 @@ const description =
 ---
 
 <MainLayout title="Nuestros paquetes" description={description}>
-  <section class="bg-lilac-soft" aria-labelledby="paquetes-titulo">
-    <Container class="pt-12 pb-8 lg:pt-16 lg:pb-12">
+  <section class="relative isolate h-[320px] overflow-hidden bg-violet-dark" aria-labelledby="paquetes-titulo">
+    <Image
+      src={praga}
+      alt="Vista de Praga con sus puentes sobre el río Moldava, entre árboles y tejados."
+      priority
+      width={1920}
+      height={Math.round((1920 * praga.height) / praga.width)}
+      widths={[640, 960, 1280, 1600, 1920]}
+      sizes="100vw"
+      class="absolute inset-0 -z-20 h-full w-full object-cover object-[50%_65%]"
+    />
+    <div class="absolute inset-0 -z-10 bg-violet-dark/75" aria-hidden="true"></div>
+    <Container class="flex h-full flex-col justify-end pb-10 lg:pb-12">
       <nav aria-label="Migas de pan">
-        <ol class="flex flex-wrap items-center gap-x-3 gap-y-1 text-lg">
+        <ol class="flex flex-wrap items-center gap-x-2 text-base text-white">
           <li>
             <a
               href="/"
-              class="inline-flex min-h-12 min-w-12 items-center font-semibold text-violet no-underline hover:underline"
+              class="inline-flex min-h-12 min-w-12 items-center font-semibold no-underline underline-offset-4 hover:underline focus-visible:outline-white"
             >
               Inicio
             </a>
           </li>
-          <li aria-hidden="true" class="text-violet">/</li>
-          <li class="font-semibold text-violet-dark" aria-current="page">Paquetes</li>
+          <li aria-hidden="true" class="text-lilac-soft">/</li>
+          <li class="font-semibold" aria-current="page">Paquetes</li>
         </ol>
       </nav>
       <h1
         id="paquetes-titulo"
-        class="mt-2 font-display text-4xl leading-tight font-extrabold text-violet-dark md:text-5xl"
+        class="mt-1 font-display text-[2.25rem] leading-[1.08] font-extrabold tracking-[-0.02em] text-white md:text-[2.75rem] lg:text-[3.5rem]"
       >
         Nuestros paquetes
       </h1>
-      <p class="mt-4 max-w-3xl">
+      <p class="mt-3 max-w-3xl text-lg text-white">
         Salidas acompañadas y viajes internacionales organizados desde Trelew.
       </p>
     </Container>
@@ -56,7 +69,7 @@ const description =
         {
           packages.map((pkg) => (
             <li class="h-full">
-              <PackageCard pkg={pkg} />
+              <PackageCard pkg={pkg} variant="horizontal" />
             </li>
           ))
         }

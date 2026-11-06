@@ -14,7 +14,7 @@ const { packages = [] } = Astro.props;
         <ul class="mt-10 grid grid-cols-1 items-stretch gap-7 md:mt-12 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
           {packages.map((pkg) => (
             <li class="h-full">
-              <PackageCard pkg={pkg} />
+              <PackageCard pkg={pkg} variant="horizontal" />
             </li>
           ))}
         </ul>

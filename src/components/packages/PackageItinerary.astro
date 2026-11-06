@@ -25,30 +25,38 @@ const { itinerary = [] } = Astro.props;
           Abrir todos
         </Button>
       </div>
-      <div id="itinerario-dias" class="mt-6 space-y-3">
+      <ol id="itinerario-dias" class="mt-8">
         {itinerary.map((item, index) => (
-          <details class="group rounded-card border border-lilac-soft bg-white" open={index === 0}>
-            <summary class="flex min-h-14 cursor-pointer list-none items-center gap-4 px-4 py-3 [&::-webkit-details-marker]:hidden">
+          <li class="relative pb-4 pl-16 last:pb-0 sm:pl-18">
+            {index < itinerary.length - 1 && (
               <span
-                class="grid size-12 shrink-0 place-items-center rounded-full bg-violet font-display text-lg font-bold text-white"
+                class="absolute top-13 -bottom-1 left-6 w-0.5 -translate-x-1/2 rounded-pill bg-lilac"
                 aria-hidden="true"
-              >
-                {item.day}
-              </span>
-              <span class="min-w-0 flex-1 font-display text-xl leading-tight font-bold text-violet-dark">
-                <span class="sr-only">Día {item.day}. </span>
-                {item.title}
-              </span>
-              <ChevronDown
-                size={24}
-                aria-hidden="true"
-                class="size-6 shrink-0 text-violet motion-safe:transition-transform motion-safe:duration-200 group-open:rotate-180"
               />
-            </summary>
-            <p class="px-4 pb-4 text-lg leading-relaxed sm:ps-20">{item.description}</p>
-          </details>
+            )}
+            <span
+              class="absolute top-1 left-0 grid size-12 place-items-center rounded-full bg-violet font-display text-lg font-bold text-white ring-4 ring-white"
+              aria-hidden="true"
+            >
+              {item.day}
+            </span>
+            <details class="group rounded-card border border-lilac-soft bg-white" open={index === 0}>
+              <summary class="flex min-h-14 cursor-pointer list-none items-center gap-4 px-4 py-3 [&::-webkit-details-marker]:hidden">
+                <span class="min-w-0 flex-1 font-display text-xl leading-tight font-bold text-violet-dark">
+                  <span class="sr-only">Día {item.day}. </span>
+                  {item.title}
+                </span>
+                <ChevronDown
+                  size={24}
+                  aria-hidden="true"
+                  class="size-6 shrink-0 text-violet motion-safe:transition-transform motion-safe:duration-200 group-open:rotate-180"
+                />
+              </summary>
+              <p class="px-4 pb-4 text-lg leading-relaxed">{item.description}</p>
+            </details>
+          </li>
         ))}
-      </div>
+      </ol>
     </section>
   )
 }

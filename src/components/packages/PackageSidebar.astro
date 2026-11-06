@@ -7,52 +7,83 @@ import { getPackageWhatsAppLink } from '../../lib/whatsapp.js';
 const { pkg } = Astro.props;
 const whatsappHref = getPackageWhatsAppLink(pkg.title);
 const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${site.name}, ${site.address}`)}`;
+const shortAddress = site.address.split(',').slice(0, 2).map((part) => part.trim()).join(', ');
+const isPending = (value) => !value || value === 'A confirmar';
+const datesPending = isPending(pkg.departureDate) && isPending(pkg.duration);
+
+const facts = datesPending
+  ? [
+      { label: 'Fechas', value: 'Consultá disponibilidad' },
+      { label: 'Modalidad', value: pkg.modality },
+    ]
+  : [
+      { label: 'Fecha de salida', value: pkg.departureDate },
+      { label: 'Duración', value: pkg.duration },
+      { label: 'Modalidad', value: pkg.modality },
+    ];
 
 function telHref(phone) {
   return `tel:${String(phone).replace(/[^\d+]/g, '')}`;
 }
-
-const contactLink =
-  'inline-flex min-h-12 items-center gap-2 text-lg font-semibold text-violet no-underline hover:underline';
 ---
 
-<aside class="hidden lg:block lg:sticky lg:top-24 lg:self-start">
-  <div class="rounded-card-lg bg-white p-6 shadow-rest">
-    <p class="font-display text-2xl leading-tight font-bold text-violet-dark">{pkg.title}</p>
-    <dl class="mt-4 space-y-3 text-lg">
-      <div>
-        <dt class="text-base font-semibold text-muted">Fecha de salida</dt>
-        <dd class="font-semibold text-violet-dark">{pkg.departureDate}</dd>
-      </div>
-      <div>
-        <dt class="text-base font-semibold text-muted">Duración</dt>
-        <dd class="font-semibold text-violet-dark">{pkg.duration}</dd>
-      </div>
-    </dl>
-    <p class="mt-4 leading-relaxed">
-      Consultá disponibilidad, itinerario completo y formas de pago.
-    </p>
-    <Button href={whatsappHref} variant="whatsapp" size="large" class="mt-6 w-full">
-      Consultar por WhatsApp
-    </Button>
-    <ul class="mt-6 space-y-1">
+<aside class="hidden lg:sticky lg:top-24 lg:block lg:self-start">
+  <div class="overflow-hidden rounded-card-lg bg-white shadow-hover">
+    <div class="bg-violet-dark px-6 py-5">
+      <p class="font-display text-2xl leading-tight font-bold text-white">{pkg.title}</p>
+    </div>
+    <div class="p-6">
+      <dl class="divide-y divide-lilac-soft">
+        {
+          facts.map(({ label, value }) => (
+            <div class="flex items-baseline justify-between gap-4 py-3 first:pt-0">
+              <dt class="text-base font-semibold text-muted">{label}</dt>
+              <dd class="text-right text-lg font-semibold text-violet-dark">{value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+      <p class="mt-4 leading-relaxed">
+        Consultá disponibilidad, itinerario completo y formas de pago.
+      </p>
+      <Button href={whatsappHref} variant="whatsapp" size="large" class="mt-6 w-full">
+        Consultar por WhatsApp
+      </Button>
       {
-        site.phones.map((phone) => (
-          <li>
-            <a href={telHref(phone)} class={contactLink}>
-              <Phone size={22} aria-hidden="true" class="size-[22px] shrink-0" />
-              {phone}
-            </a>
-          </li>
-        ))
+        site.phones.length > 0 && (
+          <ul class="mt-4 space-y-1">
+            {site.phones.map((phone) => (
+              <li>
+                <a
+                  href={telHref(phone)}
+                  class="inline-flex min-h-12 items-center gap-2 text-lg font-semibold text-violet no-underline hover:underline"
+                >
+                  <Phone size={22} aria-hidden="true" class="size-[22px] shrink-0" />
+                  {phone}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
       }
-      <li>
-        <a href={mapsUrl} class={contactLink} target="_blank" rel="noopener noreferrer">
-          <MapPin size={22} aria-hidden="true" class="size-[22px] shrink-0" />
-          <span>{site.address}</span>
-          <span class="sr-only"> (se abre en una ventana nueva)</span>
-        </a>
-      </li>
-    </ul>
+    </div>
+  </div>
+
+  <div class="mt-5 flex items-start gap-3 rounded-card-lg bg-cream px-5 py-4">
+    <span class="mt-0.5 inline-flex size-10 shrink-0 items-center justify-center rounded-full bg-white text-violet">
+      <MapPin size={20} aria-hidden="true" />
+    </span>
+    <p class="leading-snug">
+      <span class="block font-semibold text-violet-dark">¿Preferís hablar en persona?</span>
+      <a
+        href={mapsUrl}
+        class="inline-flex min-h-12 items-center font-semibold text-violet underline underline-offset-4 hover:text-violet-dark"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {shortAddress}
+        <span class="sr-only"> (se abre en una ventana nueva)</span>
+      </a>
+    </p>
   </div>
 </aside>

@@ -4,41 +4,40 @@ import { Check, X } from '@lucide/astro';
 const { included = [], excluded = [] } = Astro.props;
 const hasIncluded = included.length > 0;
 const hasExcluded = excluded.length > 0;
+const cardTitle = 'font-display text-2xl leading-tight font-bold text-violet-dark md:text-[1.75rem]';
 ---
 
 {
   (hasIncluded || hasExcluded) && (
-    <div class="grid gap-10 md:grid-cols-2 md:gap-8">
+    <div class="grid gap-6 md:grid-cols-2 md:gap-6">
       {hasIncluded && (
-        <section aria-labelledby="incluye-titulo">
-          <h2
-            id="incluye-titulo"
-            class="font-display text-3xl leading-tight font-bold text-violet-dark md:text-4xl"
-          >
+        <section class="rounded-card-lg bg-lilac-soft p-6 md:p-8" aria-labelledby="incluye-titulo">
+          <h2 id="incluye-titulo" class={cardTitle}>
             Qué incluye
           </h2>
           <ul class="mt-6 space-y-4">
             {included.map((item) => (
               <li class="flex items-start gap-3">
-                <Check size={22} aria-hidden="true" class="mt-1 size-[22px] shrink-0 text-whatsapp" />
-                <span class="text-lg leading-relaxed">{item}</span>
+                <span class="mt-0.5 grid size-7 shrink-0 place-items-center rounded-full bg-violet text-white">
+                  <Check size={18} aria-hidden="true" class="size-[18px]" />
+                </span>
+                <span class="text-lg leading-relaxed text-violet-dark">{item}</span>
               </li>
             ))}
           </ul>
         </section>
       )}
       {hasExcluded && (
-        <section aria-labelledby="no-incluye-titulo">
-          <h2
-            id="no-incluye-titulo"
-            class="font-display text-3xl leading-tight font-bold text-violet-dark md:text-4xl"
-          >
+        <section class="rounded-card-lg border border-lilac bg-white p-6 md:p-8" aria-labelledby="no-incluye-titulo">
+          <h2 id="no-incluye-titulo" class={cardTitle}>
             Qué no incluye
           </h2>
           <ul class="mt-6 space-y-4">
             {excluded.map((item) => (
               <li class="flex items-start gap-3">
-                <X size={22} aria-hidden="true" class="mt-1 size-[22px] shrink-0 text-muted" />
+                <span class="mt-0.5 grid size-7 shrink-0 place-items-center rounded-full bg-lilac-soft text-muted">
+                  <X size={18} aria-hidden="true" class="size-[18px]" />
+                </span>
                 <span class="text-lg leading-relaxed">{item}</span>
               </li>
             ))}

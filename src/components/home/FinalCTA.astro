@@ -1,53 +1,55 @@
 ---
-import { Plane } from '@lucide/astro';
+import { Image } from 'astro:assets';
+import budapest from '../../assets/images/hero/hero-budapest.jpg';
 import Button from '../ui/Button.astro';
 import Container from '../ui/Container.astro';
+import Eyebrow from '../ui/Eyebrow.astro';
 import { getGeneralWhatsAppLink } from '../../lib/whatsapp.js';
 ---
 
 <section class="pt-9 pb-18 lg:pt-14 lg:pb-28" aria-labelledby="cta-final-titulo">
   <Container>
     <div
-      class="rounded-3xl bg-violet bg-linear-to-r from-violet to-[color-mix(in_srgb,var(--color-violet)_74%,var(--color-violet-dark))] px-6 py-8 text-white lg:px-10 lg:py-9"
+      class="relative isolate flex items-center justify-center overflow-hidden rounded-[28px] bg-violet-dark px-6 py-14 text-center md:px-12 lg:h-[360px] lg:py-0"
     >
-      <div class="flex flex-col items-center gap-6 text-center lg:flex-row lg:gap-8 lg:text-left">
-        <div class="relative h-14 w-32 shrink-0 lg:h-[4.5rem] lg:w-40" aria-hidden="true">
-          <svg viewBox="0 0 160 72" class="h-full w-full" fill="none">
-            <path
-              d="M4 60C34 60 46 20 90 16c28-2.5 42 10 62 12"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-dasharray="0.1 8"
-            />
-          </svg>
-          <Plane
-            size={28}
-            aria-hidden="true"
-            class="absolute top-0 right-0 size-7 lg:size-10"
-          />
-        </div>
+      <Image
+        src={budapest}
+        alt="El Parlamento de Budapest iluminado de noche, a orillas del Danubio."
+        width={1600}
+        height={Math.round((1600 * budapest.height) / budapest.width)}
+        widths={[640, 960, 1280, 1600]}
+        sizes="(min-width: 1240px) 1176px, 100vw"
+        loading="lazy"
+        class="absolute inset-0 -z-20 size-full object-cover object-[60%_70%]"
+      />
+      <div
+        class="absolute inset-0 -z-10 bg-linear-to-r from-violet-dark/80 to-violet-dark/65"
+        aria-hidden="true"
+      >
+      </div>
 
-        <div class="min-w-0 flex-1">
-          <h2
-            id="cta-final-titulo"
-            class="font-display text-4xl leading-tight font-extrabold text-balance"
-          >
-            ¿Listo para tu próximo viaje?
-          </h2>
-          <p class="mt-2 text-lg leading-relaxed text-balance text-white">
-            Escribinos y te ayudamos a encontrar la salida ideal para vos.
-          </p>
-        </div>
-
-        <div class="w-full shrink-0 lg:w-auto lg:border-l lg:border-white/30 lg:pl-8">
+      <div class="max-w-2xl">
+        <Eyebrow tone="light" class="justify-center text-lilac-soft!">Tu próximo viaje empieza acá</Eyebrow>
+        <h2
+          id="cta-final-titulo"
+          class="mt-4 font-display text-[2rem] leading-[1.1] font-extrabold tracking-[-0.02em] text-balance text-white md:text-[2.5rem] lg:text-5xl"
+        >
+          ¿Listo para tu próximo viaje?
+        </h2>
+        <p class="mx-auto mt-4 max-w-[48ch] text-lg leading-relaxed text-balance text-white">
+          Escribinos y te ayudamos a encontrar la salida ideal para vos.
+        </p>
+        <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:gap-4">
           <Button
             href={getGeneralWhatsAppLink()}
             variant="whatsapp"
             size="large"
-            class="w-full border-2! border-white! focus-visible:outline-white lg:w-auto"
+            class="w-full border-white/40! focus-visible:outline-white sm:w-auto"
           >
             Consultanos por WhatsApp
+          </Button>
+          <Button href="/paquetes" variant="ghost-light" size="large" class="w-full sm:w-auto">
+            Ver paquetes
           </Button>
         </div>
       </div>

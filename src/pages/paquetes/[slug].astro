@@ -27,6 +27,11 @@ const { pkg } = Astro.props;
 const related = getRelatedPackages(pkg.slug)
   .filter((item) => item.slug !== 'proximamente')
   .slice(0, 3);
+// La caja solo se muestra si le sirve al viajero, no si únicamente avisa que el contenido es de ejemplo.
+const hasUsefulInfo =
+  typeof pkg.importantInfo === 'string' &&
+  pkg.importantInfo.trim().length > 0 &&
+  !/\b(de ejemplo|demo|ilustrativ)/i.test(pkg.importantInfo);
 const sectionTitle = 'font-display text-3xl leading-tight font-bold text-violet-dark md:text-4xl';
 const touristTrip = {
   '@context': 'https://schema.org',
@@ -93,7 +98,7 @@ const touristTrip = {
           <PackageGallery gallery={pkg.gallery} />
 
           {
-            pkg.importantInfo && (
+            hasUsefulInfo && (
               <section
                 class="rounded-card-lg bg-lilac-soft px-5 py-6 md:px-8 md:py-8"
                 aria-labelledby="info-importante-titulo"

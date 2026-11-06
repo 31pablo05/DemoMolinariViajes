@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import { Users } from '@lucide/astro';
 import Badge from '../ui/Badge.astro';
 import Container from '../ui/Container.astro';
 
@@ -8,58 +9,82 @@ const crumbs = [
   { label: 'Inicio', href: '/' },
   { label: 'Paquetes', href: '/paquetes' },
 ];
+
+// Degradado solo en la parte baja: denso donde van los destinos (lila suave, texto chico)
+// y más liviano a la altura del H1, que por tamaño solo necesita 3:1.
+// En mobile el título puede ocupar dos líneas, por eso el degradado sube un poco más.
+const scrim =
+  'bg-[linear-gradient(to_top,color-mix(in_srgb,var(--color-violet-dark)_92%,transparent)_0%,color-mix(in_srgb,var(--color-violet-dark)_82%,transparent)_22%,color-mix(in_srgb,var(--color-violet-dark)_62%,transparent)_42%,transparent_54%)] lg:bg-[linear-gradient(to_top,color-mix(in_srgb,var(--color-violet-dark)_92%,transparent)_0%,color-mix(in_srgb,var(--color-violet-dark)_82%,transparent)_18%,color-mix(in_srgb,var(--color-violet-dark)_62%,transparent)_30%,transparent_38%)]';
 ---
 
-<section class="relative isolate" aria-labelledby="paquete-titulo">
-  <div class="relative h-[300px] overflow-hidden lg:h-[440px]">
-    <Image
-      src={pkg.image}
-      alt={pkg.imageAlt}
-      priority
-      widths={[640, 960, 1280, 1600, 1920]}
-      sizes="100vw"
-      class="absolute inset-0 h-full w-full object-cover"
-    />
-    <div
-      class="absolute inset-0 bg-linear-to-t from-violet-dark from-10% via-violet-dark/85 via-42% to-transparent"
-      aria-hidden="true"
-    ></div>
-  </div>
-  <Container class="absolute inset-0 z-10 flex flex-col justify-end pb-16 lg:pb-20">
-    <nav aria-label="Migas de pan">
-      <ol class="flex flex-wrap items-center gap-x-3 gap-y-1 text-lg text-white">
+<section class="relative isolate h-[340px] overflow-hidden bg-violet-dark lg:h-[520px]" aria-labelledby="paquete-titulo">
+  <Image
+    src={pkg.image}
+    alt={pkg.imageAlt}
+    priority
+    width={1920}
+    height={Math.round((1920 * pkg.image.height) / pkg.image.width)}
+    widths={[640, 960, 1280, 1600, 1920]}
+    sizes="100vw"
+    class="absolute inset-0 -z-20 h-full w-full object-cover"
+  />
+  <div class:list={['absolute inset-0 -z-10', scrim]} aria-hidden="true"></div>
+
+  <Container class="flex h-full flex-col pt-4 pb-12 lg:pt-6 lg:pb-14">
+    <nav aria-label="Migas de pan" class="self-start">
+      <ol
+        class="flex flex-wrap items-center gap-x-2 rounded-2xl bg-violet-dark/75 px-4 text-base text-white backdrop-blur-md"
+      >
         {
           crumbs.map((crumb) => (
             <>
               <li>
                 <a
                   href={crumb.href}
-                  class="inline-flex min-h-12 min-w-12 items-center justify-center font-semibold no-underline hover:underline focus-visible:outline-white"
+                  class="inline-flex min-h-12 min-w-12 items-center justify-center font-semibold no-underline underline-offset-4 hover:underline focus-visible:outline-white"
                 >
                   {crumb.label}
                 </a>
               </li>
-              <li aria-hidden="true" class="text-white">
+              <li aria-hidden="true" class="text-lilac-soft">
                 /
               </li>
             </>
           ))
         }
-        <li class="font-semibold" aria-current="page">{pkg.title}</li>
+        <li class="inline-flex min-h-12 items-center font-semibold" aria-current="page">{pkg.title}</li>
       </ol>
     </nav>
-    <div class="mt-1 flex flex-wrap gap-2">
-      {pkg.accompanied && <Badge class="bg-white! text-violet-dark!">Salida acompañada</Badge>}
+
+    <div class="mt-auto">
       {
-        pkg.status === 'ultimos-lugares' && (
-          <Badge class="bg-lilac! text-violet-dark!">Últimos lugares</Badge>
+        (pkg.accompanied || pkg.status === 'ultimos-lugares') && (
+          <div class="mb-3 flex flex-wrap gap-2">
+            {pkg.accompanied && (
+              <Badge class="gap-1.5 bg-white! text-violet-dark! shadow-rest">
+                <Users size={18} aria-hidden="true" class="shrink-0" />
+                Salida acompañada
+              </Badge>
+            )}
+            {pkg.status === 'ultimos-lugares' && (
+              <Badge class="bg-lilac! text-violet-dark!">Últimos lugares</Badge>
+            )}
+          </div>
         )
-      }    </div>
-    <h1
-      id="paquete-titulo"
-      class="mt-3 max-w-4xl font-display text-4xl leading-tight font-extrabold text-balance text-white md:text-5xl"
-    >
-      {pkg.title}
-    </h1>
+      }
+      <h1
+        id="paquete-titulo"
+        class="max-w-4xl font-display text-[2.25rem] leading-[1.08] font-extrabold tracking-[-0.02em] text-balance text-white md:text-[2.75rem] lg:text-[3.5rem]"
+      >
+        {pkg.title}
+      </h1>
+      {
+        pkg.destinations.length > 0 && (
+          <p class="mt-2 text-lg leading-snug font-medium text-lilac-soft lg:mt-3">
+            {pkg.destinations.join(' · ')}
+          </p>
+        )
+      }
+    </div>
   </Container>
 </section>

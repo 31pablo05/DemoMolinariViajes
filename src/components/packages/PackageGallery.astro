@@ -1,14 +1,49 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
+import { Expand } from '@lucide/astro';
 import GalleryLightbox from '../react/GalleryLightbox.jsx';
 
 const { gallery = [] } = Astro.props;
-const images = gallery.map((photo) => ({
-  src: photo.src.src,
-  alt: photo.alt,
-  width: photo.src.width,
-  height: photo.src.height,
-}));
+const total = gallery.length;
+
+const images = await Promise.all(
+  gallery.map(async (photo) => {
+    const optimized = await getImage({ src: photo.src, width: 1600, format: 'webp' });
+    return {
+      src: optimized.src,
+      alt: photo.alt,
+      width: optimized.attributes.width,
+      height: optimized.attributes.height,
+    };
+  }),
+);
+
+// Mosaico de 3 columnas (2 en mobile) con la primera foto grande.
+// Las que sobran en la última fila se estiran para que no queden huecos.
+function tile(index) {
+  if (index === 0) {
+    return {
+      item: total === 1 ? 'col-span-2 md:col-span-3 md:row-span-2' : 'col-span-2 md:row-span-2',
+      image: 'aspect-[4/3]',
+      sizes: '(min-width: 1024px) 540px, (min-width: 768px) 66vw, 100vw',
+    };
+  }
+  const rest = total - 1;
+  const mobileWide = rest % 2 === 1 && index === total - 1;
+  let desktop = '';
+  if (total === 2) desktop = 'md:row-span-2';
+  if (index >= 3) {
+    const lastRow = (total - 3) % 3;
+    const isLast = index === total - 1;
+    if (lastRow === 1 && isLast) desktop = 'md:col-span-3';
+    if (lastRow === 2 && isLast) desktop = 'md:col-span-2';
+  }
+  return {
+    item: [mobileWide && 'col-span-2', desktop].filter(Boolean).join(' '),
+    image: mobileWide ? 'aspect-[2/1]' : 'aspect-square',
+    sizes: mobileWide || desktop.includes('col-span') ? '(min-width: 1024px) 800px, 100vw' : '(min-width: 1024px) 270px, (min-width: 768px) 33vw, 50vw',
+  };
+}
 ---
 
 {
@@ -21,28 +56,40 @@ const images = gallery.map((photo) => ({
         Galería
       </h2>
       <GalleryLightbox client:visible images={images}>
-        <ul class="mt-6 grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-3">
-          {gallery.map((photo, index) => (
-            <li class="overflow-hidden rounded-card">
-              <button
-                type="button"
-                data-lightbox-index={index}
-                aria-label={`Ampliar foto: ${photo.alt}`}
-                class="block w-full cursor-pointer"
-              >
-                <Image
-                  src={photo.src}
-                  alt={photo.alt}
-                  width={640}
-                  height={480}
-                  widths={[320, 480, 640, 960]}
-                  sizes="(min-width: 1024px) 22vw, 50vw"
-                  loading="lazy"
-                  class="aspect-[4/3] h-auto w-full object-cover"
-                />
-              </button>
-            </li>
-          ))}
+        <ul class="mt-6 grid grid-cols-2 gap-4 md:auto-rows-[200px] md:grid-cols-3">
+          {gallery.map((photo, index) => {
+            const layout = tile(index);
+            return (
+              <li class:list={['relative overflow-hidden rounded-card-lg bg-lilac-soft', layout.item]}>
+                <button
+                  type="button"
+                  data-lightbox-index={index}
+                  aria-label={`Ampliar foto: ${photo.alt}`}
+                  class="group/photo block size-full cursor-pointer focus-visible:outline-offset-[-3px]"
+                >
+                  <Image
+                    src={photo.src}
+                    alt={photo.alt}
+                    width={1280}
+                    height={Math.round((1280 * photo.src.height) / photo.src.width)}
+                    widths={[480, 800, 1280]}
+                    sizes={layout.sizes}
+                    loading="lazy"
+                    class:list={[
+                      'h-auto w-full object-cover md:aspect-auto md:h-full motion-safe:transition-transform motion-safe:duration-500 motion-safe:ease-out motion-safe:group-hover/photo:scale-105',
+                      layout.image,
+                    ]}
+                  />
+                  <span
+                    class="absolute top-3 right-3 inline-flex size-10 items-center justify-center rounded-full bg-white/80 text-violet-dark opacity-0 backdrop-blur-md group-hover/photo:opacity-100 group-focus-visible/photo:opacity-100 motion-safe:transition-opacity motion-safe:duration-300"
+                    aria-hidden="true"
+                  >
+                    <Expand size={20} />
+                  </span>
+                </button>
+              </li>
+            );
+          })}
         </ul>
       </GalleryLightbox>
     </section>

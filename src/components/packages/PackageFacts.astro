@@ -1,24 +1,44 @@
 ---
-import { Calendar, Clock, MapPin, Route } from '@lucide/astro';
+import { Calendar, CalendarSearch, Clock, MapPin, Route } from '@lucide/astro';
+import Button from '../ui/Button.astro';
 import Container from '../ui/Container.astro';
+import { getPackageWhatsAppLink } from '../../lib/whatsapp.js';
 
 const { pkg } = Astro.props;
 const destinationCount = Array.isArray(pkg.destinations) ? pkg.destinations.length : 0;
+const isPending = (value) => !value || value === 'A confirmar';
+const datesPending = isPending(pkg.departureDate) && isPending(pkg.duration);
 
-const facts = [
-  { label: 'Fecha de salida', value: pkg.departureDate, icon: Calendar },
-  { label: 'Duración', value: pkg.duration, icon: Clock },
-  { label: 'Modalidad', value: pkg.modality, icon: Route },
-  { label: 'Destinos', value: String(destinationCount), icon: MapPin },
-];
+const facts = datesPending
+  ? [
+      { label: 'Modalidad', value: pkg.modality, icon: Route },
+      { label: 'Destinos', value: String(destinationCount), icon: MapPin },
+      { label: 'Fechas', value: 'Consultá disponibilidad', icon: CalendarSearch, wide: true },
+    ]
+  : [
+      { label: 'Fecha de salida', value: pkg.departureDate, icon: Calendar },
+      { label: 'Duración', value: pkg.duration, icon: Clock },
+      { label: 'Modalidad', value: pkg.modality, icon: Route },
+      { label: 'Destinos', value: String(destinationCount), icon: MapPin },
+    ];
 ---
 
-<Container class="relative z-20 -mt-10">
-  <div class="rounded-card-lg bg-white px-5 py-6 shadow-rest md:px-8 md:py-8">
-    <dl class="grid grid-cols-2 gap-x-6 gap-y-6 lg:grid-cols-4">
+<Container class="relative z-20 -mt-6">
+  <div
+    class:list={[
+      'rounded-card-lg bg-white px-5 py-6 shadow-hover md:px-8 md:py-7',
+      datesPending && 'lg:flex lg:items-center lg:gap-8',
+    ]}
+  >
+    <dl
+      class:list={[
+        'grid grid-cols-2 gap-x-6 gap-y-6',
+        datesPending ? 'sm:grid-cols-3 lg:flex-1' : 'lg:grid-cols-4',
+      ]}
+    >
       {
-        facts.map(({ label, value, icon: Icon }) => (
-          <div class="flex items-start gap-3">
+        facts.map(({ label, value, icon: Icon, wide }) => (
+          <div class:list={['flex items-start gap-3', wide && 'col-span-2 sm:col-span-1']}>
             <Icon size={28} aria-hidden="true" class="mt-0.5 size-7 shrink-0 text-violet" />
             <div class="min-w-0">
               <dt class="text-base font-semibold text-muted">{label}</dt>
@@ -30,5 +50,16 @@ const facts = [
         ))
       }
     </dl>
+    {
+      datesPending && (
+        <Button
+          href={getPackageWhatsAppLink(pkg.title)}
+          variant="whatsapp"
+          class="mt-6 w-full shrink-0 lg:mt-0 lg:w-auto"
+        >
+          Consultar fechas<span class="sr-only"> de {pkg.title} por WhatsApp</span>
+        </Button>
+      )
+    }
   </div>
 </Container>

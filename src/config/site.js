@@ -30,6 +30,9 @@ export const site = {
       followers: 'más de 1.000',
     },
   },
+  legal: {
+    legajo: '8608',
+  },
   domain,
   url: `https://${domain}`,
   isDemo: true,
