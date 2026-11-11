@@ -168,7 +168,14 @@ function telHref(phone) {
     <div
       class="mt-12 flex flex-col items-center gap-3 border-t border-white/15 pt-6 text-center text-lilac-soft lg:flex-row lg:justify-between lg:text-left"
     >
-      <p>© {year} {site.name}</p>
+      <p class="inline-flex flex-wrap items-baseline justify-center gap-x-3 gap-y-1 lg:justify-start">
+        <span>© {year} {site.name}</span>
+        {
+          site.isDemo && (
+            <span class="text-sm">Sitio en versión de presentación</span>
+          )
+        }
+      </p>
       <p>Agencia de turismo · Legajo {site.legal.legajo}</p>
       <p>Sitio desarrollado por MediaDesign</p>
     </div>

@@ -1,0 +1,81 @@
+---
+import { site } from '../../config/site.js';
+import { getGeneralWhatsAppLink } from '../../lib/whatsapp.js';
+
+const whatsappHref = getGeneralWhatsAppLink();
+const copies = ['original', 'duplicate'];
+
+function hrefFor(item) {
+  if (item.whatsapp) return whatsappHref;
+  return item.href || '';
+}
+
+function partsOf(item) {
+  const text = item.text ?? '';
+  const name = item.name;
+  if (!name || !text.includes(name)) return [{ text, emphasis: false }];
+  const index = text.indexOf(name);
+  return [
+    { text: text.slice(0, index), emphasis: false },
+    { text: name, emphasis: true },
+    { text: text.slice(index + name.length), emphasis: false },
+  ].filter((part) => part.text.length > 0);
+}
+
+const linkClass =
+  'whitespace-nowrap rounded-sm text-sm leading-none text-lilac-soft no-underline hover:underline hover:underline-offset-4';
+---
+
+<div class="announcement-bar overflow-hidden bg-violet-dark px-4 py-2.5" role="region" aria-label="Salidas confirmadas">
+  <div class="announcement-track flex w-max items-center">
+    {
+      copies.map((copy) => (
+        <ul
+          class="announcement-copy flex shrink-0 items-center"
+          data-announcement-copy={copy}
+          aria-hidden={copy === 'duplicate' ? 'true' : undefined}
+        >
+          {site.announcements.map((item) => {
+            const href = hrefFor(item);
+            const external = Boolean(item.whatsapp);
+            const parts = partsOf(item);
+            return (
+              <li class="flex items-center">
+                {href ? (
+                  <a
+                    href={href}
+                    class={linkClass}
+                    tabindex={copy === 'duplicate' ? -1 : undefined}
+                    {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  >
+                    {parts.map((part) =>
+                      part.emphasis ? (
+                        <span class="font-semibold text-white">{part.text}</span>
+                      ) : (
+                        part.text
+                      ),
+                    )}
+                    {external && <span class="sr-only"> (se abre en una ventana nueva)</span>}
+                  </a>
+                ) : (
+                  <span class="whitespace-nowrap text-sm leading-none text-lilac-soft">
+                    {parts.map((part) =>
+                      part.emphasis ? (
+                        <span class="font-semibold text-white">{part.text}</span>
+                      ) : (
+                        part.text
+                      ),
+                    )}
+                  </span>
+                )}
+                <span class="px-5 text-sm leading-none text-lilac-soft" aria-hidden="true">
+                  ·
+                </span>
+              </li>
+            );
+          })}
+        </ul>
+      ))
+    }
+  </div>
+</div>

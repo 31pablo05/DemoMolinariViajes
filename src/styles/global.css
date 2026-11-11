@@ -160,22 +160,105 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+
+  .announcement-track {
+    width: 100%;
+    max-width: 100%;
+    justify-content: center;
+  }
+
+  .announcement-copy[data-announcement-copy='duplicate'] {
+    display: none;
+  }
+
+  .announcement-copy {
+    max-width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 0.25rem;
+  }
+
+  .announcement-copy > li {
+    max-width: 100%;
+  }
+
+  .announcement-bar a {
+    max-width: 100%;
+    white-space: normal !important;
+    text-align: center;
+  }
+}
+
+/* Fuera de @layer para ganar a las utilidades (w-max, flex) y dejar el foco a la vista. */
+.announcement-bar:focus-within .announcement-track {
+  animation: none;
+  width: 100%;
+  max-width: 100%;
+  justify-content: center;
+}
+
+.announcement-bar:focus-within .announcement-copy[data-announcement-copy='duplicate'] {
+  display: none;
+}
+
+.announcement-bar:focus-within .announcement-copy {
+  max-width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 0.25rem;
+}
+
+.announcement-bar:focus-within li {
+  max-width: 100%;
+}
+
+.announcement-bar:focus-within a {
+  max-width: 100%;
+  white-space: normal !important;
+  text-align: center;
+}
+
+.announcement-bar a:focus-visible {
+  outline: 2px solid var(--color-white);
+  outline-offset: 2px;
 }
 
 @layer components {
-  /* Mobile: solo protege los controles que van sobre la foto. */
+  /* Mobile: un velo corto arriba para que el header se separe del cielo. */
   .hero-scrim {
-    background:
-      linear-gradient(
-        to bottom,
-        color-mix(in srgb, var(--color-violet-dark) 45%, transparent) 0%,
-        transparent 28%
-      ),
-      linear-gradient(
-        to top,
-        color-mix(in srgb, var(--color-violet-dark) 80%, transparent) 0%,
-        transparent 45%
-      );
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-violet-dark) 42%, transparent) 0%,
+      transparent 18%
+    );
+  }
+
+  /*
+   * El degradado de abajo sigue al bloque de texto: denso detrás de todo el copy
+   * (el lila del título necesita ~90 % de violeta para AA sobre una foto blanca)
+   * y se apaga en los 7.5rem de arriba, así la foto queda libre.
+   */
+  .hero-copy::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    top: -7.5rem;
+    pointer-events: none;
+    background: linear-gradient(
+      to top,
+      color-mix(in srgb, var(--color-violet-dark) 94%, transparent) 0%,
+      color-mix(in srgb, var(--color-violet-dark) 90%, transparent) calc(100% - 7.5rem),
+      transparent 100%
+    );
+  }
+
+  @media (min-width: 64rem) {
+    .hero-copy::before {
+      content: none;
+    }
   }
 
   /*
@@ -253,6 +336,12 @@
     animation-play-state: paused;
   }
 
+  @media (hover: hover) and (pointer: fine) {
+    [data-hero][data-ready]:hover .hero-slide.is-active img {
+      animation-play-state: paused;
+    }
+  }
+
   @keyframes hero-zoom {
     from {
       scale: 1.08;
@@ -260,6 +349,23 @@
     to {
       scale: 1;
     }
+  }
+
+  @keyframes announcement-marquee {
+    from {
+      translate: 0 0;
+    }
+    to {
+      translate: -50% 0;
+    }
+  }
+
+  .announcement-track {
+    animation: announcement-marquee 36s linear infinite;
+  }
+
+  .announcement-bar:hover .announcement-track {
+    animation-play-state: paused;
   }
 
   .skip-link {

@@ -33,6 +33,29 @@ export const site = {
   legal: {
     legajo: '8608',
   },
+  // Salidas confirmadas de la barra de anuncios. `name` se pinta en blanco; el resto del texto, en lila.
+  // whatsapp: true usa el enlace general de WhatsApp.
+  announcements: [
+    {
+      name: 'Cartagena',
+      text: '✈ Cartagena · 7 noches all inclusive · enero y febrero 2027',
+      href: '/paquetes/cartagena',
+    },
+    {
+      name: 'Japón y Nueva York',
+      text: '✈ Japón y Nueva York · marzo 2027',
+      href: '/paquetes/japon-nueva-york',
+    },
+    {
+      name: 'Europa',
+      text: '✈ Europa · septiembre 2027',
+      href: '/paquetes/europa-central',
+    },
+    {
+      text: 'Consultanos por WhatsApp',
+      whatsapp: true,
+    },
+  ],
   domain,
   url: `https://${domain}`,
   isDemo: true,
