@@ -1,0 +1,136 @@
+---
+import { site } from '../config/site.js';
+import { getGeneralWhatsAppLink } from '../lib/whatsapp.js';
+import MainLayout from '../layouts/MainLayout.astro';
+
+const description =
+  'Términos y condiciones del sitio de Molinari Viajes, agencia de turismo en Trelew, Chubut.';
+const whatsappHref = getGeneralWhatsAppLink();
+const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${site.name}, ${site.address}`)}`;
+
+const prose = 'text-[1.0625rem] leading-relaxed text-violet-dark';
+const heading = 'font-display text-2xl leading-tight font-bold text-violet-dark';
+const textLink =
+  'font-semibold text-violet underline underline-offset-4 hover:text-violet-dark focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-violet';
+---
+
+<MainLayout title="Términos y condiciones" description={description}>
+  <section class="bg-violet-dark" aria-labelledby="terminos-titulo">
+    <div class="mx-auto w-full max-w-3xl px-5 py-10 md:px-8 lg:py-16">
+      <nav aria-label="Migas de pan">
+        <ol class="flex flex-wrap items-center gap-x-2 text-base text-white">
+          <li>
+            <a
+              href="/"
+              class="inline-flex min-h-12 min-w-12 items-center font-semibold no-underline underline-offset-4 hover:underline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-white"
+            >
+              Inicio
+            </a>
+          </li>
+          <li aria-hidden="true" class="text-lilac-soft">/</li>
+          <li class="font-semibold" aria-current="page">Términos y condiciones</li>
+        </ol>
+      </nav>
+      <h1
+        id="terminos-titulo"
+        class="mt-2 font-display text-[2rem] leading-tight font-extrabold tracking-[-0.02em] text-white md:text-[2.5rem]"
+      >
+        Términos y condiciones
+      </h1>
+    </div>
+  </section>
+
+  <div class="mx-auto flex w-full max-w-3xl flex-col gap-10 px-5 py-12 md:px-8 lg:py-16">
+    <p class={prose}>Última actualización: {site.legal.updated}.</p>
+
+    <section class="flex flex-col gap-4">
+      <h2 class={heading}>Quiénes somos</h2>
+      <!-- TODO: mostrar site.legal.legalName y site.legal.cuit cuando estén completos. -->
+      <p class={prose}>
+        {site.name} es una agencia de turismo con domicilio en {site.address}. Legajo {site.legal.legajo}.
+      </p>
+      {
+        site.legal.legalName && (
+          <p class={prose}>Razón social: {site.legal.legalName}.</p>
+        )
+      }
+      {
+        site.legal.cuit && (
+          <p class={prose}>CUIT: {site.legal.cuit}.</p>
+        )
+      }
+    </section>
+
+    <section class="flex flex-col gap-4">
+      <h2 class={heading}>Uso del sitio</h2>
+      <p class={prose}>
+        Este sitio es informativo. Los paquetes, itinerarios, fotos y precios que publicamos son
+        orientativos. Pueden cambiar según la disponibilidad, los cupos y lo que definan las
+        aerolíneas, los hoteles y los operadores.
+      </p>
+    </section>
+
+    <section class="flex flex-col gap-4">
+      <h2 class={heading}>Precios</h2>
+      <p class={prose}>
+        Los precios están expresados en la moneda que indica cada paquete. Son por persona, salvo
+        que se aclare otra cosa. No incluyen lo que no se detalle de forma expresa.
+      </p>
+      <p class={prose}>
+        La confirmación de una reserva, el precio final y las condiciones se acuerdan directamente
+        con la agencia.
+      </p>
+    </section>
+
+    <section class="flex flex-col gap-4">
+      <h2 class={heading}>Reservas, pagos y cancelaciones</h2>
+      <p class={prose}>
+        Las reservas, los pagos y las cancelaciones se rigen por las condiciones particulares de
+        cada viaje. Esas condiciones las informa la agencia al momento de reservar.
+      </p>
+    </section>
+
+    <section class="flex flex-col gap-4">
+      <h2 class={heading}>Documentación</h2>
+      <p class={prose}>
+        Cada pasajero es responsable de contar con la documentación, las visas y los requisitos
+        sanitarios vigentes para el destino.
+      </p>
+    </section>
+
+    <section class="flex flex-col gap-4">
+      <h2 class={heading}>Contenido</h2>
+      <p class={prose}>
+        Los textos, las imágenes y la marca pertenecen a {site.name} o a sus respectivos titulares.
+        Algunas imágenes son ilustrativas.
+      </p>
+    </section>
+
+    <section class="flex flex-col gap-4">
+      <h2 class={heading}>Normativa aplicable</h2>
+      <p class={prose}>
+        Se aplica la legislación de la República Argentina, incluida la Ley 18.829 de Agentes de
+        Viajes y la Ley 24.240 de Defensa del Consumidor.
+      </p>
+    </section>
+
+    <section class="flex flex-col gap-4">
+      <h2 class={heading}>Contacto</h2>
+      <p class={prose}>Para consultas sobre estos términos, escribinos o vení a la oficina.</p>
+      <ul class="flex flex-col items-start gap-1">
+        <li>
+          <a href={whatsappHref} class={`${textLink} inline-flex min-h-11 items-center`} target="_blank" rel="noopener noreferrer">
+            WhatsApp
+            <span class="sr-only"> (se abre en una ventana nueva)</span>
+          </a>
+        </li>
+        <li>
+          <a href={mapsUrl} class={`${textLink} inline-flex min-h-11 items-center`} target="_blank" rel="noopener noreferrer">
+            {site.address}
+            <span class="sr-only"> (se abre en una ventana nueva)</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+  </div>
+</MainLayout>

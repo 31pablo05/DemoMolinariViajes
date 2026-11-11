@@ -1,0 +1,131 @@
+---
+import { site } from '../config/site.js';
+import { getGeneralWhatsAppLink } from '../lib/whatsapp.js';
+import MainLayout from '../layouts/MainLayout.astro';
+
+const description =
+  'Política de privacidad de Molinari Viajes. Cómo tratamos los datos cuando nos escribís por WhatsApp o nos visitás en la oficina de Trelew.';
+const whatsappHref = getGeneralWhatsAppLink();
+const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${site.name}, ${site.address}`)}`;
+
+const prose = 'text-[1.0625rem] leading-relaxed text-violet-dark';
+const heading = 'font-display text-2xl leading-tight font-bold text-violet-dark';
+const textLink =
+  'font-semibold text-violet underline underline-offset-4 hover:text-violet-dark focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-violet';
+---
+
+<MainLayout title="Política de privacidad" description={description}>
+  <section class="bg-violet-dark" aria-labelledby="privacidad-titulo">
+    <div class="mx-auto w-full max-w-3xl px-5 py-10 md:px-8 lg:py-16">
+      <nav aria-label="Migas de pan">
+        <ol class="flex flex-wrap items-center gap-x-2 text-base text-white">
+          <li>
+            <a
+              href="/"
+              class="inline-flex min-h-12 min-w-12 items-center font-semibold no-underline underline-offset-4 hover:underline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-white"
+            >
+              Inicio
+            </a>
+          </li>
+          <li aria-hidden="true" class="text-lilac-soft">/</li>
+          <li class="font-semibold" aria-current="page">Política de privacidad</li>
+        </ol>
+      </nav>
+      <h1
+        id="privacidad-titulo"
+        class="mt-2 font-display text-[2rem] leading-tight font-extrabold tracking-[-0.02em] text-white md:text-[2.5rem]"
+      >
+        Política de privacidad
+      </h1>
+    </div>
+  </section>
+
+  <div class="mx-auto flex w-full max-w-3xl flex-col gap-10 px-5 py-12 md:px-8 lg:py-16">
+    <p class={prose}>Última actualización: {site.legal.updated}.</p>
+
+    <section class="flex flex-col gap-4">
+      <h2 class={heading}>Qué datos recibimos</h2>
+      <p class={prose}>
+        Este sitio no tiene formularios ni cuentas de usuario. Los datos personales, como el
+        nombre, el teléfono y lo que la persona decida compartir, solo los recibimos cuando nos
+        escribe por WhatsApp o nos visita en la oficina.
+      </p>
+    </section>
+
+    <section class="flex flex-col gap-4">
+      <h2 class={heading}>Para qué se usan</h2>
+      <p class={prose}>
+        Usamos esos datos para responder consultas, armar presupuestos y gestionar reservas. No los
+        vendemos ni los cedemos a terceros, salvo a los prestadores necesarios para concretar el
+        viaje, como aerolíneas, hoteles y aseguradoras.
+      </p>
+    </section>
+
+    <section class="flex flex-col gap-4">
+      <h2 class={heading}>Tus derechos</h2>
+      <p class={prose}>
+        Podés pedir acceso, rectificación y supresión de tus datos, según la Ley 25.326 de
+        Protección de Datos Personales. Para ejercer esos derechos, escribinos por
+        <a href={whatsappHref} class={textLink} target="_blank" rel="noopener noreferrer">
+          WhatsApp<span class="sr-only"> (se abre en una ventana nueva)</span>
+        </a>
+        o vení a la oficina de {site.address}.
+      </p>
+      <p class={prose}>
+        La Agencia de Acceso a la Información Pública, órgano de control de la Ley 25.326, tiene la
+        atribución de atender las denuncias y reclamos que se interpongan por el incumplimiento de
+        las normas sobre protección de datos personales. Su sitio es
+        <a href="https://www.argentina.gob.ar/aaip" class={textLink} target="_blank" rel="noopener noreferrer">
+          argentina.gob.ar/aaip<span class="sr-only"> (se abre en una ventana nueva)</span>
+        </a>.
+      </p>
+    </section>
+
+    <section class="flex flex-col gap-4">
+      <h2 class={heading}>Cookies</h2>
+      <p class={prose}>Este sitio no usa cookies de seguimiento ni de publicidad.</p>
+    </section>
+
+    <section class="flex flex-col gap-4">
+      <h2 class={heading}>Enlaces a otros sitios</h2>
+      <p class={prose}>
+        Los enlaces a WhatsApp, Instagram, Facebook y Google Maps se rigen por las políticas de
+        esas plataformas:
+      </p>
+      <ul class={`${prose} flex flex-col gap-2`}>
+        <li>
+          <a href="https://www.whatsapp.com/legal/privacy-policy" class={`${textLink} inline-flex min-h-11 items-center`} target="_blank" rel="noopener noreferrer">
+            Política de privacidad de WhatsApp
+            <span class="sr-only"> (se abre en una ventana nueva)</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://privacycenter.instagram.com/policy/" class={`${textLink} inline-flex min-h-11 items-center`} target="_blank" rel="noopener noreferrer">
+            Política de privacidad de Instagram
+            <span class="sr-only"> (se abre en una ventana nueva)</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/privacy/policy/" class={`${textLink} inline-flex min-h-11 items-center`} target="_blank" rel="noopener noreferrer">
+            Política de privacidad de Facebook
+            <span class="sr-only"> (se abre en una ventana nueva)</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://policies.google.com/privacy" class={`${textLink} inline-flex min-h-11 items-center`} target="_blank" rel="noopener noreferrer">
+            Política de privacidad de Google
+            <span class="sr-only"> (se abre en una ventana nueva)</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <section class="flex flex-col gap-4">
+      <h2 class={heading}>Cambios a esta política</h2>
+      <p class={prose}>
+        Podemos actualizar esta política. Cuando lo hagamos, vamos a cambiar la fecha de última
+        actualización, que hoy es el {site.legal.updated}.
+      </p>
+    </section>
+  </div>
+</MainLayout>

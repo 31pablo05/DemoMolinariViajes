@@ -224,35 +224,28 @@
 }
 
 @layer components {
-  /* Mobile: un velo corto arriba para que el header se separe del cielo. */
+  /*
+   * Mobile: un velo corto arriba para el header. Abajo, el violeta queda
+   * denso detrás del texto (el lila del título necesita ~90 % para AA)
+   * y se apaga antes de la mitad de la pantalla.
+   */
   .hero-scrim {
-    background: linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--color-violet-dark) 42%, transparent) 0%,
-      transparent 18%
-    );
+    background:
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--color-violet-dark) 42%, transparent) 0%,
+        transparent 18%
+      ),
+      linear-gradient(
+        to top,
+        color-mix(in srgb, var(--color-violet-dark) 94%, transparent) 0%,
+        color-mix(in srgb, var(--color-violet-dark) 90%, transparent) 47%,
+        transparent 49.5%
+      );
   }
 
-  /*
-   * El degradado de abajo sigue al bloque de texto: denso detrás de todo el copy
-   * (el lila del título necesita ~90 % de violeta para AA sobre una foto blanca)
-   * y se apaga en los 7.5rem de arriba, así la foto queda libre.
-   */
   .hero-copy::before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    top: -7.5rem;
-    pointer-events: none;
-    background: linear-gradient(
-      to top,
-      color-mix(in srgb, var(--color-violet-dark) 94%, transparent) 0%,
-      color-mix(in srgb, var(--color-violet-dark) 90%, transparent) calc(100% - 7.5rem),
-      transparent 100%
-    );
+    content: none;
   }
 
   @media (min-width: 64rem) {
@@ -330,6 +323,13 @@
 
   [data-hero][data-ready] .hero-slide.is-active img {
     animation: hero-zoom 7s linear both;
+  }
+
+  @media (max-width: 63.999rem) {
+    [data-hero] .hero-slide:not([data-brand]) img {
+      object-position: var(--hero-focus, center top);
+      transform-origin: var(--hero-focus, center top);
+    }
   }
 
   [data-hero][data-ready][data-paused] .hero-slide.is-active img {

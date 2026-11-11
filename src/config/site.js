@@ -9,6 +9,12 @@ export const site = {
     handle: '@molinariviajes_',
     url: 'https://www.instagram.com/molinariviajes_/',
   },
+  social: {
+    facebook: {
+      // TODO: reemplazar por la URL real de la página de Facebook de Molinari Viajes.
+      url: 'https://www.facebook.com/',
+    },
+  },
   // Pendiente de confirmar con el cliente.
   whatsappNumber: '',
   // Pendiente de confirmar con el cliente.
@@ -32,6 +38,11 @@ export const site = {
   },
   legal: {
     legajo: '8608',
+    updated: '11 de noviembre de 2026',
+    // TODO: completar razón social / nombre legal.
+    legalName: '',
+    // TODO: completar CUIT.
+    cuit: '',
   },
   // Salidas confirmadas de la barra de anuncios. `name` se pinta en blanco; el resto del texto, en lila.
   // whatsapp: true usa el enlace general de WhatsApp.

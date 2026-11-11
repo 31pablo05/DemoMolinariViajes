@@ -1,80 +1,103 @@
 ---
-import { Image, getImage } from 'astro:assets';
+import { getImage } from 'astro:assets';
 import { HeartHandshake, MapPin, Users } from '@lucide/astro';
 import roma from '../../assets/images/hero/hero-roma.jpg';
+import romaMobile from '../../assets/images/hero/hero-roma-mobile.png';
 import japon from '../../assets/images/hero/hero-japon.jpg';
+import japonMobile from '../../assets/images/hero/hero-japon-mobile.png';
 import londres from '../../assets/images/hero/hero-londres.jpg';
+import londresMobile from '../../assets/images/hero/hero-londres-mobile.png';
 import nuevaYork from '../../assets/images/hero/hero-nueva-york.jpg';
+import nuevaYorkMobile from '../../assets/images/hero/hero-nueva-york-mobile.png';
 import praga from '../../assets/images/hero/hero-praga.jpg';
+import pragaMobile from '../../assets/images/hero/hero-praga-mobile.png';
 import budapest from '../../assets/images/hero/hero-budapest.jpg';
+import budapestMobile from '../../assets/images/hero/hero-budapest-mobile.png';
 import logoCielo from '../../assets/images/hero/hero-logo-cielo.png';
-import logoCieloMobile from '../../assets/images/hero/hero-logo-cielo-mobile.jpeg';
+import logoCieloMobile from '../../assets/images/hero/hero-logo-cielo-mobile.png';
 import logoTokio from '../../assets/images/hero/hero-logo-tokio.png';
-import logoTokioMobile from '../../assets/images/hero/hero-logo-tokio-mobile.jpeg';
+import logoTokioMobile from '../../assets/images/hero/hero-logo-tokio-mobile.png';
 import Button from '../ui/Button.astro';
 import Container from '../ui/Container.astro';
 import Eyebrow from '../ui/Eyebrow.astro';
 import { getGeneralWhatsAppLink } from '../../lib/whatsapp.js';
 
-function brandImage(src, widths) {
+const photoWidths = [640, 960, 1280, 1600, 1920];
+const brandWidths = [1280, 1600, 1920, 2560];
+const mobileWidths = [640, 960, 1280];
+
+function optimized(src, widths) {
   return getImage({ src, widths, sizes: '100vw', format: 'webp' });
 }
 
-const [cieloWide, cieloTall, tokioWide, tokioTall] = await Promise.all([
-  brandImage(logoCielo, [1280, 1600, 1920, 2560]),
-  brandImage(logoCieloMobile, [640, 960, 1280]),
-  brandImage(logoTokio, [1280, 1600, 1920, 2560]),
-  brandImage(logoTokioMobile, [640, 960, 1280]),
-]);
-
-const slides = [
+const definitions = [
   {
-    image: logoCielo,
-    imageMobile: logoCieloMobile,
-    wide: cieloWide,
-    tall: cieloTall,
+    desktop: logoCielo,
+    mobile: logoCieloMobile,
+    desktopWidths: brandWidths,
     alt: 'Logo de Molinari Viajes sobre un cielo con nubes',
     brand: true,
   },
   {
-    image: roma,
+    desktop: roma,
+    mobile: romaMobile,
     alt: 'El Coliseo de Roma iluminado por el sol de la tarde, bajo un cielo despejado.',
-    focus: 'object-[center_62%]',
+    focus: 'lg:object-[center_62%]',
+    focusMobile: 'center top',
   },
   {
-    image: japon,
+    desktop: japon,
+    mobile: japonMobile,
     alt: 'El monte Fuji nevado detrás de una pagoda roja, rodeada de árboles.',
-    focus: 'object-[center_42%]',
+    focus: 'lg:object-[center_42%]',
+    focusMobile: 'center top',
   },
   {
-    image: londres,
+    desktop: londres,
+    mobile: londresMobile,
     alt: 'El río Támesis en Londres al atardecer, con el Tower Bridge a la izquierda.',
-    focus: 'object-[center_58%]',
+    focus: 'lg:object-[center_58%]',
+    focusMobile: 'center top',
   },
   {
-    image: logoTokio,
-    imageMobile: logoTokioMobile,
-    wide: tokioWide,
-    tall: tokioTall,
+    desktop: logoTokio,
+    mobile: logoTokioMobile,
+    desktopWidths: brandWidths,
     alt: 'Logo de Molinari Viajes sobre una calle de Tokio de noche',
     brand: true,
   },
   {
-    image: nuevaYork,
+    desktop: nuevaYork,
+    mobile: nuevaYorkMobile,
     alt: 'Vista aérea de Manhattan y el río Hudson al anochecer, con las luces de la ciudad encendidas.',
-    focus: 'object-[center_45%]',
+    focus: 'lg:object-[center_45%]',
+    focusMobile: 'center top',
   },
   {
-    image: praga,
+    desktop: praga,
+    mobile: pragaMobile,
     alt: 'Los puentes de Praga sobre el río Moldava, con los techos rojos de la ciudad.',
-    focus: 'object-[center_70%]',
+    focus: 'lg:object-[center_70%]',
+    focusMobile: 'center top',
   },
   {
-    image: budapest,
+    desktop: budapest,
+    mobile: budapestMobile,
     alt: 'El Parlamento de Budapest iluminado de noche, a orillas del Danubio.',
-    focus: 'object-[70%_78%]',
+    focus: 'lg:object-[70%_78%]',
+    focusMobile: 'center top',
   },
 ];
+
+const slides = await Promise.all(
+  definitions.map(async ({ desktop, mobile, desktopWidths, ...slide }) => {
+    const [wide, tall] = await Promise.all([
+      optimized(desktop, desktopWidths ?? photoWidths),
+      optimized(mobile, mobileWidths),
+    ]);
+    return { ...slide, wide, tall };
+  }),
+);
 
 const trust = [
   { icon: MapPin, label: 'Oficina en Belgrano 461' },
@@ -85,7 +108,7 @@ const trust = [
 ---
 
 <section
-  class="relative isolate flex min-h-[85svh] flex-col overflow-hidden bg-violet-dark lg:block lg:h-[clamp(780px,92svh,1200px)] lg:min-h-0"
+  class="relative isolate flex h-[calc(100svh-(5.25rem+2.125rem))] flex-col overflow-hidden bg-violet-dark lg:block lg:h-[clamp(780px,92svh,1200px)] lg:min-h-0"
   aria-labelledby="hero-titulo"
   data-hero
 >
@@ -98,38 +121,35 @@ const trust = [
           data-brand={slide.brand ? '' : undefined}
           aria-hidden={i === 0 ? undefined : 'true'}
         >
-          {
-            slide.imageMobile ? (
-              <picture>
-                <source media="(min-width: 1024px)" srcset={slide.wide.srcSet.attribute} sizes="100vw" />
-                <img
-                  src={slide.tall.src}
-                  srcset={slide.tall.srcSet.attribute}
-                  alt={slide.alt}
-                  width={slide.tall.attributes.width}
-                  height={slide.tall.attributes.height}
-                  sizes="100vw"
-                  class="h-full w-full object-contain object-top lg:object-cover lg:object-center"
-                  {...(i === 0
-                    ? { fetchpriority: 'high', decoding: 'async' }
-                    : { loading: 'lazy', decoding: 'async', fetchpriority: 'low' })}
-                />
-              </picture>
-            ) : (
-              <Image
-                src={slide.image}
-                alt={slide.alt}
-                width={1920}
-                height={Math.round((1920 * slide.image.height) / slide.image.width)}
-                widths={[640, 960, 1280, 1600, 1920]}
-                sizes="100vw"
-                class:list={['h-full w-full object-cover', slide.focus]}
-                {...(i === 0
-                  ? { priority: true }
-                  : { loading: 'lazy', decoding: 'async', fetchpriority: 'low' })}
-              />
-            )
-          }
+          <picture class="relative block h-full w-full">
+            <source
+              media="(min-width: 1024px)"
+              srcset={slide.wide.srcSet.attribute}
+              sizes="100vw"
+              {...(i === 0 ? { fetchpriority: 'high' } : { fetchpriority: 'low' })}
+            />
+            <img
+              src={slide.tall.src}
+              srcset={slide.tall.srcSet.attribute}
+              alt={slide.alt}
+              width={slide.tall.attributes.width}
+              height={slide.tall.attributes.height}
+              sizes="100vw"
+              class:list={[
+                slide.brand
+                  ? 'object-cover max-lg:absolute max-lg:inset-x-0 max-lg:top-[-30%] max-lg:h-auto max-lg:w-full lg:h-full lg:w-full lg:object-center'
+                  : ['h-full w-full object-cover', slide.focus],
+              ]}
+              style={
+                slide.brand
+                  ? undefined
+                  : { '--hero-focus': slide.focusMobile ?? 'center top' }
+              }
+              {...(i === 0
+                ? { fetchpriority: 'high', decoding: 'async' }
+                : { loading: 'lazy', decoding: 'async', fetchpriority: 'low' })}
+            />
+          </picture>
         </div>
       ))
     }
@@ -139,24 +159,24 @@ const trust = [
   <div
     class="hero-copy relative z-10 mt-auto w-full lg:pointer-events-none lg:absolute lg:inset-0 lg:mt-0 lg:flex lg:items-center"
   >
-    <Container class="pb-8 lg:pt-0 lg:pb-8">
+    <Container class="pb-4 lg:pt-0 lg:pb-8">
       <div class="pointer-events-auto lg:max-w-[34rem] xl:max-w-[600px]">
         <Eyebrow tone="light" class="text-lilac-soft!">Agencia de viajes en Trelew</Eyebrow>
         <h1
           id="hero-titulo"
-          class="mt-3 font-display text-4xl leading-[1.05] font-extrabold tracking-[-0.02em] text-white lg:mt-5 lg:text-[3.5rem] xl:text-[4rem]"
+          class="mt-2 font-display text-[2rem] leading-[1.05] font-extrabold tracking-[-0.02em] text-white lg:mt-5 lg:text-[3.5rem] xl:text-[4rem]"
         >
           Viajá con la experiencia de <span class="text-lilac">Molinari Viajes</span>
         </h1>
-        <p class="mt-3 max-w-[34rem] text-lg leading-snug text-white/85 lg:mt-5 lg:text-xl lg:leading-relaxed">
+        <p class="mt-2 max-w-[34rem] text-base leading-snug text-white/85 lg:mt-5 lg:text-xl lg:leading-relaxed">
           Desde Trelew al mundo, con salidas acompañadas y asesoramiento personalizado.
         </p>
-        <div class="mt-5 flex flex-col gap-3 lg:mt-7 lg:flex-row lg:flex-wrap">
+        <div class="mt-3 flex flex-col gap-2 lg:mt-7 lg:flex-row lg:flex-wrap lg:gap-3">
           <Button
             href="#paquetes"
             variant="secondary"
             size="large"
-            class="w-full border-white! focus-visible:outline-white lg:w-auto"
+            class="w-full border-white! focus-visible:outline-white max-lg:min-h-12 lg:w-auto"
           >
             Ver paquetes
           </Button>
@@ -164,12 +184,12 @@ const trust = [
             href={getGeneralWhatsAppLink()}
             variant="whatsapp"
             size="large"
-            class="w-full focus-visible:outline-white lg:w-auto"
+            class="w-full focus-visible:outline-white max-lg:min-h-12 lg:w-auto"
           >
             Hablar por WhatsApp
           </Button>
         </div>
-        <ul class="mt-4 flex flex-col gap-1.5 text-[0.9375rem] leading-snug text-white/80 lg:mt-7 lg:flex-row lg:flex-wrap lg:gap-2.5 lg:gap-x-6">
+        <ul class="hidden text-[0.9375rem] leading-snug text-white/80 lg:mt-7 lg:flex lg:flex-row lg:flex-wrap lg:gap-2.5 lg:gap-x-6">
           {
             trust.map(({ icon: Icon, label }) => (
               <li class="flex items-center gap-2">

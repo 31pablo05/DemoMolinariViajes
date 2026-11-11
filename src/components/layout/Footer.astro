@@ -1,65 +1,47 @@
 ---
 import { Image } from 'astro:assets';
-import { MapPin, Phone } from '@lucide/astro';
+import { MapPin } from '@lucide/astro';
+import globo from '../../assets/images/brand/globo.png';
 import logoLight from '../../assets/images/brand/logo-horizontal-light.png';
-import Button from '../ui/Button.astro';
 import Container from '../ui/Container.astro';
 import WhatsAppIcon from '../ui/WhatsAppIcon.astro';
 import { site } from '../../config/site.js';
-import { getAllPackages } from '../../data/packages.js';
 import { getGeneralWhatsAppLink } from '../../lib/whatsapp.js';
 
-const path = Astro.url.pathname.replace(/\/$/, '') || '/';
-const isHome = path === '/';
 const year = new Date().getFullYear();
 const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${site.name}, ${site.address}`)}`;
 const whatsappHref = getGeneralWhatsAppLink();
 
-const links = [
-  { label: 'Inicio', href: '/', current: isHome },
-  {
-    label: 'Paquetes',
-    href: '/paquetes',
-    current: path === '/paquetes',
-  },
-  { label: 'Nosotros', href: isHome ? '#nosotros' : '/#nosotros', current: false },
-  {
-    label: 'Experiencias',
-    href: isHome ? '#experiencias' : '/#experiencias',
-    current: false,
-  },
-  {
-    label: 'Contacto',
-    href: '/contacto',
-    current: path === '/contacto' || path.startsWith('/contacto/'),
-  },
-];
-
-const packageLinks = getAllPackages()
-  .filter((pkg) => pkg.status !== 'proximamente')
-  .map((pkg) => ({
-    label: pkg.title,
-    href: `/paquetes/${pkg.slug}`,
-    current: path === `/paquetes/${pkg.slug}`,
-  }));
-
-const textLink =
-  'inline-flex min-h-12 items-center justify-center gap-2 rounded-md px-1 text-lg text-lilac-soft underline-offset-4 hover:text-white hover:underline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-white md:justify-start';
-const columnTitle = 'font-display text-lg font-semibold text-white';
-
-const instagramIcon = `<svg viewBox="0 0 24 24" aria-hidden="true" class="size-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"></circle></svg>`;
-
-function telHref(phone) {
-  return `tel:${String(phone).replace(/[^\d+]/g, '')}`;
-}
+const socialLink =
+  'inline-flex size-11 items-center justify-center rounded-full border border-white/20 text-white motion-safe:transition motion-safe:duration-200 hover:border-lilac hover:bg-lilac motion-safe:hover:-translate-y-0.5 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-white';
+const contactLink =
+  'inline-flex min-h-11 items-center gap-2 rounded-md text-[0.9375rem] leading-snug text-lilac-soft underline-offset-4 hover:text-white hover:underline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-white';
+const legalLink =
+  'inline-flex min-h-11 items-center text-sm text-lilac-soft underline-offset-4 hover:text-white hover:underline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-white';
 ---
 
-<footer class="bg-violet-dark text-white">
-  <Container class="py-14 lg:py-16">
+<footer class="relative overflow-hidden bg-violet-dark text-white">
+  <div class="h-[3px] bg-linear-to-r from-violet to-lilac" aria-hidden="true"></div>
+
+  <div
+    class="pointer-events-none absolute -right-20 -bottom-28 size-[30rem] opacity-[0.07]"
+    aria-hidden="true"
+  >
+    <Image
+      src={globo}
+      alt=""
+      width={globo.width}
+      height={globo.height}
+      class="size-full object-contain"
+      loading="lazy"
+    />
+  </div>
+
+  <Container class="relative py-8 lg:py-10">
     <div
-      class="flex flex-col items-center gap-8 border-b border-white/15 pb-10 text-center md:flex-row md:justify-between md:text-left"
+      class="flex flex-col items-center gap-6 text-center lg:grid lg:grid-cols-[minmax(0,1.15fr)_auto_auto] lg:items-center lg:gap-x-16 lg:text-left"
     >
-      <div>
+      <div class="order-1 max-w-sm lg:max-w-none">
         <a
           href="/"
           aria-label="Molinari Viajes, inicio"
@@ -71,113 +53,85 @@ function telHref(phone) {
             width={820}
             height={180}
             widths={[410, 820]}
-            sizes="280px"
+            sizes="240px"
             loading="lazy"
-            class="h-14 w-auto md:h-16"
+            class="h-16 w-auto lg:h-20"
           />
         </a>
-        <p class="mt-3 text-lg text-lilac-soft">Agencia de viajes y turismo en Trelew, Chubut.</p>
+        <p class="mt-2 text-[0.9375rem] leading-snug text-lilac-soft">
+          Agencia de viajes y turismo en Trelew, Chubut.
+        </p>
       </div>
-      <div class="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
-        <Button
-          href={whatsappHref}
-          variant="whatsapp"
-          class="w-full border-white/40! focus-visible:outline-white sm:w-auto"
-        >
-          WhatsApp
-        </Button>
-        <Button href={site.instagram.url} variant="ghost-light" class="w-full sm:w-auto">
-          <Fragment set:html={instagramIcon} />
-          Instagram
-        </Button>
-      </div>
-    </div>
 
-    <div
-      class="mt-12 grid grid-cols-1 justify-items-center gap-10 text-center md:grid-cols-3 md:justify-items-start md:gap-x-10 md:text-left"
-    >
-      <nav aria-label="Navegación">
-        <p class={columnTitle}>Navegación</p>
-        <ul class="mt-2">
-          {
-            links.map((link) => (
-              <li>
-                <a
-                  href={link.href}
-                  class={textLink}
-                  {...(link.current ? { 'aria-current': 'page' } : {})}
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </nav>
+      <ul class="order-3 flex flex-col items-center gap-1 lg:order-2 lg:items-start">
+        <li>
+          <a href={mapsUrl} class={contactLink} target="_blank" rel="noopener noreferrer">
+            <MapPin size={16} aria-hidden="true" class="shrink-0" />
+            <span>{site.address}</span>
+            <span class="sr-only"> (se abre en una ventana nueva)</span>
+          </a>
+        </li>
+        <li>
+          <a href={whatsappHref} class={contactLink} target="_blank" rel="noopener noreferrer">
+            <WhatsAppIcon size={16} />
+            <span>WhatsApp</span>
+            <span class="sr-only"> (se abre en una ventana nueva)</span>
+          </a>
+        </li>
+      </ul>
 
-      <div>
-        <p class={columnTitle}>Contacto</p>
-        <ul class="mt-2">
+      <div class="order-2 lg:order-3 lg:justify-self-end">
+        <p class="text-sm font-semibold leading-none text-white">Seguinos</p>
+        <ul class="mt-2 flex items-center justify-center gap-2.5 lg:justify-end">
           <li>
-            <a href={mapsUrl} class:list={[textLink, 'items-start py-3 text-left']} target="_blank" rel="noopener noreferrer">
-              <MapPin size={22} aria-hidden="true" class="mt-0.5 size-[22px] shrink-0" />
-              <span>{site.address}</span>
-              <span class="sr-only"> (se abre en una ventana nueva)</span>
+            <a href={site.instagram.url} class={socialLink} target="_blank" rel="noopener noreferrer">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+                <circle cx="12" cy="12" r="4"></circle>
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"></circle>
+              </svg>
+              <span class="sr-only">Instagram de Molinari Viajes (se abre en una ventana nueva)</span>
             </a>
           </li>
-          {
-            site.phones.map((phone) => (
-              <li>
-                <a href={telHref(phone)} class={textLink}>
-                  <Phone size={22} aria-hidden="true" class="size-[22px] shrink-0" />
-                  <span>{phone}</span>
-                </a>
-              </li>
-            ))
-          }
           <li>
-            <a href={whatsappHref} class={textLink} target="_blank" rel="noopener noreferrer">
-              <WhatsAppIcon size={22} />
-              <span>WhatsApp</span>
-              <span class="sr-only"> (se abre en una ventana nueva)</span>
+            <a href={site.social.facebook.url} class={socialLink} target="_blank" rel="noopener noreferrer">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+              </svg>
+              <span class="sr-only">Facebook de Molinari Viajes (se abre en una ventana nueva)</span>
+            </a>
+          </li>
+          <li>
+            <a href={whatsappHref} class={socialLink} target="_blank" rel="noopener noreferrer">
+              <WhatsAppIcon size={20} />
+              <span class="sr-only">WhatsApp de Molinari Viajes (se abre en una ventana nueva)</span>
             </a>
           </li>
         </ul>
       </div>
-
-      <nav aria-label="Paquetes">
-        <p class={columnTitle}>Paquetes</p>
-        <ul class="mt-2">
-          {
-            packageLinks.map((link) => (
-              <li>
-                <a
-                  href={link.href}
-                  class={textLink}
-                  {...(link.current ? { 'aria-current': 'page' } : {})}
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </nav>
     </div>
+  </Container>
 
-    <div
-      class="mt-12 flex flex-col items-center gap-3 border-t border-white/15 pt-6 text-center text-lilac-soft lg:flex-row lg:justify-between lg:text-left"
+  <div class="relative border-t border-white/10">
+    <Container
+      class="flex flex-col items-center gap-1.5 py-4 text-center text-lilac-soft lg:flex-row lg:justify-between lg:text-left"
     >
-      <p class="inline-flex flex-wrap items-baseline justify-center gap-x-3 gap-y-1 lg:justify-start">
-        <span>© {year} {site.name}</span>
+      <p class="text-sm leading-snug">
+        © {year} {site.name} · Agencia de turismo · Legajo {site.legal.legajo}
         {
           site.isDemo && (
-            <span class="text-sm">Sitio en versión de presentación</span>
+            <span class="ml-2.5 inline-block align-middle rounded-pill border border-white/20 px-2.5 py-0.5 text-xs leading-5 text-lilac-soft">
+              Sitio en versión de presentación
+            </span>
           )
         }
       </p>
-      <p>Agencia de turismo · Legajo {site.legal.legajo}</p>
-      <p>Sitio desarrollado por MediaDesign</p>
-    </div>
-  </Container>
+      <nav aria-label="Información legal" class="flex flex-wrap items-center justify-center gap-x-2">
+        <a href="/terminos" class={legalLink}>Términos y condiciones</a>
+        <span aria-hidden="true" class="text-sm text-lilac-soft">·</span>
+        <a href="/privacidad" class={legalLink}>Política de privacidad</a>
+      </nav>
+      <p class="text-sm leading-snug">Sitio desarrollado por MediaDesign</p>
+    </Container>
+  </div>
 </footer>
