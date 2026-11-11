@@ -9,23 +9,28 @@
 @import "@fontsource/inter/600.css";
 
 @theme {
-  /* Violeta oscuro institucional */
-  --color-violet-dark: #321344;
-  /* Violeta principal */
-  --color-violet: #642080;
-  /* Violeta intermedio */
-  --color-violet-mid: #9156ad;
-  /* Lila de marca */
-  --color-lilac: #ca86e3;
-  /* Lila suave */
-  --color-lilac-soft: #f1e5f7;
-  /* Fondo general */
-  --color-surface: #faf9fc;
-  /* Crema cálido para alternar fondos de sección */
-  --color-cream: #fbf7f2;
+  /* Violeta oscuro institucional: mismo matiz que #6f1075, mucho más oscuro. Texto y fondos oscuros. */
+  --color-violet-dark: #320b36;
+  /* Violeta principal del manual */
+  --color-violet: #6f1075;
+  /* Violeta intermedio: cejas y texto auxiliar sobre claro (AA en blanco, crema y lila suave). */
+  --color-violet-mid: #9a2aad;
+  /* Lila de marca del manual. 3.0:1 sobre blanco: solo acentos, textos grandes sobre oscuro y fondos suaves. */
+  --color-lilac: #cc69fc;
+  /* Lila suave: lavado del lila de marca para fondos de sección y chips */
+  --color-lilac-soft: #faf0ff;
+  /* Fondo general, tinte mínimo del violeta de marca */
+  --color-surface: #fbf8fb;
+  /* Crema del manual (#fffdd1) al 50 % con blanco, para no saturar las secciones de fondo. */
+  --color-cream: #fffee8;
   --color-white: #ffffff;
-  /* Texto secundario */
-  --color-muted: #5e5664;
+  /* Texto secundario, gris violeta de la misma familia */
+  --color-muted: #5a4a5e;
+  /* Acento rojo del manual. 4.43:1 sobre blanco: no usarlo en texto chico; 18 px o más en semibold, o un tono más oscuro. */
+  --color-accent: #ed0f3d;
+  /* Celestes de apoyo del manual. El claro no llega a AA sobre blanco (2.2:1): solo detalles. El profundo sí (4.93:1). */
+  --color-sky: #83b7cc;
+  --color-sky-deep: #417697;
   /* Verde de WhatsApp. #128C4A queda en 4.31:1 con blanco y no llega a AA en texto de 16 px. */
   --color-whatsapp: #0f7840;
   --color-whatsapp-hover: #0d6535;
@@ -39,12 +44,12 @@
   --radius-card-lg: 20px;
   --radius-pill: 9999px;
 
-  --shadow-rest: 0 8px 24px rgb(50 19 68 / 0.08);
-  --shadow-hover: 0 14px 32px rgb(50 19 68 / 0.14);
+  --shadow-rest: 0 8px 24px rgb(50 11 54 / 0.08);
+  --shadow-hover: 0 14px 32px rgb(50 11 54 / 0.14);
   --shadow-violet: 0 8px 20px color-mix(in srgb, var(--color-violet) 22%, transparent);
   --shadow-whatsapp: 0 8px 20px color-mix(in srgb, var(--color-whatsapp) 22%, transparent);
 
-  --container-page: 1240px;
+  --container-page: 1440px;
 
   --animate-hero-in: hero-in 0.8s ease-out both;
 
@@ -199,6 +204,28 @@
   @media (min-width: 80rem) {
     .hero-scrim {
       --hero-text-end: calc(max(0px, (100% - var(--container-page)) / 2) + 2rem + 37.5rem);
+    }
+  }
+
+  /*
+   * Diapositivas de marca: el globo está centrado, justo al lado del texto.
+   * El degradado izquierdo se mantiene denso sobre el bloque de texto y se
+   * apaga en el borde, para que el logo quede visible.
+   */
+  @media (min-width: 64rem) {
+    [data-hero] .hero-slide.is-active[data-brand] ~ .hero-scrim {
+      background:
+        linear-gradient(
+          to top,
+          color-mix(in srgb, var(--color-violet-dark) 40%, transparent) 0%,
+          transparent 30%
+        ),
+        linear-gradient(
+          90deg,
+          color-mix(in srgb, var(--color-violet-dark) 78%, transparent) 0%,
+          color-mix(in srgb, var(--color-violet-dark) 68%, transparent) var(--hero-text-end),
+          transparent calc(var(--hero-text-end) + 6%)
+        );
     }
   }
 

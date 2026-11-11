@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import { ArrowRight, HeartHandshake, MapPin, Pause, Play, Users } from '@lucide/astro';
 import roma from '../../assets/images/hero/hero-roma.jpg';
 import japon from '../../assets/images/hero/hero-japon.jpg';
@@ -7,12 +7,38 @@ import londres from '../../assets/images/hero/hero-londres.jpg';
 import nuevaYork from '../../assets/images/hero/hero-nueva-york.jpg';
 import praga from '../../assets/images/hero/hero-praga.jpg';
 import budapest from '../../assets/images/hero/hero-budapest.jpg';
+import logoCielo from '../../assets/images/hero/hero-logo-cielo.png';
+import logoCieloMobile from '../../assets/images/hero/hero-logo-cielo-mobile.jpeg';
+import logoTokio from '../../assets/images/hero/hero-logo-tokio.png';
+import logoTokioMobile from '../../assets/images/hero/hero-logo-tokio-mobile.jpeg';
 import Button from '../ui/Button.astro';
 import Container from '../ui/Container.astro';
 import Eyebrow from '../ui/Eyebrow.astro';
 import { getGeneralWhatsAppLink } from '../../lib/whatsapp.js';
 
+function brandImage(src, widths) {
+  return getImage({ src, widths, sizes: '100vw', format: 'webp' });
+}
+
+const [cieloWide, cieloTall, tokioWide, tokioTall] = await Promise.all([
+  brandImage(logoCielo, [1280, 1600, 1920, 2560]),
+  brandImage(logoCieloMobile, [640, 960, 1280]),
+  brandImage(logoTokio, [1280, 1600, 1920, 2560]),
+  brandImage(logoTokioMobile, [640, 960, 1280]),
+]);
+
 const slides = [
+  {
+    image: logoCielo,
+    imageMobile: logoCieloMobile,
+    wide: cieloWide,
+    tall: cieloTall,
+    alt: 'Logo de Molinari Viajes sobre un cielo con nubes',
+    destination: 'Molinari Viajes',
+    href: '/paquetes',
+    linkText: 'Ver paquetes',
+    brand: true,
+  },
   {
     image: roma,
     alt: 'El Coliseo de Roma iluminado por el sol de la tarde, bajo un cielo despejado.',
@@ -33,6 +59,17 @@ const slides = [
     destination: 'Gran Bretaña',
     href: '/paquetes',
     focus: 'object-[center_58%]',
+  },
+  {
+    image: logoTokio,
+    imageMobile: logoTokioMobile,
+    wide: tokioWide,
+    tall: tokioTall,
+    alt: 'Logo de Molinari Viajes sobre una calle de Tokio de noche',
+    destination: 'Molinari Viajes',
+    href: '/paquetes',
+    linkText: 'Ver paquetes',
+    brand: true,
   },
   {
     image: nuevaYork,
@@ -82,20 +119,42 @@ const toggleClass =
           data-slide
           data-destination={slide.destination}
           data-href={slide.href}
+          data-link-text={slide.linkText}
+          data-brand={slide.brand ? '' : undefined}
           aria-hidden={i === 0 ? undefined : 'true'}
         >
-          <Image
-            src={slide.image}
-            alt={slide.alt}
-            width={1920}
-            height={Math.round((1920 * slide.image.height) / slide.image.width)}
-            widths={[640, 960, 1280, 1600, 1920]}
-            sizes="100vw"
-            class:list={['h-full w-full object-cover', slide.focus]}
-            {...(i === 0
-              ? { priority: true }
-              : { loading: 'lazy', decoding: 'async', fetchpriority: 'low' })}
-          />
+          {
+            slide.imageMobile ? (
+              <picture>
+                <source media="(min-width: 768px)" srcset={slide.wide.srcSet.attribute} sizes="100vw" />
+                <img
+                  src={slide.tall.src}
+                  srcset={slide.tall.srcSet.attribute}
+                  alt={slide.alt}
+                  width={slide.tall.attributes.width}
+                  height={slide.tall.attributes.height}
+                  sizes="100vw"
+                  class="h-full w-full object-cover object-center"
+                  {...(i === 0
+                    ? { fetchpriority: 'high', decoding: 'async' }
+                    : { loading: 'lazy', decoding: 'async', fetchpriority: 'low' })}
+                />
+              </picture>
+            ) : (
+              <Image
+                src={slide.image}
+                alt={slide.alt}
+                width={1920}
+                height={Math.round((1920 * slide.image.height) / slide.image.width)}
+                widths={[640, 960, 1280, 1600, 1920]}
+                sizes="100vw"
+                class:list={['h-full w-full object-cover', slide.focus]}
+                {...(i === 0
+                  ? { priority: true }
+                  : { loading: 'lazy', decoding: 'async', fetchpriority: 'low' })}
+              />
+            )
+          }
         </div>
       ))
     }
@@ -155,7 +214,81 @@ const toggleClass =
       mediaBox,
     ]}
   >
-    
+    <Container class="relative h-full">
+      <div
+        class="absolute inset-x-5 bottom-9 flex flex-col items-start gap-1 md:inset-x-8 lg:pointer-events-auto lg:inset-x-auto lg:right-8 lg:bottom-10 lg:w-[19rem] lg:items-stretch lg:gap-0 lg:rounded-card lg:border lg:border-white/15 lg:bg-violet-dark/70 lg:px-5 lg:pt-4 lg:pb-1 lg:backdrop-blur-md"
+      >
+        <div
+          class="pointer-events-auto rounded-pill bg-violet-dark/75 px-4 py-2 backdrop-blur-md lg:rounded-none lg:bg-transparent lg:p-0 lg:backdrop-blur-none"
+        >
+          <p class="hidden text-[0.8125rem] leading-none font-semibold tracking-[0.14em] text-lilac-soft uppercase lg:block">
+            Conocé con Molinari
+          </p>
+          <p
+            class="font-display text-base leading-tight font-bold text-white motion-safe:transition-opacity motion-safe:duration-500 lg:mt-2 lg:text-[1.375rem]"
+            data-hero-name
+          >
+            {first.destination}
+          </p>
+          <a
+            href={first.href}
+            class="mt-1 hidden min-h-12 items-center gap-1.5 font-semibold text-white underline-offset-4 hover:underline focus-visible:outline-white lg:inline-flex"
+            data-hero-link
+          >
+            <span data-hero-link-text>{first.linkText ?? 'Ver viaje'}</span>
+            <span class="sr-only" data-hero-link-label>
+              {first.linkText ? '' : `a ${first.destination}`}
+            </span>
+            <ArrowRight size={18} aria-hidden="true" />
+          </a>
+        </div>
+
+        <div class="hidden w-full items-center gap-3 group-data-ready/hero:flex">
+          <div class="pointer-events-auto flex flex-1 gap-1.5" role="group" aria-label="Fotos de destinos">
+            {
+              slides.map((slide, i) => (
+                <button
+                  type="button"
+                  class:list={[
+                    'group/segment flex h-11 flex-1 cursor-pointer items-center focus-visible:outline-white',
+                    i === 0 && 'is-active',
+                  ]}
+                  aria-label={`Ver foto de ${slide.destination}`}
+                  aria-current={i === 0 ? 'true' : undefined}
+                  data-segment
+                >
+                  <span class="relative block h-[3px] w-full overflow-hidden rounded-pill bg-white/35 group-hover/segment:bg-white/55">
+                    <span class="hero-fill absolute inset-0 rounded-pill bg-white" data-fill />
+                  </span>
+                </button>
+              ))
+            }
+          </div>
+          <button
+            type="button"
+            class:list={[toggleClass, 'hidden lg:group-data-ready/hero:inline-flex']}
+            aria-label="Pausar fotos"
+            data-hero-toggle
+          >
+            <span data-icon-pause class="inline-flex"><Pause size={20} aria-hidden="true" /></span>
+            <span data-icon-play class="inline-flex" hidden><Play size={20} aria-hidden="true" /></span>
+          </button>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        class:list={[
+          toggleClass,
+          'absolute top-4 right-5 hidden group-data-ready/hero:inline-flex md:right-8 lg:hidden!',
+        ]}
+        aria-label="Pausar fotos"
+        data-hero-toggle
+      >
+        <span data-icon-pause class="inline-flex"><Pause size={20} aria-hidden="true" /></span>
+        <span data-icon-play class="inline-flex" hidden><Play size={20} aria-hidden="true" /></span>
+      </button>
+    </Container>
   </div>
 
   <p class="sr-only" aria-live="polite" data-hero-live></p>
@@ -185,8 +318,11 @@ const toggleClass =
 
     function updateName(slide) {
       const destination = slide.dataset.destination ?? '';
+      const linkText = slide.dataset.linkText || 'Ver viaje';
       if (link instanceof HTMLAnchorElement) link.href = slide.dataset.href ?? '/paquetes';
-      if (linkLabel) linkLabel.textContent = `a ${destination}`;
+      const linkWords = hero.querySelector('[data-hero-link-text]');
+      if (linkWords) linkWords.textContent = linkText;
+      if (linkLabel) linkLabel.textContent = linkText === 'Ver viaje' ? `a ${destination}` : '';
       if (!(name instanceof HTMLElement)) return;
       if (reduceMotion.matches) {
         name.textContent = destination;

@@ -48,12 +48,12 @@ const photoInfo = {
 };
 
 const layout = [
-  { item: 'col-span-2 md:row-span-2', image: 'aspect-[4/3]', sizes: '(min-width: 1024px) 820px, (min-width: 768px) 66vw, 100vw' },
-  { item: 'lg:row-span-2', image: 'aspect-square', sizes: '(min-width: 1024px) 400px, (min-width: 768px) 33vw, 50vw' },
-  { item: '', image: 'aspect-square', sizes: '(min-width: 1024px) 300px, (min-width: 768px) 33vw, 50vw' },
-  { item: '', image: 'aspect-square', sizes: '(min-width: 1024px) 300px, (min-width: 768px) 33vw, 50vw' },
-  { item: 'lg:col-span-2', image: 'aspect-square', sizes: '(min-width: 1024px) 600px, (min-width: 768px) 33vw, 50vw' },
-  { item: 'hidden md:block lg:col-span-2', image: 'aspect-square', sizes: '(min-width: 1024px) 600px, 33vw' },
+  { item: 'col-span-2 md:row-span-2', image: 'aspect-[4/3]', sizes: '(min-width: 1280px) 720px, (min-width: 1024px) 560px, (min-width: 768px) 66vw, 100vw' },
+  { item: 'lg:row-span-2', image: 'aspect-square', sizes: '(min-width: 1280px) 360px, (min-width: 1024px) 280px, (min-width: 768px) 33vw, 50vw' },
+  { item: '', image: 'aspect-square', sizes: '(min-width: 1280px) 360px, (min-width: 1024px) 280px, (min-width: 768px) 33vw, 50vw' },
+  { item: '', image: 'aspect-square', sizes: '(min-width: 1280px) 360px, (min-width: 1024px) 280px, (min-width: 768px) 33vw, 50vw' },
+  { item: 'lg:col-span-2', image: 'aspect-square', sizes: '(min-width: 1280px) 720px, (min-width: 1024px) 560px, (min-width: 768px) 33vw, 50vw' },
+  { item: 'hidden md:block lg:col-span-2', image: 'aspect-square', sizes: '(min-width: 1280px) 720px, (min-width: 1024px) 560px, 33vw' },
 ];
 
 const photos = Object.entries(photoInfo)
@@ -100,7 +100,7 @@ const instagramIcon = `<svg viewBox="0 0 24 24" aria-hidden="true" class="size-5
     <GalleryLightbox client:visible images={lightboxImages}>
       {
         photos.length > 0 && (
-          <ul class="mt-10 grid grid-cols-2 gap-4 md:mt-12 md:auto-rows-[220px] md:grid-cols-3 lg:auto-rows-[260px] lg:grid-cols-4">
+          <ul class="mt-10 grid grid-cols-2 gap-4 md:mt-12 md:auto-rows-[220px] md:grid-cols-3 lg:auto-rows-[300px] lg:grid-cols-4">
             {photos.map((photo, index) => (
               <li class:list={['relative overflow-hidden rounded-card-lg bg-lilac-soft', layout[index].item]}>
                 <button
