@@ -308,7 +308,7 @@
   .hero-slide {
     opacity: 0;
     z-index: 0;
-    transition: opacity 1.5s ease-in-out;
+    transition: opacity var(--hero-fade-duration, 1s) ease-in-out;
   }
 
   .hero-slide.is-leaving {
@@ -322,7 +322,7 @@
   }
 
   [data-hero][data-ready] .hero-slide.is-active img {
-    animation: hero-zoom 7s linear both;
+    animation: hero-zoom var(--hero-slide-duration, 5s) linear both;
   }
 
   @media (max-width: 63.999rem) {

@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import { Menu, X } from '@lucide/astro';
 import Button from '../ui/Button.astro';
 import logo from '../../assets/images/brand/logo-horizontal.png';
+import logoMark from '../../assets/images/brand/logo-wordmark.png';
 import { site } from '../../config/site.js';
 import { getGeneralWhatsAppLink } from '../../lib/whatsapp.js';
 
@@ -33,12 +34,12 @@ const links = [
 
 <header class="group/header sticky top-0 z-40" data-site-header>
   <div
-    class="absolute inset-0 -z-10 border-b border-lilac-soft/70 bg-white/92 backdrop-blur-md motion-safe:transition-shadow motion-safe:duration-300 group-data-scrolled/header:shadow-[0_6px_20px_color-mix(in_srgb,var(--color-violet-dark)_7%,transparent)]"
+    class="absolute inset-0 -z-10 border-b border-violet/8 bg-white/92 backdrop-blur-md motion-safe:transition-shadow motion-safe:duration-300 motion-safe:ease-out group-data-scrolled/header:shadow-[0_6px_20px_color-mix(in_srgb,var(--color-violet-dark)_7%,transparent)]"
     aria-hidden="true"
   >
   </div>
   <div
-    class="mx-auto flex h-21 max-w-page items-center justify-between gap-4 px-5 motion-safe:transition-[height] motion-safe:duration-300 group-data-scrolled/header:h-17 md:px-8"
+    class="mx-auto flex h-21 max-w-page items-center justify-between gap-4 px-5 motion-safe:transition-[height] motion-safe:duration-300 motion-safe:ease-out group-data-scrolled/header:h-17 md:px-8 lg:grid lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:gap-x-8"
   >
     <a href="/" class="inline-flex min-h-12 shrink-0 items-center rounded-card">
       <Image
@@ -48,22 +49,31 @@ const links = [
         height={52}
         densities={[2]}
         loading="eager"
-        class="h-10 w-auto lg:h-13"
+        class="h-10 w-auto lg:hidden"
+      />
+      <Image
+        src={logoMark}
+        alt="Molinari Viajes, inicio"
+        width={551}
+        height={149}
+        densities={[2]}
+        loading="eager"
+        class="hidden w-auto motion-safe:transition-[height] motion-safe:duration-300 motion-safe:ease-out lg:block lg:h-14 lg:group-data-scrolled/header:h-[46px]"
       />
     </a>
 
-    <nav class="hidden lg:flex lg:items-center" aria-label="Principal">
+    <nav class="hidden lg:flex lg:items-center lg:justify-center lg:gap-x-4 xl:gap-x-6" aria-label="Principal">
       {
         links.map((link) => (
           <a
             href={link.href}
-            class="group/link relative inline-flex min-h-12 items-center px-3 font-body text-base font-semibold text-violet-dark xl:px-4"
+            class="group/link relative inline-flex min-h-12 items-center px-3.5 font-body text-base font-semibold text-violet-dark"
             {...(link.current ? { 'aria-current': 'page' } : {})}
           >
             {link.label}
             <span
               class:list={[
-                'absolute inset-x-3 bottom-1.5 h-0.5 origin-center rounded-pill bg-violet motion-safe:transition-transform motion-safe:duration-200 xl:inset-x-4',
+                'absolute inset-x-3.5 bottom-1.5 h-0.5 origin-center rounded-pill bg-violet motion-safe:transition-transform motion-safe:duration-200',
                 link.current
                   ? 'scale-x-100'
                   : 'scale-x-0 group-hover/link:scale-x-100 group-focus-visible/link:scale-x-100',
@@ -78,7 +88,11 @@ const links = [
 
     <div class="flex items-center">
       <div class="hidden lg:block">
-        <Button href={whatsappHref} variant="whatsapp" class="shrink-0">
+        <Button
+          href={whatsappHref}
+          variant="whatsapp"
+          class="h-[46px]! min-h-[46px]! shrink-0 shadow-none! hover:shadow-none! active:shadow-none!"
+        >
           <span class="xl:hidden">WhatsApp</span>
           <span class="hidden xl:inline">Consultanos por WhatsApp</span>
         </Button>

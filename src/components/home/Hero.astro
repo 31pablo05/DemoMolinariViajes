@@ -228,6 +228,9 @@ const desktopReadability =
 </section>
 
 <script>
+  const SLIDE_DURATION_MS = 5000;
+  const FADE_DURATION_MS = 1000;
+
   const hero = document.querySelector('[data-hero]');
 
   if (hero instanceof HTMLElement) {
@@ -236,6 +239,8 @@ const desktopReadability =
     let index = 0;
     let holding = false;
 
+    hero.style.setProperty('--hero-slide-duration', `${SLIDE_DURATION_MS}ms`);
+    hero.style.setProperty('--hero-fade-duration', `${FADE_DURATION_MS}ms`);
     hero.toggleAttribute('data-ready', true);
 
     function updatePaused() {
@@ -272,7 +277,7 @@ const desktopReadability =
         window.setTimeout(() => {
           current.classList.remove('is-leaving');
           currentImg?.style.removeProperty('scale');
-        }, 1600),
+        }, FADE_DURATION_MS + 100),
       );
 
       window.clearTimeout(leaveTimers.get(target));
