@@ -57,6 +57,6 @@ export const site = {
     },
   ],
   domain,
-  url: `https://${domain}`,
+  url: 'https://demomolinariviajes.vercel.app',
   isDemo: true,
 };
