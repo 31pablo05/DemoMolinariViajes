@@ -1,6 +1,7 @@
 ---
 import { Info } from '@lucide/astro';
 import Container from '../../components/ui/Container.astro';
+import PackageDepartures from '../../components/packages/PackageDepartures.astro';
 import PackageFacts from '../../components/packages/PackageFacts.astro';
 import PackageFaq from '../../components/packages/PackageFaq.astro';
 import PackageGallery from '../../components/packages/PackageGallery.astro';
@@ -93,6 +94,7 @@ const touristTrip = {
             )
           }
 
+          <PackageDepartures departures={pkg.departures} />
           <PackageItinerary itinerary={pkg.itinerary} />
           <PackageServices included={pkg.included} excluded={pkg.excluded} />
           <PackageGallery gallery={pkg.gallery} />

@@ -7,6 +7,7 @@ import { getPackageWhatsAppLink } from '../../lib/whatsapp.js';
 
 const { pkg, variant = 'horizontal' } = Astro.props;
 const vertical = variant === 'vertical';
+const flyer = variant === 'flyer';
 const href = `/paquetes/${pkg.slug}`;
 const whatsappHref = getPackageWhatsAppLink(pkg.title);
 const isComing = pkg.status === 'proximamente';
@@ -32,7 +33,23 @@ const buttonArrow = 'motion-safe:group-hover/card:[&_.lucide-arrow-right]:transl
   class="group/card relative flex h-full flex-col overflow-hidden rounded-3xl bg-white shadow-[0_24px_56px_-24px_color-mix(in_srgb,var(--color-violet-dark)_24%,transparent)] motion-safe:transition motion-safe:duration-300 motion-safe:ease-out motion-safe:hover:-translate-y-1.5 motion-safe:hover:shadow-[0_32px_64px_-24px_color-mix(in_srgb,var(--color-violet-dark)_32%,transparent)]"
 >
   {
-    vertical ? (
+    flyer ? (
+      <a
+        href={href}
+        class="relative block aspect-[4/5] overflow-hidden bg-white focus-visible:outline-offset-[-3px]"
+      >
+        <Image
+          src={pkg.flyer}
+          alt={pkg.flyerAlt}
+          width={1080}
+          height={1350}
+          widths={[480, 720, 960, 1080]}
+          sizes="(min-width: 1024px) 420px, (min-width: 768px) 50vw, 100vw"
+          loading="lazy"
+          class="block h-full w-full object-contain"
+        />
+      </a>
+    ) : vertical ? (
       <div class="isolate grid aspect-[4/5] overflow-hidden">
         <Image
           src={pkg.image}
@@ -85,7 +102,12 @@ const buttonArrow = 'motion-safe:group-hover/card:[&_.lucide-arrow-right]:transl
     )
   }
 
-  <div class="pointer-events-none absolute top-4 left-4 z-10 flex max-w-[calc(100%-2rem)] flex-wrap gap-2">
+  <div
+    class:list={[
+      'pointer-events-none absolute top-4 left-4 z-10 flex max-w-[calc(100%-2rem)] flex-wrap gap-2',
+      flyer && 'hidden',
+    ]}
+  >
     {
       pkg.accompanied && (
         <Badge class="gap-1.5 bg-white! text-violet-dark! shadow-rest">
@@ -97,9 +119,9 @@ const buttonArrow = 'motion-safe:group-hover/card:[&_.lucide-arrow-right]:transl
     {isLastSpots && <Badge class="bg-lilac! text-violet-dark!">Últimos lugares</Badge>}
   </div>
 
-  <div class:list={['flex flex-1 flex-col', vertical ? 'p-4 sm:p-5' : 'p-5 sm:p-6']}>
+  <div class:list={['flex flex-1 flex-col', vertical || flyer ? 'p-4 sm:p-5' : 'p-5 sm:p-6']}>
     {
-      !vertical && (
+      !vertical && !flyer && (
         <>
           <h3 class="font-display text-2xl leading-tight font-bold text-violet-dark md:text-[1.625rem]">
             {isComing ? (
@@ -125,7 +147,7 @@ const buttonArrow = 'motion-safe:group-hover/card:[&_.lucide-arrow-right]:transl
       )
     }
 
-    <div class:list={['flex gap-3', vertical ? '' : 'mt-auto pt-6']}>
+    <div class:list={['flex gap-3', vertical || flyer ? '' : 'mt-auto pt-6']}>
       {
         isComing ? (
           <Button href={whatsappHref} variant="whatsapp-outline" class="relative z-10 w-full">

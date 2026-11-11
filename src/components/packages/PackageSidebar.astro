@@ -16,10 +16,10 @@ const modality = isPending(pkg.modality) ? [] : [{ label: 'Modalidad', value: pk
 const facts = datesPending
   ? [{ label: 'Fechas', value: 'Consultá disponibilidad' }, ...modality]
   : [
-      { label: 'Fecha de salida', value: pkg.departureDate },
-      { label: 'Duración', value: pkg.duration },
+      !isPending(pkg.departureDate) && { label: 'Fecha de salida', value: pkg.departureDate },
+      !isPending(pkg.duration) && { label: 'Duración', value: pkg.duration },
       ...modality,
-    ];
+    ].filter(Boolean);
 
 function telHref(phone) {
   return `tel:${String(phone).replace(/[^\d+]/g, '')}`;

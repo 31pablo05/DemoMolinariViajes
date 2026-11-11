@@ -1,0 +1,44 @@
+---
+const { departures = [] } = Astro.props;
+const sectionTitle = 'font-display text-3xl leading-tight font-bold text-violet-dark md:text-4xl';
+---
+
+{
+  departures.length > 0 && (
+    <section aria-labelledby="salidas-titulo">
+      <h2 id="salidas-titulo" class={sectionTitle}>
+        Salidas y precios
+      </h2>
+      <div class="mt-6 overflow-x-auto">
+        <table class="w-full border-collapse text-left">
+          <caption class="sr-only">Salidas con precio por persona</caption>
+          <thead>
+            <tr class="border-b border-lilac-soft">
+              <th scope="col" class="py-3 pr-4 text-base font-semibold text-muted">
+                Desde
+              </th>
+              <th scope="col" class="py-3 pr-4 text-base font-semibold text-muted">
+                Fecha
+              </th>
+              <th scope="col" class="py-3 text-base font-semibold text-muted">
+                Precio por persona
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {departures.map((item) => (
+              <tr class="border-b border-lilac-soft">
+                <th scope="row" class="py-4 pr-4 text-lg font-semibold text-violet-dark">
+                  {item.city}
+                </th>
+                <td class="py-4 pr-4 text-lg text-violet-dark">{item.date}</td>
+                <td class="py-4 font-display text-xl font-bold text-accent">{item.price}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-4 text-lg text-muted">Precios por persona. Consultanos por disponibilidad.</p>
+    </section>
+  )
+}

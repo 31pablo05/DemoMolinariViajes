@@ -11,7 +11,7 @@ const cardTitle = 'font-display text-2xl leading-tight font-bold text-violet-dar
   (hasIncluded || hasExcluded) && (
     <div class="grid gap-6 md:grid-cols-2 md:gap-6">
       {hasIncluded && (
-        <section class="rounded-card-lg bg-lilac-soft p-6 md:p-8" aria-labelledby="incluye-titulo">
+        <section class:list={['rounded-card-lg bg-lilac-soft p-6 md:p-8', !hasExcluded && 'md:col-span-2']} aria-labelledby="incluye-titulo">
           <h2 id="incluye-titulo" class={cardTitle}>
             Qué incluye
           </h2>

@@ -20,11 +20,16 @@ const facts = datesPending
       { label: 'Fechas', value: 'Consultá disponibilidad', icon: CalendarSearch, wide: true },
     ]
   : [
-      { label: 'Fecha de salida', value: pkg.departureDate, icon: Calendar },
-      { label: 'Duración', value: pkg.duration, icon: Clock },
+      !isPending(pkg.departureDate) && {
+        label: 'Fecha de salida',
+        value: pkg.departureDate,
+        icon: Calendar,
+        wide: Array.isArray(pkg.departures) && pkg.departures.length > 1,
+      },
+      !isPending(pkg.duration) && { label: 'Duración', value: pkg.duration, icon: Clock },
       ...modality,
       { label: 'Destinos', value: String(destinationCount), icon: MapPin },
-    ];
+    ].filter(Boolean);
 ---
 
 <Container class="relative z-20 -mt-6">

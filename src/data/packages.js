@@ -21,6 +21,9 @@ import franciaCover from '../assets/images/destinations/francia-bretana.jpg';
 import francia01 from '../assets/images/destinations/francia-bretana/01.jpg';
 import francia02 from '../assets/images/destinations/francia-bretana/02.jpg';
 import francia03 from '../assets/images/destinations/francia-bretana/03.jpg';
+import flyerCartagena from '../assets/images/flyers/flyer-cartagena.jpeg';
+import flyerJapon from '../assets/images/flyers/flyer-japon.jpeg';
+import flyerEuropa from '../assets/images/flyers/flyer-europa.jpeg';
 
 function gallery(photos) {
   return photos.map(([src, alt]) => ({ src, alt }));
@@ -128,9 +131,12 @@ const packages = [
     shortDescription:
       'Del Japón de templos y cerezos a la energía de Nueva York: Tokio, Kioto y la Gran Manzana en un mismo viaje.',
     description:
-      'Un viaje que reúne dos mundos: el pulso de Tokio, la calma de los templos de Kioto y la energía de Nueva York. Viajás en grupo y con la coordinación de Molinari, para vivir cada destino con tranquilidad y sin preocuparte por la organización.',
+      'Un viaje que reúne dos mundos: el pulso de Tokio, la calma de los templos de Kioto y la energía de Nueva York. Salida en marzo de 2027, con extensión a Nueva York. El grupo viaja acompañado por Héctor y Mónica. Viajás en grupo y con la coordinación de Molinari, para vivir cada destino con tranquilidad y sin preocuparte por la organización.',
     image: japonCover,
     imageAlt: 'La torre de Tokio y el Empire State de Nueva York, iluminados al anochecer.',
+    flyer: flyerJapon,
+    flyerAlt:
+      'Flyer del viaje a Japón y Nueva York, salida en marzo de 2027 con extensión a Nueva York.',
     gallery: gallery([
       [japon01, 'Torii rojos entre cerezos en flor, con visitantes recorriendo el sendero.'],
       [japon02, 'El Empire State y el skyline de Nueva York al atardecer.'],
@@ -138,7 +144,7 @@ const packages = [
       [japon04, 'Una pagoda, el monte Fuji y el Coliseo entre cerezos en flor.'],
     ]),
     destinations: ['Tokio', 'Kioto', 'Nueva York'],
-    departureDate: 'A confirmar',
+    departureDate: 'Marzo 2027',
     duration: 'A confirmar',
     modality: 'Salida acompañada',
     accompanied: true,
@@ -183,10 +189,11 @@ const packages = [
       },
     ],
     included: [
-      'Acompañamiento de un coordinador durante el viaje.',
-      'Alojamiento según el programa que se confirme.',
-      'Traslados previstos entre las ciudades del recorrido.',
-      'Desayunos.',
+      'Hoteles céntricos.',
+      'Traslados.',
+      'Visitas.',
+      'Comidas según itinerario.',
+      'Acompañamiento.',
     ],
     excluded: [
       'Vuelos, salvo que el programa confirmado los incluya.',
@@ -195,12 +202,12 @@ const packages = [
       'Todo lo que no esté escrito en el programa confirmado.',
     ],
     importantInfo:
-      'Fechas, documentación, horarios y servicios se confirman con Molinari antes de reservar. Los valores y las formas de pago se consultan directamente con la agencia.',
+      'Salida en marzo de 2027, con extensión a Nueva York. Consultanos por disponibilidad. La documentación y los horarios se confirman con Molinari antes de reservar.',
     faq: [
       {
         question: '¿Cuáles son las próximas fechas?',
         answer:
-          'La agencia comunica las fechas de salida cuando el programa está cerrado. Escribinos por WhatsApp y te avisamos.',
+          'La salida es en marzo de 2027, con extensión a Nueva York. Consultanos por disponibilidad.',
       },
       {
         question: '¿El viaje incluye Japón y Nueva York en la misma salida?',
@@ -312,79 +319,46 @@ const packages = [
     slug: 'europa-central',
     title: 'Europa Central',
     shortDescription:
-      'Berlín, Praga, Viena, Budapest y Salzburgo, con cierre en Venecia y Roma: un recorrido por el corazón de Europa.',
+      'Madrid, Berlín, Dresde, Praga, Viena y Salzburgo, con cierre en Venecia y Roma: un recorrido por Europa en septiembre de 2027.',
     description:
-      'Un viaje que une las grandes capitales de Europa central con dos joyas de Italia: la historia de Berlín, los puentes y las cúpulas de Praga, la música de Viena y Salzburgo, el Danubio en Budapest, los canales de Venecia y el final en Roma. Molinari te asesora en cada paso para que lo disfrutes sin preocupaciones.',
+      'Un recorrido por Madrid, Berlín, Dresde, Praga, Viena y Salzburgo, con cierre en Venecia y Roma. Salida en septiembre de 2027, en grupos cerrados de la empresa. Molinari te asesora en cada paso para que lo disfrutes sin preocupaciones.',
     image: europaCentralCover,
     imageAlt: 'El Coliseo de Roma al atardecer, entre cipreses.',
+    flyer: flyerEuropa,
+    flyerAlt: 'Flyer del viaje a Europa Central, salida en septiembre de 2027.',
     gallery: gallery([
       [europaCentral01, 'El Coliseo de Roma al atardecer, entre cipreses.'],
       [europaCentral02, 'La torre Eiffel al atardecer, junto al Sena y un puente de París.'],
       [europaCentral03, 'Una góndola frente a la basílica de Santa Maria della Salute, en Venecia.'],
     ]),
-    destinations: ['Berlín', 'Praga', 'Viena', 'Budapest', 'Salzburgo', 'Venecia', 'Roma'],
-    departureDate: 'A confirmar',
+    destinations: ['Madrid', 'Berlín', 'Dresde', 'Praga', 'Viena', 'Salzburgo', 'Venecia', 'Roma'],
+    departureDate: 'Septiembre 2027',
     duration: 'A confirmar',
-    modality: 'A confirmar',
-    accompanied: false,
+    modality: 'Salida acompañada',
+    accompanied: true,
     featured: false,
     status: 'disponible',
-    itinerary: [
-      {
-        day: 1,
-        title: 'Berlín',
-        description: 'Llegada y primer paseo por la ciudad.',
-      },
-      {
-        day: 2,
-        title: 'Praga',
-        description: 'Traslado y recorrido por el centro histórico.',
-      },
-      {
-        day: 3,
-        title: 'Viena',
-        description: 'Un día para recorrer el centro de la ciudad.',
-      },
-      {
-        day: 4,
-        title: 'Budapest',
-        description: 'Tiempo para recorrer Buda y Pest, a los dos lados del Danubio.',
-      },
-      {
-        day: 5,
-        title: 'Salzburgo y Venecia',
-        description:
-          'Tramo entre las dos ciudades. Los tiempos de viaje se confirman en el programa final.',
-      },
-      {
-        day: 6,
-        title: 'Roma',
-        description: 'Cierre del recorrido, con tiempo libre.',
-      },
-    ],
+    itinerary: [],
     included: [
-      'Alojamiento según el programa que se confirme.',
-      'Traslados previstos entre las ciudades del recorrido.',
-      'Desayunos.',
+      'Aéreo.',
+      'Hoteles céntricos en cada ciudad.',
+      'Desayunos y cenas.',
+      'Acompañamiento.',
+      'Asistencia.',
     ],
-    excluded: [
-      'Vuelos, salvo que el programa confirmado los incluya.',
-      'Comidas no detalladas en el programa.',
-      'Gastos personales.',
-      'Todo lo que no esté escrito en el programa confirmado.',
-    ],
+    excluded: [],
     importantInfo:
-      'La modalidad del viaje, las fechas y los servicios se confirman con Molinari antes de reservar. Los valores y las formas de pago se consultan directamente con la agencia.',
+      'Salida en septiembre de 2027. Grupos cerrados de la empresa. Consultanos por disponibilidad.',
     faq: [
       {
         question: '¿Es una salida acompañada?',
         answer:
-          'La modalidad se confirma con la agencia. Escribinos por WhatsApp y te contamos cómo se organiza.',
+          'Sí. Incluye acompañamiento y es un grupo cerrado de la empresa. Consultanos por disponibilidad.',
       },
       {
-        question: '¿El itinerario visita todas las ciudades?',
+        question: '¿Qué ciudades recorre?',
         answer:
-          'El recorrido final se confirma con la agencia, junto con el programa día por día.',
+          'Madrid, Berlín, Dresde, Praga, Viena, Salzburgo, Venecia y Roma.',
       },
       {
         question: '¿Dónde consulto el valor y la forma de pago?',
@@ -482,6 +456,40 @@ const packages = [
     isDemo: true,
   },
   {
+    id: 'cartagena',
+    slug: 'cartagena',
+    title: 'Cartagena de Indias',
+    shortDescription:
+      'Siete noches all inclusive en el Hotel Cartagena Plaza: una escapada al Caribe con el respaldo y la atención de Molinari Viajes.',
+    description:
+      'Cartagena de Indias, con siete noches all inclusive en el Hotel Cartagena Plaza. Una escapada al Caribe con el respaldo y la atención de Molinari Viajes.',
+    // Portada provisoria: no hay foto de Cartagena. Es la aurora de la galería de Francia y Bretaña.
+    image: francia03,
+    imageAlt: 'Aurora boreal verde sobre montañas nevadas y un lago. Foto provisoria, a reemplazar por una de Cartagena.',
+    flyer: flyerCartagena,
+    flyerAlt:
+      'Flyer del viaje a Cartagena, 7 noches all inclusive, salidas enero y febrero 2027.',
+    gallery: [],
+    destinations: ['Cartagena de Indias'],
+    departureDate: '22/01, 26/01 y 05/02/2027',
+    duration: '7 noches',
+    modality: 'A confirmar',
+    accompanied: false,
+    featured: false,
+    status: 'disponible',
+    departures: [
+      { city: 'Córdoba', date: '05/02/2027', price: 'USD 1.520' },
+      { city: 'Buenos Aires', date: '26/01/2027', price: 'USD 1.690' },
+      { city: 'Mendoza', date: '22/01/2027', price: 'USD 1.570' },
+    ],
+    itinerary: [],
+    included: ['Aéreo.', 'Hotel Cartagena Plaza.', 'All inclusive.', 'Traslados.', 'Asistencia.'],
+    excluded: [],
+    importantInfo: 'Precios por persona. Consultanos por disponibilidad.',
+    faq: [],
+    isDemo: false,
+  },
+  {
     id: 'proximamente',
     slug: 'proximamente',
     title: 'Destino a confirmar',
@@ -511,7 +519,8 @@ const packages = [
   },
 ];
 
-const featuredSlugs = ['europa-clasica', 'japon-nueva-york', 'egipto'];
+// La home muestra los tres paquetes con flyer. El flag `featured` no cambia: el catálogo lo usa para ordenar.
+const featuredSlugs = ['cartagena', 'japon-nueva-york', 'europa-central'];
 
 export function getAllPackages() {
   return packages;
@@ -519,7 +528,7 @@ export function getAllPackages() {
 
 export function getFeaturedPackages() {
   return featuredSlugs
-    .map((slug) => packages.find((item) => item.slug === slug && item.featured))
+    .map((slug) => packages.find((item) => item.slug === slug))
     .filter(Boolean)
     .slice(0, 3);
 }
