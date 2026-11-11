@@ -37,6 +37,7 @@ const definitions = [
     desktopWidths: brandWidths,
     alt: 'Logo de Molinari Viajes sobre un cielo con nubes',
     brand: true,
+    focusMobile: 'center 30%',
   },
   {
     desktop: roma,
@@ -65,6 +66,7 @@ const definitions = [
     desktopWidths: brandWidths,
     alt: 'Logo de Molinari Viajes sobre una calle de Tokio de noche',
     brand: true,
+    focusMobile: 'center 30%',
   },
   {
     desktop: nuevaYork,
@@ -136,15 +138,10 @@ const trust = [
               height={slide.tall.attributes.height}
               sizes="100vw"
               class:list={[
-                slide.brand
-                  ? 'object-cover max-lg:absolute max-lg:inset-x-0 max-lg:top-[-30%] max-lg:h-auto max-lg:w-full lg:h-full lg:w-full lg:object-center'
-                  : ['h-full w-full object-cover', slide.focus],
+                'h-full w-full object-cover max-lg:absolute max-lg:inset-0 max-lg:[object-position:var(--hero-focus)] max-lg:[transform-origin:var(--hero-focus)]',
+                slide.brand ? 'lg:object-center' : slide.focus,
               ]}
-              style={
-                slide.brand
-                  ? undefined
-                  : { '--hero-focus': slide.focusMobile ?? 'center top' }
-              }
+              style={{ '--hero-focus': slide.focusMobile ?? 'center top' }}
               {...(i === 0
                 ? { fetchpriority: 'high', decoding: 'async' }
                 : { loading: 'lazy', decoding: 'async', fetchpriority: 'low' })}
@@ -153,22 +150,27 @@ const trust = [
         </div>
       ))
     }
-    <div class="hero-scrim pointer-events-none absolute inset-0 z-10" aria-hidden="true"></div>
+    <div
+      class="hero-scrim pointer-events-none absolute inset-0 z-10 max-lg:bg-[linear-gradient(to_bottom,color-mix(in_srgb,var(--color-violet-dark)_20%,transparent),transparent_10%)]"
+      aria-hidden="true"
+    ></div>
   </div>
 
   <div
     class="hero-copy relative z-10 mt-auto w-full lg:pointer-events-none lg:absolute lg:inset-0 lg:mt-0 lg:flex lg:items-center"
   >
-    <Container class="pb-4 lg:pt-0 lg:pb-8">
-      <div class="pointer-events-auto lg:max-w-[34rem] xl:max-w-[600px]">
-        <Eyebrow tone="light" class="text-lilac-soft!">Agencia de viajes en Trelew</Eyebrow>
+    <Container class="max-lg:px-4! max-lg:pb-4 lg:pt-0 lg:pb-8">
+      <div
+        class="pointer-events-auto max-lg:rounded-3xl max-lg:border max-lg:border-white/15 max-lg:bg-violet-dark/85 max-lg:p-5 max-lg:backdrop-blur-3xl max-lg:supports-[backdrop-filter]:bg-violet-dark/60! lg:max-w-[34rem] xl:max-w-[600px]"
+      >
+        <Eyebrow tone="light" class="max-lg:text-white! lg:text-lilac-soft!">Agencia de viajes en Trelew</Eyebrow>
         <h1
           id="hero-titulo"
-          class="mt-2 font-display text-[2rem] leading-[1.05] font-extrabold tracking-[-0.02em] text-white lg:mt-5 lg:text-[3.5rem] xl:text-[4rem]"
+          class="mt-2 font-display text-[1.75rem] leading-[1.05] font-extrabold tracking-[-0.02em] text-white lg:mt-5 lg:text-[3.5rem] xl:text-[4rem]"
         >
-          Viajá con la experiencia de <span class="text-lilac">Molinari Viajes</span>
+          Viajá con la experiencia de <span class="text-lilac-soft lg:text-lilac">Molinari Viajes</span>
         </h1>
-        <p class="mt-2 max-w-[34rem] text-base leading-snug text-white/85 lg:mt-5 lg:text-xl lg:leading-relaxed">
+        <p class="mt-2 max-w-[34rem] text-[0.9375rem] leading-snug text-white lg:mt-5 lg:text-xl lg:leading-relaxed lg:text-white/85">
           Desde Trelew al mundo, con salidas acompañadas y asesoramiento personalizado.
         </p>
         <div class="mt-3 flex flex-col gap-2 lg:mt-7 lg:flex-row lg:flex-wrap lg:gap-3">

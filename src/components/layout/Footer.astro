@@ -118,13 +118,6 @@ const legalLink =
     >
       <p class="text-sm leading-snug">
         © {year} {site.name} · Agencia de turismo · Legajo {site.legal.legajo}
-        {
-          site.isDemo && (
-            <span class="ml-2.5 inline-block align-middle rounded-pill border border-white/20 px-2.5 py-0.5 text-xs leading-5 text-lilac-soft">
-              Sitio en versión de presentación
-            </span>
-          )
-        }
       </p>
       <nav aria-label="Información legal" class="flex flex-wrap items-center justify-center gap-x-2">
         <a href="/terminos" class={legalLink}>Términos y condiciones</a>
