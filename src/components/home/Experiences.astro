@@ -21,7 +21,7 @@ const photoInfo = {
   },
   'experiencia-01.jpg': {
     alt: 'Un grupo de viajeros mayores recorre a pie una calle angosta y empedrada, entre casas blancas con puertas de madera en arco.',
-    // TODO: confirmar el destino; parece una medina del Mediterráneo (¿Túnez?), pero no se distingue con certeza.
+    // TODO: experiencia-01.jpg — no se distingue el destino (calle blanca, puertas en arco).
     destination: '',
   },
   'experiencia-04.jpg': {
@@ -41,19 +41,21 @@ const photoInfo = {
   },
   'experiencia-05.jpg': {
     alt: 'Un grupo de viajeros reunido en una escalinata, a la sombra de árboles con flores blancas.',
-    // TODO: confirmar el destino; no se distingue en la foto.
+    // TODO: experiencia-05.jpg — no se distingue el destino (escalinata y árboles, sin un hito reconocible).
     destination: '',
     focus: 'object-[50%_55%]',
   },
 };
 
+const cellSizes = '(min-width: 1024px) 440px, (min-width: 768px) 33vw, 50vw';
+
 const layout = [
-  { item: 'col-span-2 md:row-span-2', image: 'aspect-[4/3]', sizes: '(min-width: 1280px) 720px, (min-width: 1024px) 560px, (min-width: 768px) 66vw, 100vw' },
-  { item: 'lg:row-span-2', image: 'aspect-square', sizes: '(min-width: 1280px) 360px, (min-width: 1024px) 280px, (min-width: 768px) 33vw, 50vw' },
-  { item: '', image: 'aspect-square', sizes: '(min-width: 1280px) 360px, (min-width: 1024px) 280px, (min-width: 768px) 33vw, 50vw' },
-  { item: '', image: 'aspect-square', sizes: '(min-width: 1280px) 360px, (min-width: 1024px) 280px, (min-width: 768px) 33vw, 50vw' },
-  { item: 'lg:col-span-2', image: 'aspect-square', sizes: '(min-width: 1280px) 720px, (min-width: 1024px) 560px, (min-width: 768px) 33vw, 50vw' },
-  { item: 'hidden md:block lg:col-span-2', image: 'aspect-square', sizes: '(min-width: 1280px) 720px, (min-width: 1024px) 560px, 33vw' },
+  { item: 'col-span-2 md:row-span-2', image: 'aspect-[4/3]', sizes: '(min-width: 1024px) 880px, (min-width: 768px) 66vw, 100vw' },
+  { item: '', image: 'aspect-square', sizes: cellSizes },
+  { item: '', image: 'aspect-square', sizes: cellSizes },
+  { item: '', image: 'aspect-square', sizes: cellSizes },
+  { item: '', image: 'aspect-square', sizes: cellSizes },
+  { item: 'hidden md:block', image: 'aspect-square', sizes: cellSizes },
 ];
 
 const photos = Object.entries(photoInfo)
@@ -100,7 +102,7 @@ const instagramIcon = `<svg viewBox="0 0 24 24" aria-hidden="true" class="size-5
     <GalleryLightbox client:visible images={lightboxImages}>
       {
         photos.length > 0 && (
-          <ul class="mt-10 grid grid-cols-2 gap-4 md:mt-12 md:auto-rows-[220px] md:grid-cols-3 lg:auto-rows-[300px] lg:grid-cols-4">
+          <ul class="mt-10 grid grid-cols-2 gap-4 md:mt-12 md:auto-rows-[220px] md:grid-cols-3 lg:auto-rows-[300px]">
             {photos.map((photo, index) => (
               <li class:list={['relative overflow-hidden rounded-card-lg bg-lilac-soft', layout[index].item]}>
                 <button

@@ -249,22 +249,7 @@
     animation: hero-zoom 7s linear both;
   }
 
-  .hero-fill {
-    scale: 0 1;
-    transform-origin: left center;
-  }
-
-  .is-done .hero-fill,
-  .is-active .hero-fill {
-    scale: 1 1;
-  }
-
-  [data-hero][data-ready] .is-active .hero-fill {
-    animation: hero-progress 7s linear both;
-  }
-
-  [data-hero][data-ready][data-paused] .hero-slide.is-active img,
-  [data-hero][data-ready][data-paused] .is-active .hero-fill {
+  [data-hero][data-ready][data-paused] .hero-slide.is-active img {
     animation-play-state: paused;
   }
 
@@ -274,15 +259,6 @@
     }
     to {
       scale: 1;
-    }
-  }
-
-  @keyframes hero-progress {
-    from {
-      scale: 0 1;
-    }
-    to {
-      scale: 1 1;
     }
   }
 

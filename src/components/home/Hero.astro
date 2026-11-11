@@ -1,6 +1,6 @@
 ---
 import { Image, getImage } from 'astro:assets';
-import { ArrowRight, HeartHandshake, MapPin, Pause, Play, Users } from '@lucide/astro';
+import { HeartHandshake, MapPin, Pause, Play, Users } from '@lucide/astro';
 import roma from '../../assets/images/hero/hero-roma.jpg';
 import japon from '../../assets/images/hero/hero-japon.jpg';
 import londres from '../../assets/images/hero/hero-londres.jpg';
@@ -34,30 +34,21 @@ const slides = [
     wide: cieloWide,
     tall: cieloTall,
     alt: 'Logo de Molinari Viajes sobre un cielo con nubes',
-    destination: 'Molinari Viajes',
-    href: '/paquetes',
-    linkText: 'Ver paquetes',
     brand: true,
   },
   {
     image: roma,
     alt: 'El Coliseo de Roma iluminado por el sol de la tarde, bajo un cielo despejado.',
-    destination: 'Roma',
-    href: '/paquetes/europa-central',
     focus: 'object-[center_62%]',
   },
   {
     image: japon,
     alt: 'El monte Fuji nevado detrás de una pagoda roja, rodeada de árboles.',
-    destination: 'Japón',
-    href: '/paquetes/japon-nueva-york',
     focus: 'object-[center_42%]',
   },
   {
     image: londres,
     alt: 'El río Támesis en Londres al atardecer, con el Tower Bridge a la izquierda.',
-    destination: 'Gran Bretaña',
-    href: '/paquetes',
     focus: 'object-[center_58%]',
   },
   {
@@ -66,30 +57,21 @@ const slides = [
     wide: tokioWide,
     tall: tokioTall,
     alt: 'Logo de Molinari Viajes sobre una calle de Tokio de noche',
-    destination: 'Molinari Viajes',
-    href: '/paquetes',
-    linkText: 'Ver paquetes',
     brand: true,
   },
   {
     image: nuevaYork,
     alt: 'Vista aérea de Manhattan y el río Hudson al anochecer, con las luces de la ciudad encendidas.',
-    destination: 'Nueva York',
-    href: '/paquetes/japon-nueva-york',
     focus: 'object-[center_45%]',
   },
   {
     image: praga,
     alt: 'Los puentes de Praga sobre el río Moldava, con los techos rojos de la ciudad.',
-    destination: 'Praga',
-    href: '/paquetes/europa-central',
     focus: 'object-[center_70%]',
   },
   {
     image: budapest,
     alt: 'El Parlamento de Budapest iluminado de noche, a orillas del Danubio.',
-    destination: 'Budapest',
-    href: '/paquetes/europa-central',
     focus: 'object-[70%_78%]',
   },
 ];
@@ -100,10 +82,9 @@ const trust = [
   { icon: HeartHandshake, label: 'Atención personalizada' },
 ];
 
-const [first] = slides;
 const mediaBox = 'aspect-[4/3] md:aspect-[3/2] lg:aspect-auto lg:h-full';
 const toggleClass =
-  'pointer-events-auto size-11 shrink-0 cursor-pointer items-center justify-center rounded-pill border border-white/30 bg-violet-dark/60 text-white backdrop-blur-md hover:bg-violet-dark/80 focus-visible:outline-white motion-reduce:hidden! lg:bg-white/15 lg:hover:bg-white/25';
+  'pointer-events-auto absolute top-4 right-5 z-20 hidden size-12 cursor-pointer items-center justify-center rounded-full border border-white/40 bg-white/75 text-violet-dark opacity-50 backdrop-blur-md hover:opacity-100 focus-visible:opacity-100 group-data-ready/hero:inline-flex motion-reduce:hidden! md:right-8 lg:top-auto lg:right-8 lg:bottom-8';
 ---
 
 <section
@@ -117,9 +98,6 @@ const toggleClass =
         <div
           class:list={['hero-slide absolute inset-0', i === 0 && 'is-active']}
           data-slide
-          data-destination={slide.destination}
-          data-href={slide.href}
-          data-link-text={slide.linkText}
           data-brand={slide.brand ? '' : undefined}
           aria-hidden={i === 0 ? undefined : 'true'}
         >
@@ -208,103 +186,22 @@ const toggleClass =
     </Container>
   </div>
 
-  <div
-    class:list={[
-      'pointer-events-none absolute inset-x-0 top-0 z-20 lg:inset-y-0',
-      mediaBox,
-    ]}
+  <button
+    type="button"
+    class={toggleClass}
+    aria-label="Pausar fotos"
+    data-hero-toggle
   >
-    <Container class="relative h-full">
-      <div
-        class="absolute inset-x-5 bottom-9 flex flex-col items-start gap-1 md:inset-x-8 lg:pointer-events-auto lg:inset-x-auto lg:right-8 lg:bottom-10 lg:w-[19rem] lg:items-stretch lg:gap-0 lg:rounded-card lg:border lg:border-white/15 lg:bg-violet-dark/70 lg:px-5 lg:pt-4 lg:pb-1 lg:backdrop-blur-md"
-      >
-        <div
-          class="pointer-events-auto rounded-pill bg-violet-dark/75 px-4 py-2 backdrop-blur-md lg:rounded-none lg:bg-transparent lg:p-0 lg:backdrop-blur-none"
-        >
-          <p class="hidden text-[0.8125rem] leading-none font-semibold tracking-[0.14em] text-lilac-soft uppercase lg:block">
-            Conocé con Molinari
-          </p>
-          <p
-            class="font-display text-base leading-tight font-bold text-white motion-safe:transition-opacity motion-safe:duration-500 lg:mt-2 lg:text-[1.375rem]"
-            data-hero-name
-          >
-            {first.destination}
-          </p>
-          <a
-            href={first.href}
-            class="mt-1 hidden min-h-12 items-center gap-1.5 font-semibold text-white underline-offset-4 hover:underline focus-visible:outline-white lg:inline-flex"
-            data-hero-link
-          >
-            <span data-hero-link-text>{first.linkText ?? 'Ver viaje'}</span>
-            <span class="sr-only" data-hero-link-label>
-              {first.linkText ? '' : `a ${first.destination}`}
-            </span>
-            <ArrowRight size={18} aria-hidden="true" />
-          </a>
-        </div>
-
-        <div class="hidden w-full items-center gap-3 group-data-ready/hero:flex">
-          <div class="pointer-events-auto flex flex-1 gap-1.5" role="group" aria-label="Fotos de destinos">
-            {
-              slides.map((slide, i) => (
-                <button
-                  type="button"
-                  class:list={[
-                    'group/segment flex h-11 flex-1 cursor-pointer items-center focus-visible:outline-white',
-                    i === 0 && 'is-active',
-                  ]}
-                  aria-label={`Ver foto de ${slide.destination}`}
-                  aria-current={i === 0 ? 'true' : undefined}
-                  data-segment
-                >
-                  <span class="relative block h-[3px] w-full overflow-hidden rounded-pill bg-white/35 group-hover/segment:bg-white/55">
-                    <span class="hero-fill absolute inset-0 rounded-pill bg-white" data-fill />
-                  </span>
-                </button>
-              ))
-            }
-          </div>
-          <button
-            type="button"
-            class:list={[toggleClass, 'hidden lg:group-data-ready/hero:inline-flex']}
-            aria-label="Pausar fotos"
-            data-hero-toggle
-          >
-            <span data-icon-pause class="inline-flex"><Pause size={20} aria-hidden="true" /></span>
-            <span data-icon-play class="inline-flex" hidden><Play size={20} aria-hidden="true" /></span>
-          </button>
-        </div>
-      </div>
-
-      <button
-        type="button"
-        class:list={[
-          toggleClass,
-          'absolute top-4 right-5 hidden group-data-ready/hero:inline-flex md:right-8 lg:hidden!',
-        ]}
-        aria-label="Pausar fotos"
-        data-hero-toggle
-      >
-        <span data-icon-pause class="inline-flex"><Pause size={20} aria-hidden="true" /></span>
-        <span data-icon-play class="inline-flex" hidden><Play size={20} aria-hidden="true" /></span>
-      </button>
-    </Container>
-  </div>
-
-  <p class="sr-only" aria-live="polite" data-hero-live></p>
+    <span data-icon-pause class="inline-flex"><Pause size={20} aria-hidden="true" /></span>
+    <span data-icon-play class="inline-flex" hidden><Play size={20} aria-hidden="true" /></span>
+  </button>
 </section>
 
 <script>
   const hero = document.querySelector('[data-hero]');
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   if (hero instanceof HTMLElement) {
     const slides = [...hero.querySelectorAll('[data-slide]')];
-    const segments = [...hero.querySelectorAll('[data-segment]')];
-    const name = hero.querySelector('[data-hero-name]');
-    const link = hero.querySelector('[data-hero-link]');
-    const linkLabel = hero.querySelector('[data-hero-link-label]');
-    const live = hero.querySelector('[data-hero-live]');
     const toggles = [...hero.querySelectorAll('[data-hero-toggle]')];
     const leaveTimers = new Map();
     let index = 0;
@@ -316,33 +213,14 @@ const toggleClass =
       hero.toggleAttribute('data-paused', userPaused || document.hidden);
     }
 
-    function updateName(slide) {
-      const destination = slide.dataset.destination ?? '';
-      const linkText = slide.dataset.linkText || 'Ver viaje';
-      if (link instanceof HTMLAnchorElement) link.href = slide.dataset.href ?? '/paquetes';
-      const linkWords = hero.querySelector('[data-hero-link-text]');
-      if (linkWords) linkWords.textContent = linkText;
-      if (linkLabel) linkLabel.textContent = linkText === 'Ver viaje' ? `a ${destination}` : '';
-      if (!(name instanceof HTMLElement)) return;
-      if (reduceMotion.matches) {
-        name.textContent = destination;
-        return;
-      }
-      name.classList.add('opacity-0');
-      window.setTimeout(() => {
-        name.textContent = destination;
-        name.classList.remove('opacity-0');
-      }, 500);
-    }
-
-    function show(next, fromUser) {
+    function show(next) {
       if (next === index) return;
       const current = slides[index];
       const target = slides[next];
       const targetImg = target.querySelector('img');
 
       if (targetImg instanceof HTMLImageElement && !targetImg.complete) {
-        targetImg.addEventListener('load', () => show(next, fromUser), { once: true });
+        targetImg.addEventListener('load', () => show(next), { once: true });
         return;
       }
 
@@ -368,27 +246,15 @@ const toggleClass =
       target.classList.add('is-active');
       target.removeAttribute('aria-hidden');
 
-      segments.forEach((segment, i) => {
-        segment.classList.toggle('is-active', i === next);
-        segment.classList.toggle('is-done', i < next);
-        if (i === next) segment.setAttribute('aria-current', 'true');
-        else segment.removeAttribute('aria-current');
-      });
-
       index = next;
-      updateName(target);
-      if (fromUser && live) live.textContent = `Foto de ${target.dataset.destination}`;
     }
 
     hero.addEventListener('animationend', (event) => {
-      const fill = event.target;
-      if (!(fill instanceof Element) || !fill.matches('[data-fill]')) return;
-      if (fill.closest('[data-segment]') !== segments[index]) return;
-      show((index + 1) % slides.length, false);
-    });
-
-    segments.forEach((segment, i) => {
-      segment.addEventListener('click', () => show(i, true));
+      if (event.animationName !== 'hero-zoom') return;
+      const img = event.target;
+      if (!(img instanceof HTMLImageElement)) return;
+      if (img.closest('[data-slide]') !== slides[index]) return;
+      show((index + 1) % slides.length);
     });
 
     toggles.forEach((toggle) => {
