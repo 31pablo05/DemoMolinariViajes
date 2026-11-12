@@ -51,15 +51,27 @@ const links = [
         loading="eager"
         class="h-10 w-auto lg:hidden"
       />
-      <Image
-        src={logoMark}
-        alt="Molinari Viajes, inicio"
-        width={551}
-        height={149}
-        densities={[2]}
-        loading="eager"
-        class="hidden w-auto motion-safe:transition-[height] motion-safe:duration-300 motion-safe:ease-out lg:block lg:h-14 lg:group-data-scrolled/header:h-[46px]"
-      />
+      <span
+        class="relative hidden w-fit motion-safe:transition-[height,font-size] motion-safe:duration-300 motion-safe:ease-out lg:block lg:h-14 lg:text-[3.5rem] lg:group-data-scrolled/header:h-[46px] lg:group-data-scrolled/header:text-[46px]"
+      >
+        <Image
+          src={logoMark}
+          alt="Molinari Viajes, agencia de turismo, inicio"
+          width={551}
+          height={149}
+          densities={[2]}
+          loading="eager"
+          class="h-full w-auto"
+        />
+        <span
+          class="absolute top-[58%] right-0 left-[31.2%] flex items-center justify-center gap-[0.28em] font-body text-[0.18em] leading-none font-semibold tracking-[0.04em] text-violet uppercase"
+          aria-hidden="true"
+        >
+          <span class="h-px w-[0.7em] shrink-0 bg-current"></span>
+          Agencia de turismo
+          <span class="h-px w-[0.7em] shrink-0 bg-current"></span>
+        </span>
+      </span>
     </a>
 
     <nav class="hidden lg:flex lg:items-center lg:justify-center lg:gap-x-4 xl:gap-x-6" aria-label="Principal">
